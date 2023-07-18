@@ -87,16 +87,7 @@ if (!fs.existsSync('./public/tmp')) {
 }
 
 app.use(function(req, res, next){
-	var  Page = mongoose.model('Page');
-	var Option = mongoose.model('Option');
-	var Slug = mongoose.model('Slug');
-	Option.findOne({"language.code":"en"}).populate({path:'menu_solutions', select: '_id title slugid', populate: {path:'slugid'}}).populate({path:'menu_services', select: '_id title slugid',  populate: {path:'slugid'}}).populate({path:'menu_additional', select: '_id title slugid', populate: {path:'slugid'}}).exec(function(err, _option){
-		if(err || !_option) return res.redirect('/en');
-		Page.findOne({"language":"en", category:"contact"}).select('_id category title sub_title language seo_keywords seo_description slugid rel_products rel_services rel_solutions additional tags').populate('slugid').exec(function(_err, _page){
-			if(_err || !_page) return res.redirect('/en');
-			 res.status(404).render('404', {pagename:"404", language:"en", option:_option, page:_page, contact:_page});
-		});
-	}); 
+	res.status(404).render('404');
 });
 
 app.listen(app.get('port'), function(){
