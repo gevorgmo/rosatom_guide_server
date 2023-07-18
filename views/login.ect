@@ -1,0 +1,26 @@
+<% extend "admin/layout.ect" %>
+
+	<div class="login-box">
+		<div class="login-logo">
+			<img src="/admin/img/logo.svg" class="form-signin-logo" />
+		</div>
+		<!-- /.login-logo -->
+		<div class="login-box-body">
+			<form  method="POST"  action="/admin/login">
+				<% if (typeof(@errors) != "undefined") :%>
+					<h1 style="font-size: 20px;text-align:center;"><%- @errors %></h1>
+				<% end %>
+				<div class="form-group has-feedback">
+					<input type="text" name="username" id="username" class="form-control" placeholder="Username"  required >
+				</div>
+				<div class="form-group has-feedback">
+					<input type="password" name="password" id="password" class="form-control" placeholder="password"  required >
+				</div>
+				<div class="form-group has-feedback">
+					<button type="submit"  name="login" class="btn btn-primary btn-block btn-flat login-btn"><i class="fa fa-sign-in"></i> Log In</button>
+				</div>
+				<a href="/admin/passwordrecover" style="font-size: 20px;">Forgot password?</a>
+			</form>
+		</div>
+	<!-- /.login-box-body -->	
+	</div>

@@ -1,0 +1,45 @@
+<% extend "admin/layout.ect" %>
+<% all_roles=["User","Administartor"]  %>
+<section class="content-header"><h1><i class="fa fa-users p-users"></i>All Users</h1></section>
+
+<section class="content-header">
+	<a href="/admin/users/new" class="btn btn-primary"><i class="fa fa-plus"></i>Create new</a>
+</section>
+
+<section class="content">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="box">
+				<div class="box-header">
+						<table id="customerslist" class="table table-bordered table-hover table-striped dataTable" role="grid">
+							<thead>
+								<tr>
+									<th class="tblsrt">Full Name</th>		
+									<th class="tblsr">Username</th>	
+									<th class="tblsrt">Role</th>
+									<th class="tblsrt">Created</th>
+									<th class="tblsrt">Last Login</th>
+									<th class="no-sort">Action</th>
+								</tr>
+							</thead>
+							<tbody id="tbody">	
+								<% for user, i in @users : %>
+									<tr id="r<%- user._id %>">
+										<td><%- user.fullname %></td>
+										<td><%- user.username %></td>	
+										<td><%- all_roles[user.role] %></td>
+										<td><%- user.created %></td>
+										<td><%- user.lastlogin %></td>
+										<td>
+											<a href="/admin/users/<%- user._id %>" class="btn btn-success btn-xs" ><i class="fa  fa-pencil"></i></a>
+											<button data-id="<%- user._id %>" class="btn btn-danger btn-xs btn-deleteuser" ><i class="fa fa-trash-o"></i></button>
+										</td>
+									</tr>
+								<% end %>	
+							</tbody>
+						</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

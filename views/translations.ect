@@ -1,0 +1,190 @@
+<% extend "admin/layout.ect" %>
+
+<section class="content-header p-translations"><h1 class="categoryname"><i class="fa   fa-retweet"></i><span>Fixed Translations</h1></section>
+
+<section class="content">
+
+	<div class="box box-primary">
+		<div class="box-header">
+			<div class="nav-tabs-custom">
+				<ul class="nav nav-tabs">
+					<% for optio,i in @options : %>
+						<li <%- if i==0 then "class='active'" else "" %>><a href="#tab_<%- optio.language.code %>" data-toggle="tab" aria-expanded="<%- if i==0 then "true" else "false" %>"><%- optio.language.code %></a></li>
+					<% end %>
+				</ul>
+				<div class="tab-content">
+					<% for optio,i in @options : %>
+						<div class="tab-pane <%- if i==0 then "active" else "" %>" id="tab_<%- optio.language.code %>" data-id="<%- optio._id %>"  data-code="<%- optio.language.code %>">
+							<h3 class="box-title" style="margin:20px 0">Home Page</h3>
+							<div class="row">
+								<div class="col-md-4 col-ms-4">
+									<div class="form-group">
+										<label>Book a meeting</label>
+										<input type="text" class="form-control" id="<%- optio.language.code %>prbook_a_meeting"  value="<%- optio.translations.book_a_meeting || "" %>">
+									</div>
+									<div class="form-group">
+										<label>More</label>
+										<input type="text" class="form-control" id="<%- optio.language.code %>prmore"  value="<%- optio.translations.more || "" %>">
+									</div>
+									<div class="form-group">
+										<label>Slogan</label>
+										<input type="text" class="form-control" id="<%- optio.language.code %>prslogan"  value="<%- optio.translations.slogan || "" %>">
+									</div>
+								</div>	
+								<div class="col-md-4 col-ms-4">	
+									<div class="form-group">
+										<label>All</label>
+										<input type="text" class="form-control" id="<%- optio.language.code %>prall"  value="<%- optio.translations.all || "" %>">
+									</div>
+									<div class="form-group">
+										<label>All Solutions</label>
+										<input type="text" class="form-control" id="<%- optio.language.code %>prall_solutions"  value="<%- optio.translations.all_solutions || "" %>">
+									</div>
+									<div class="form-group">
+										<label>All Services</label>
+										<input type="text" class="form-control" id="<%- optio.language.code %>prall_services"  value="<%- optio.translations.all_services || "" %>">
+									</div>	
+									<div class="form-group">
+										<label>All Products</label>
+										<input type="text" class="form-control" id="<%- optio.language.code %>prall_products"  value="<%- optio.translations.all_products || "" %>">
+									</div>
+
+								</div>	
+								<div class="col-md-4 col-ms-4">	
+									<div class="form-group">
+										<label>Follow us on</label>
+										<input type="text" class="form-control" id="<%- optio.language.code %>prfollow_us_on"  value="<%- optio.translations.follow_us_on || "" %>">
+									</div>	
+									<div class="form-group">
+										<label>Copyright</label>
+										<input type="text" class="form-control" id="<%- optio.language.code %>prcopyright"  value="<%- optio.translations.copyright || "" %>">
+									</div>
+								</div>
+							</div>
+							
+							<h4 class="page-header"></h4>
+							<h3 class="box-title" style="margin:20px 0">Careers Page</h3>
+							<div class="row">
+								<div class="col-md-4 col-ms-4">
+									<div class="form-group">
+										<label>Date of publication</label>
+										<input type="text" class="form-control" id="<%- optio.language.code %>prdate_publication"  value="<%- optio.translations.date_publication || "" %>">
+									</div>
+									<div class="form-group">
+										<label>Expire date</label>
+										<input type="text" class="form-control" id="<%- optio.language.code %>prdate_expire"  value="<%- optio.translations.date_expire || "" %>">
+									</div>
+									<div class="form-group">
+										<label>Apply for this job</label>
+										<input type="text" class="form-control" id="<%- optio.language.code %>prapply_for_this_job"  value="<%- optio.translations.apply_for_this_job || "" %>">
+									</div>
+								</div>	
+								<div class="col-md-4 col-ms-4">	
+									<div class="form-group">
+										<label>Attach CV</label>
+										<input type="text" class="form-control" id="<%- optio.language.code %>prattach"  value="<%- optio.translations.attach || "" %>">
+									</div>	
+									<div class="form-group">
+										<label>Attach CV in PDF, DOC or JPG format</label>
+										<input type="text" class="form-control" id="<%- optio.language.code %>prattach_formats"  value="<%- optio.translations.attach_formats || "" %>">
+									</div>
+									<div class="form-group">
+										<label>Upload</label>
+										<input type="text" class="form-control" id="<%- optio.language.code %>prupload"  value="<%- optio.translations.upload || "" %>">
+									</div>
+								</div>	
+								<div class="col-md-4 col-ms-4">	
+									<div class="form-group">
+										<label>Apply</label>
+										<input type="text" class="form-control" id="<%- optio.language.code %>prapply"  value="<%- optio.translations.apply || "" %>">
+									</div>
+									<div class="form-group">
+										<label>All Jobs</label>
+										<input type="text" class="form-control" id="<%- optio.language.code %>prall_jobs"  value="<%- optio.translations.all_jobs || "" %>">
+									</div>
+								</div>
+							</div>
+							
+							
+							<h4 class="page-header"></h4>
+							<h3 class="box-title" style="margin:20px 0">Contact Page</h3>
+							<div class="row">
+								<div class="col-md-4 col-ms-4">
+									<div class="form-group">
+										<label>Write to us</label>
+										<input type="text" class="form-control" id="<%- optio.language.code %>prwrite_to_us"  value="<%- optio.translations.write_to_us || "" %>">
+									</div>
+									<div class="form-group">
+										<label>Name Surname</label>
+										<input type="text" class="form-control" id="<%- optio.language.code %>prname_surname"  value="<%- optio.translations.name_surname || "" %>">
+									</div>
+									<div class="form-group">
+										<label>Company Name</label>
+										<input type="text" class="form-control" id="<%- optio.language.code %>prcompany_name"  value="<%- optio.translations.company_name || "" %>">
+									</div>
+									<div class="form-group">
+										<label>Email</label>
+										<input type="text" class="form-control" id="<%- optio.language.code %>premail"  value="<%- optio.translations.email || "" %>">
+									</div>
+								</div>		
+								<div class="col-md-4 col-ms-4">
+									<div class="form-group">
+										<label>Phone</label>
+										<input type="text" class="form-control" id="<%- optio.language.code %>prphone"  value="<%- optio.translations.phone || "" %>">
+									</div>
+									<div class="form-group">
+										<label>Description</label>
+										<input type="text" class="form-control" id="<%- optio.language.code %>prdescription"  value="<%- optio.translations.description || "" %>">
+									</div>
+									<div class="form-group">
+										<label>Sent</label>
+										<input type="text" class="form-control" id="<%- optio.language.code %>prsent"  value="<%- optio.translations.sent || "" %>">
+									</div>	
+									<div class="form-group">
+										<label>Address</label>
+										<input type="text" class="form-control" id="<%- optio.language.code %>praddress"  value="<%- optio.translations.address || "" %>">
+									</div>
+								</div>	
+								<div class="col-md-4 col-ms-4">	
+									<div class="form-group">
+										<label>Form Success Sent</label>
+										<input type="text" class="form-control" id="<%- optio.language.code %>prform_success"  value="<%- optio.translations.form_success || "" %>">
+									</div>	
+									<div class="form-group">
+										<label>Form Sent Error</label>
+										<input type="text" class="form-control" id="<%- optio.language.code %>prform_error"  value="<%- optio.translations.form_error || "" %>">
+									</div>
+								</div>
+							</div>	
+						</div>
+					<% end %>
+				</div>	
+			</div>	
+		</div>
+	</div>
+			
+	<div class="box">
+		<div class="box-footer">
+			<div class="pull-right">
+				<a  href="/admin" class="btn btn-default"><i class="fa fa-angle-left"></i> Back</a>
+				<button type="button"  class="btn btn-success btn-savetrans"><i class="fa fa-save"></i> Save</button>
+				<button type="button"  data-href="/admin" class="btn btn-info andexit btn-savetrans"><i class="fa fa-save"></i> Save and exit</button>
+			</div>
+		</div>	
+	</div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

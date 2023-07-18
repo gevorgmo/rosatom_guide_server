@@ -1,0 +1,83 @@
+.wrapper{overflow:unset!important}
+.edit_contr_cont{position:relative;min-height:680px}
+.edit_contr_left{width:104px;position:absolute;height:100%;left:0;top:0;z-index:2}
+.edit_contr_modules{position: -webkit-sticky; position: sticky; top: 60px;}
+.edit_contr_right{position:relative;z-index:1;padding-left:120px;}
+.edit_templ{height: 40px; width: 80px;margin-right: 10px;    margin-bottom: 5px;display:inline-block;background-repeat:no-repeat;background-position:50% 50%;background-size:contain;border:1px solid #999;border-radius:5px;}
+.edit_templ:hover{border:1px solid #004bae;}
+.edit_templ_1{background-image:url(../img/temp1.png)}
+.edit_templ_2{background-image:url(../img/temp2.png)}
+.edit_templ_3{background-image:url(../img/temp3.png)}
+.edit_templ_4{background-image:url(../img/temp4.png)}
+.edit_templ_5{background-image:url(../img/temp5.png)}
+.edit_templ_6{background-image:url(../img/temp6.png)}
+.edit_templ_7{background-image:url(../img/temp7.png)}
+.edit_templ_8{background-image:url(../img/temp8.png)}
+.edit_templ_9{background-image:url(../img/temp9.png)}
+.edit_templ_10{background-image:url(../img/temp10.png)}
+.edit_templ_11{background-image:url(../img/temp11.png)}
+.edit_templ_12{background-image:url(../img/temp12.png)}
+.edit_templ:last-child{margin-right: 0px;}
+.edit_contr_items{position:relative;border:1px solid #999;border-radius:3px;padding:0 10px 10px 10px;}
+.edit_contr_modules_templs{}
+#edit_contr_items_list{padding-bottom:40px;position:relative}
+.edit_item_empty{display:block;border:2px dashed  #004bae;background-color:#ccc;height:60px;border-radius:5px;margin:10px 0}
+.edit_ittm{padding:10px;margin:10px 0;border:1px solid #ccc;border-radius:5px;background-color:#fff;position:relative;}
+.edit_img{background-repeat:no-repeat;background-position:50% 50%;background-size:contain;height:150px;background-image:url(../img/temp.png)}
+.edit_video{background-repeat:no-repeat;background-position:50% 50%;background-size:contain;height:150px;background-image:url(../img/video.png)}
+.edit_videof{background-repeat:no-repeat;background-position:50% 50%;background-size:contain;height:150px;background-image:url(../img/videof.png)}
+.edit_text{height: 150px;overflow:hidden;padding: 10px;position:relative;}
+.edit_text::after{content: '';display:block;position:absolute;bottom:0;left:0;width:100%;height:50px;z-index:2;background: rgb(255,255,255);background: linear-gradient(0deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 100%);}
+.edit_ittm_part1,.edit_ittm_part2{width:50%;position:relative;}
+.edit_ittm_part11,.edit_ittm_part12,.edit_ittm_part13{width:33.333%;position:relative;}
+.edit_ittm_clbth{clear:both}
+.edit_ittm_part1{float:left}
+.edit_ittm_part2{float:right}
+.edit_ittm_part11,.edit_ittm_part12,.edit_ittm_part13{float:left}
+.edit_templ_7{background-image:url(../img/temp7.png)}
+.edit_bottom_drag_text{position:absolute;text-align:center;width:100%;bottom:0;}
+.edit_btns{position:absolute;top:8px;right:8px;display:none}
+.edit_ttpls{width:100px;height:auto;display:none;}
+.edit_ittm:hover{background-color:#dedede}
+.edit_ittm:hover .edit_btns{display:block}
+.edit_video_iframe,.edit_video_file{display:block;height:150px;width:270px;margin:0 auto;}
+.edit_img_caption{position:absolute;bottom:0;left:0;padding:5px;background-color:rgba(255,255,255,0.8);font-style: italic;}
+.edit_text_with_button{text-align:center;background-color:#eee}
+.edit_button{background: #fff; margin: 15px 0 0 0; padding: 0 63px;color: #204072; border: 1px solid #EFEFEF;display: inline-block;font-size: 18px; line-height: 30px;text-align: center;    white-space: nowrap;  border-radius: 0;}
+.edit_slideshow{height:150px;background-repeat:no-repeat;background-position:50% 50%;background-size:contain;background-image:url(../img/temp9.png)}
+
+.edit_slideshow_content {text-align:center}
+.slide_itm{vertical-align: top;display:inline-block;min-width:133px;min-height:120px;margin:5px;background:#ddd;position:relative;padding:0px 10px 0 0;border:1px solid #aaa}
+.slide_remove{position:absolute;top:2px;right:2px}
+.slide_media_add{position:absolute;top:2px;left:2px}
+.slideshow_itm{width:18%;height:auto;margin:5px;}
+.slide_itm_wrap{position:relative}
+#slideshow_list{margin-top:30px}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

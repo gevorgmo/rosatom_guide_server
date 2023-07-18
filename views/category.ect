@@ -1,0 +1,88 @@
+<% extend "admin/layout.ect" %>
+<% all_category_icons={"product":"<i class='fa  fa-shopping-cart'></i>","solution":"<i class='fa  fa-star-half-empty'></i>","service":"<i class='fa  tasks'></i>","team":"<i class='fa  fa-briefcase'></i>","career":"<i class='fa  fa-user'></i>","page":"<i class='fa  fa-copy'></i>"} %>
+<% all_category_titles={"product":"All Products","solution":"All Solutions","service":"All Services","team":"All Team Members","career":"All Available Job Positions","page":"All Additional Pages"} %>
+<% all_global_pages={"home":"Home Page","solutions":"Solutions Page","products":"Products Page","services":"Services Page","careers":"Careers Page","contact":"Contact Page","company":"Company Page"} %>
+
+<section class="content-header p-category"><h1><%- all_category_icons[@pagename] %> <%- if all_category_titles[@pagename] then all_category_titles[@pagename] else all_global_pages[@pagename] %></h1></section>
+
+<% if all_category_titles[@pagename] :%>
+	<section class="content-header">
+		<a href="/admin/item/new?category=<%- @pagename %>" class="btn btn-primary"><i class="fa fa-plus"></i>Create new</a>
+	</section>
+<% end %>	
+
+<section class="content">
+
+			<% for item in @items : %>
+					<div class="info-box" id="<%- item.id %>">
+					
+						<% if all_category_titles[@pagename] :%>
+							<span class="info-box-icon" style="background-size:contain;background-repeat:no-repeat;background-position:50% 50%;background-image:url( 
+								<% finded=false %>
+								<% for optio in @options : %>
+									<% for page in item.pages : %>
+										<% if page.language==optio.language.code :%>
+											<% if page.poster!="" :%>
+												<%- page.poster  %>
+												<% finded=true %>
+												<% break %>
+											<% end %>	
+										<% end %>	
+									<% end %>
+									<% if finded :%>	
+										<% break %>
+									<% end %>
+								<% end %>	
+							)"></span>
+						<% end %>	
+						
+						
+						<% if all_category_titles[@pagename] :%>
+							<div class="info-box-right" style="text-align:right;">	
+								<button type="button" data-slugid="<%- item.id %>"  data-href="/admin/category/<%- @pagename %>" class="btn btn-warning btn-xs btn-flat btn-copyitem"><i class="fa  fa-clone"></i></button>
+								<button type="button" data-slugid="<%- item.id %>"  class="btn btn-danger btn-xs btn-flat btn-deleteitem"><i class="glyphicon glyphicon-trash"></i></button>							
+							</div>
+						<% end %>
+						
+						<div class="info-box-center" >
+							<% for optio in @options : %>
+								<% notfinded=true %>
+								<% for page in item.pages : %>
+									<% if page.language==optio.language.code :%>
+										<a href="/admin/item/<%- page.id %>" class="btn btn-xs  <%- if page.active then "btn-success"  else "btn-warning" %>  btn-flat languagebtn"><%- optio.language.code %></a>
+										<% notfinded=false %>
+										<% break %>
+									<% end %>
+								<% end %>
+								<% if notfinded :%>
+									<a href="/admin/item/new?language=<%- optio.language.code %>&category=<%- @pagename %>&slugid=<%- item.id %>" class="btn btn-xs btn-info btn-flat languagebtn"><%- optio.language.code %></a>
+								<% end %>
+							<% end %>									
+						</div>
+						<div class="info-box-content">
+							<span class="info-box-number">
+								<% finded=false %>
+								<% for optio in @options : %>
+									<% for page in item.pages : %>
+										<% if page.language==optio.language.code :%>
+											<% if page.title!="" :%>
+												<%- page.title  %>
+												<% finded=true %>
+												<% break %>
+											<% end %>	
+										<% end %>	
+									<% end %>
+									<% if finded :%>
+										<% break %>
+									<% end %>
+								<% end %>
+							</span>								
+						</div>	
+					</div>	
+			<% end %>
+
+</section>
+
+
+
+

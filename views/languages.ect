@@ -1,0 +1,484 @@
+<% extend "admin/layout.ect" %>
+
+<section class="content-header p-languages"><h1><i class="fa fa-globe"></i> Website Languages</h1></section>
+<section class="content">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="box box-primary">
+				<div class="box-header">
+					<div class="row">
+						<div class="col-md-6">
+							<label>Add language</label>
+							<div class="input-group">
+								<select class="form-control" id="prlanguage" style="width: 100%;">
+									<option value="ab">Abkhazian (ab)</option>
+									<option value="aa">Afar (aa)</option>
+									<option value="af">Afrikaans (af)</option>
+									<option value="ak">Akan (ak)</option>
+									<option value="sq">Albanian (sq)</option>
+									<option value="am">Amharic (am)</option>
+									<option value="ar">Arabic (ar)</option>
+									<option value="an">Aragonese (an)</option>
+									<option value="hy">Armenian (hy)</option>
+									<option value="as">Assamese (as)</option>
+									<option value="av">Avaric (av)</option>
+									<option value="ae">Avestan (ae)</option>
+									<option value="ay">Aymara (ay)</option>
+									<option value="az">Azerbaijani (az)</option>
+									<option value="bm">Bambara (bm)</option>
+									<option value="ba">Bashkir (ba)</option>
+									<option value="eu">Basque (eu)</option>
+									<option value="be">Belarusian (be)</option>
+									<option value="bn">Bengali (bn)</option>
+									<option value="bi">Bislama (bi)</option>
+									<option value="bs">Bosnian (bs)</option>
+									<option value="br">Breton (br)</option>
+									<option value="bg">Bulgarian (bg)</option>
+									<option value="my">Burmese (my)</option>
+									<option value="ca">Catalan, Valencian (ca)</option>
+									<option value="ch">Chamorro (ch)</option>
+									<option value="ce">Chechen (ce)</option>
+									<option value="ny">Chichewa, Chewa, Nyanja (ny)</option>
+									<option value="zh">Chinese (zh)</option>
+									<option value="cu">Church Slavic, Old Slavonic, Church Slavonic, Old Bulgarian, Old Church Slavonic (cu)</option>
+									<option value="cv">Chuvash (cv)</option>
+									<option value="kw">Cornish (kw)</option>
+									<option value="co">Corsican (co)</option>
+									<option value="cr">Cree (cr)</option>
+									<option value="hr">Croatian (hr)</option>
+									<option value="cs">Czech (cs)</option>
+									<option value="da">Danish (da)</option>
+									<option value="dv">Divehi, Dhivehi, Maldivian (dv)</option>
+									<option value="nl">Dutch, Flemish (nl)</option>
+									<option value="dz">Dzongkha (dz)</option>
+									<option value="en">English (en)</option>
+									<option value="eo">Esperanto (eo)</option>
+									<option value="et">Estonian (et)</option>
+									<option value="ee">Ewe (ee)</option>
+									<option value="fo">Faroese (fo)</option>
+									<option value="fj">Fijian (fj)</option>
+									<option value="fi">Finnish (fi)</option>
+									<option value="fr">French (fr)</option>
+									<option value="fy">Western Frisian (fy)</option>
+									<option value="ff">Fulah (ff)</option>
+									<option value="gd">Gaelic, Scottish Gaelic (gd)</option>
+									<option value="gl">Galician (gl)</option>
+									<option value="lg">Ganda (lg)</option>
+									<option value="ka">Georgian (ka)</option>
+									<option value="de">German (de)</option>
+									<option value="el">Greek, Modern (1453–) (el)</option>
+									<option value="kl">Kalaallisut, Greenlandic (kl)</option>
+									<option value="gn">Guarani (gn)</option>
+									<option value="gu">Gujarati (gu)</option>
+									<option value="ht">Haitian, Haitian Creole (ht)</option>
+									<option value="ha">Hausa (ha)</option>
+									<option value="he">Hebrew (he)</option>
+									<option value="hz">Herero (hz)</option>
+									<option value="hi">Hindi (hi)</option>
+									<option value="ho">Hiri Motu (ho)</option>
+									<option value="hu">Hungarian (hu)</option>
+									<option value="is">Icelandic (is)</option>
+									<option value="io">Ido (io)</option>
+									<option value="ig">Igbo (ig)</option>
+									<option value="id">Indonesian (id)</option>
+									<option value="ia">Interlingua (International Auxiliary Language Association) (ia)</option>
+									<option value="ie">Interlingue, Occidental (ie)</option>
+									<option value="iu">Inuktitut (iu)</option>
+									<option value="ik">Inupiaq (ik)</option>
+									<option value="ga">Irish (ga)</option>
+									<option value="it">Italian (it)</option>
+									<option value="ja">Japanese (ja)</option>
+									<option value="jv">Javanese (jv)</option>
+									<option value="kn">Kannada (kn)</option>
+									<option value="kr">Kanuri (kr)</option>
+									<option value="ks">Kashmiri (ks)</option>
+									<option value="kk">Kazakh (kk)</option>
+									<option value="km">Central Khmer (km)</option>
+									<option value="ki">Kikuyu, Gikuyu (ki)</option>
+									<option value="rw">Kinyarwanda (rw)</option>
+									<option value="ky">Kirghiz, Kyrgyz (ky)</option>
+									<option value="kv">Komi (kv)</option>
+									<option value="kg">Kongo (kg)</option>
+									<option value="ko">Korean (ko)</option>
+									<option value="kj">Kuanyama, Kwanyama (kj)</option>
+									<option value="ku">Kurdish (ku)</option>
+									<option value="lo">Lao (lo)</option>
+									<option value="la">Latin (la)</option>
+									<option value="lv">Latvian (lv)</option>
+									<option value="li">Limburgan, Limburger, Limburgish (li)</option>
+									<option value="ln">Lingala (ln)</option>
+									<option value="lt">Lithuanian (lt)</option>
+									<option value="lu">Luba-Katanga (lu)</option>
+									<option value="lb">Luxembourgish, Letzeburgesch (lb)</option>
+									<option value="mk">Macedonian (mk)</option>
+									<option value="mg">Malagasy (mg)</option>
+									<option value="ms">Malay (ms)</option>
+									<option value="ml">Malayalam (ml)</option>
+									<option value="mt">Maltese (mt)</option>
+									<option value="gv">Manx (gv)</option>
+									<option value="mi">Maori (mi)</option>
+									<option value="mr">Marathi (mr)</option>
+									<option value="mh">Marshallese (mh)</option>
+									<option value="mn">Mongolian (mn)</option>
+									<option value="na">Nauru (na)</option>
+									<option value="nv">Navajo, Navaho (nv)</option>
+									<option value="nd">North Ndebele (nd)</option>
+									<option value="nr">South Ndebele (nr)</option>
+									<option value="ng">Ndonga (ng)</option>
+									<option value="ne">Nepali (ne)</option>
+									<option value="no">Norwegian (no)</option>
+									<option value="nb">Norwegian Bokmål (nb)</option>
+									<option value="nn">Norwegian Nynorsk (nn)</option>
+									<option value="ii">Sichuan Yi, Nuosu (ii)</option>
+									<option value="oc">Occitan (oc)</option>
+									<option value="oj">Ojibwa (oj)</option>
+									<option value="or">Oriya (or)</option>
+									<option value="om">Oromo (om)</option>
+									<option value="os">Ossetian, Ossetic (os)</option>
+									<option value="pi">Pali (pi)</option>
+									<option value="ps">Pashto, Pushto (ps)</option>
+									<option value="fa">Persian (fa)</option>
+									<option value="pl">Polish (pl)</option>
+									<option value="pt">Portuguese (pt)</option>
+									<option value="pa">Punjabi, Panjabi (pa)</option>
+									<option value="qu">Quechua (qu)</option>
+									<option value="ro">Romanian, Moldavian, Moldovan (ro)</option>
+									<option value="rm">Romansh (rm)</option>
+									<option value="rn">Rundi (rn)</option>
+									<option value="ru">Russian (ru)</option>
+									<option value="se">Northern Sami (se)</option>
+									<option value="sm">Samoan (sm)</option>
+									<option value="sg">Sango (sg)</option>
+									<option value="sa">Sanskrit (sa)</option>
+									<option value="sc">Sardinian (sc)</option>
+									<option value="sr">Serbian (sr)</option>
+									<option value="sn">Shona (sn)</option>
+									<option value="sd">Sindhi (sd)</option>
+									<option value="si">Sinhala, Sinhalese (si)</option>
+									<option value="sk">Slovak (sk)</option>
+									<option value="sl">Slovenian (sl)</option>
+									<option value="so">Somali (so)</option>
+									<option value="st">Southern Sotho (st)</option>
+									<option value="es">Spanish, Castilian (es)</option>
+									<option value="su">Sundanese (su)</option>
+									<option value="sw">Swahili (sw)</option>
+									<option value="ss">Swati (ss)</option>
+									<option value="sv">Swedish (sv)</option>
+									<option value="tl">Tagalog (tl)</option>
+									<option value="ty">Tahitian (ty)</option>
+									<option value="tg">Tajik (tg)</option>
+									<option value="ta">Tamil (ta)</option>
+									<option value="tt">Tatar (tt)</option>
+									<option value="te">Telugu (te)</option>
+									<option value="th">Thai (th)</option>
+									<option value="bo">Tibetan (bo)</option>
+									<option value="ti">Tigrinya (ti)</option>
+									<option value="to">Tonga (Tonga Islands) (to)</option>
+									<option value="ts">Tsonga (ts)</option>
+									<option value="tn">Tswana (tn)</option>
+									<option value="tr">Turkish (tr)</option>
+									<option value="tk">Turkmen (tk)</option>
+									<option value="tw">Twi (tw)</option>
+									<option value="ug">Uighur, Uyghur (ug)</option>
+									<option value="uk">Ukrainian (uk)</option>
+									<option value="ur">Urdu (ur)</option>
+									<option value="uz">Uzbek (uz)</option>
+									<option value="ve">Venda (ve)</option>
+									<option value="vi">Vietnamese (vi)</option>
+									<option value="vo">Volapük (vo)</option>
+									<option value="wa">Walloon (wa)</option>
+									<option value="cy">Welsh (cy)</option>
+									<option value="wo">Wolof (wo)</option>
+									<option value="xh">Xhosa (xh)</option>
+									<option value="yi">Yiddish (yi)</option>
+									<option value="yo">Yoruba (yo)</option>
+									<option value="za">Zhuang, Chuang (za)</option>
+									<option value="zu">Zulu (zu)</option>
+								</select>
+								<span class="input-group-btn">
+									<button type="button" class="btn btn-success btn-flat btn-addlanguage"><i class="fa fa-plus"></i> Add</button>
+								</span>
+							</div>	
+						</div>	
+					</div>		
+				</div>
+				<div class="box-body">
+					<div class="languages_list connectedSortable"></div>
+				</div>
+				<div class="box-footer">
+					<div class="pull-right">
+						<a  href="/admin" class="btn btn-default"><i class="fa fa-angle-left"></i> Cancel</a>
+						<button type="button"   class="btn btn-success btn-savelanguages"><i class="fa fa-save"></i> Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</section>
+
+
+<script type="text/javascript">
+	var _languages=<%- JSON.stringify @options %>;
+</script>
+
+
+
+<div class="modal fade" id="set_country" data-code="" >
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title country_modal_ttl"></h4>	
+			</div>
+			<div class="modal-body countries_list">	
+				<div class="form-group"><label for="prnewtab0" ><input type="checkbox"  id="prnewtab0"  value="AF"  class="othercheckbox country_selector country_selectorAF" /> Afghanistan</label></div>
+				<div class="form-group"><label for="prnewtab1" ><input type="checkbox"  id="prnewtab1"  value="AX"  class="othercheckbox country_selector country_selectorAX" /> Åland Islands</label></div>
+				<div class="form-group"><label for="prnewtab2" ><input type="checkbox"  id="prnewtab2"  value="AL"  class="othercheckbox country_selector country_selectorAL" /> Albania</label></div>
+				<div class="form-group"><label for="prnewtab3" ><input type="checkbox"  id="prnewtab3"  value="DZ"  class="othercheckbox country_selector country_selectorDZ" /> Algeria</label></div>
+				<div class="form-group"><label for="prnewtab4" ><input type="checkbox"  id="prnewtab4"  value="AS"  class="othercheckbox country_selector country_selectorAS" /> American Samoa</label></div>
+				<div class="form-group"><label for="prnewtab5" ><input type="checkbox"  id="prnewtab5"  value="AD"  class="othercheckbox country_selector country_selectorAD" /> AndorrA</label></div>
+				<div class="form-group"><label for="prnewtab6" ><input type="checkbox"  id="prnewtab6"  value="AO"  class="othercheckbox country_selector country_selectorAO" /> Angola</label></div>
+				<div class="form-group"><label for="prnewtab7" ><input type="checkbox"  id="prnewtab7"  value="AI"  class="othercheckbox country_selector country_selectorAI" /> Anguilla</label></div>
+				<div class="form-group"><label for="prnewtab8" ><input type="checkbox"  id="prnewtab8"  value="AQ"  class="othercheckbox country_selector country_selectorAQ" /> Antarctica</label></div>
+				<div class="form-group"><label for="prnewtab9" ><input type="checkbox"  id="prnewtab9"  value="AG"  class="othercheckbox country_selector country_selectorAG" /> Antigua and Barbuda</label></div>
+				<div class="form-group"><label for="prnewtab10" ><input type="checkbox"  id="prnewtab10"  value="AR"  class="othercheckbox country_selector country_selectorAR" /> Argentina</label></div>
+				<div class="form-group"><label for="prnewtab11" ><input type="checkbox"  id="prnewtab11"  value="AM"  class="othercheckbox country_selector country_selectorAM" /> Armenia</label></div>
+				<div class="form-group"><label for="prnewtab12" ><input type="checkbox"  id="prnewtab12"  value="AW"  class="othercheckbox country_selector country_selectorAW" /> Aruba</label></div>
+				<div class="form-group"><label for="prnewtab13" ><input type="checkbox"  id="prnewtab13"  value="AU"  class="othercheckbox country_selector country_selectorAU" /> Australia</label></div>
+				<div class="form-group"><label for="prnewtab14" ><input type="checkbox"  id="prnewtab14"  value="AT"  class="othercheckbox country_selector country_selectorAT" /> Austria</label></div>
+				<div class="form-group"><label for="prnewtab15" ><input type="checkbox"  id="prnewtab15"  value="AZ"  class="othercheckbox country_selector country_selectorAZ" /> Azerbaijan</label></div>
+				<div class="form-group"><label for="prnewtab16" ><input type="checkbox"  id="prnewtab16"  value="BS"  class="othercheckbox country_selector country_selectorBS" /> Bahamas</label></div>
+				<div class="form-group"><label for="prnewtab17" ><input type="checkbox"  id="prnewtab17"  value="BH"  class="othercheckbox country_selector country_selectorBH" /> Bahrain</label></div>
+				<div class="form-group"><label for="prnewtab18" ><input type="checkbox"  id="prnewtab18"  value="BD"  class="othercheckbox country_selector country_selectorBD" /> Bangladesh</label></div>
+				<div class="form-group"><label for="prnewtab19" ><input type="checkbox"  id="prnewtab19"  value="BB"  class="othercheckbox country_selector country_selectorBB" /> Barbados</label></div>
+				<div class="form-group"><label for="prnewtab20" ><input type="checkbox"  id="prnewtab20"  value="BY"  class="othercheckbox country_selector country_selectorBY" /> Belarus</label></div>
+				<div class="form-group"><label for="prnewtab21" ><input type="checkbox"  id="prnewtab21"  value="BE"  class="othercheckbox country_selector country_selectorBE" /> Belgium</label></div>
+				<div class="form-group"><label for="prnewtab22" ><input type="checkbox"  id="prnewtab22"  value="BZ"  class="othercheckbox country_selector country_selectorBZ" /> Belize</label></div>
+				<div class="form-group"><label for="prnewtab23" ><input type="checkbox"  id="prnewtab23"  value="BJ"  class="othercheckbox country_selector country_selectorBJ" /> Benin</label></div>
+				<div class="form-group"><label for="prnewtab24" ><input type="checkbox"  id="prnewtab24"  value="BM"  class="othercheckbox country_selector country_selectorBM" /> Bermuda</label></div>
+				<div class="form-group"><label for="prnewtab25" ><input type="checkbox"  id="prnewtab25"  value="BT"  class="othercheckbox country_selector country_selectorBT" /> Bhutan</label></div>
+				<div class="form-group"><label for="prnewtab26" ><input type="checkbox"  id="prnewtab26"  value="BO"  class="othercheckbox country_selector country_selectorBO" /> Bolivia</label></div>
+				<div class="form-group"><label for="prnewtab27" ><input type="checkbox"  id="prnewtab27"  value="BA"  class="othercheckbox country_selector country_selectorBA" /> Bosnia and Herzegovina</label></div>
+				<div class="form-group"><label for="prnewtab28" ><input type="checkbox"  id="prnewtab28"  value="BW"  class="othercheckbox country_selector country_selectorBW" /> Botswana</label></div>
+				<div class="form-group"><label for="prnewtab29" ><input type="checkbox"  id="prnewtab29"  value="BV"  class="othercheckbox country_selector country_selectorBV" /> Bouvet Island</label></div>
+				<div class="form-group"><label for="prnewtab30" ><input type="checkbox"  id="prnewtab30"  value="BR"  class="othercheckbox country_selector country_selectorBR" /> Brazil</label></div>
+				<div class="form-group"><label for="prnewtab31" ><input type="checkbox"  id="prnewtab31"  value="IO"  class="othercheckbox country_selector country_selectorIO" /> British Indian Ocean Territory</label></div>
+				<div class="form-group"><label for="prnewtab32" ><input type="checkbox"  id="prnewtab32"  value="BN"  class="othercheckbox country_selector country_selectorBN" /> Brunei Darussalam</label></div>
+				<div class="form-group"><label for="prnewtab33" ><input type="checkbox"  id="prnewtab33"  value="BG"  class="othercheckbox country_selector country_selectorBG" /> Bulgaria</label></div>
+				<div class="form-group"><label for="prnewtab34" ><input type="checkbox"  id="prnewtab34"  value="BF"  class="othercheckbox country_selector country_selectorBF" /> Burkina Faso</label></div>
+				<div class="form-group"><label for="prnewtab35" ><input type="checkbox"  id="prnewtab35"  value="BI"  class="othercheckbox country_selector country_selectorBI" /> Burundi</label></div>
+				<div class="form-group"><label for="prnewtab36" ><input type="checkbox"  id="prnewtab36"  value="KH"  class="othercheckbox country_selector country_selectorKH" /> Cambodia</label></div>
+				<div class="form-group"><label for="prnewtab37" ><input type="checkbox"  id="prnewtab37"  value="CM"  class="othercheckbox country_selector country_selectorCM" /> Cameroon</label></div>
+				<div class="form-group"><label for="prnewtab38" ><input type="checkbox"  id="prnewtab38"  value="CA"  class="othercheckbox country_selector country_selectorCA" /> Canada</label></div>
+				<div class="form-group"><label for="prnewtab39" ><input type="checkbox"  id="prnewtab39"  value="CV"  class="othercheckbox country_selector country_selectorCV" /> Cape Verde</label></div>
+				<div class="form-group"><label for="prnewtab40" ><input type="checkbox"  id="prnewtab40"  value="KY"  class="othercheckbox country_selector country_selectorKY" /> Cayman Islands</label></div>
+				<div class="form-group"><label for="prnewtab41" ><input type="checkbox"  id="prnewtab41"  value="CF"  class="othercheckbox country_selector country_selectorCF" /> Central African Republic</label></div>
+				<div class="form-group"><label for="prnewtab42" ><input type="checkbox"  id="prnewtab42"  value="TD"  class="othercheckbox country_selector country_selectorTD" /> Chad</label></div>
+				<div class="form-group"><label for="prnewtab43" ><input type="checkbox"  id="prnewtab43"  value="CL"  class="othercheckbox country_selector country_selectorCL" /> Chile</label></div>
+				<div class="form-group"><label for="prnewtab44" ><input type="checkbox"  id="prnewtab44"  value="CN"  class="othercheckbox country_selector country_selectorCN" /> China</label></div>
+				<div class="form-group"><label for="prnewtab45" ><input type="checkbox"  id="prnewtab45"  value="CX"  class="othercheckbox country_selector country_selectorCX" /> Christmas Island</label></div>
+				<div class="form-group"><label for="prnewtab46" ><input type="checkbox"  id="prnewtab46"  value="CC"  class="othercheckbox country_selector country_selectorCC" /> Cocos (Keeling) Islands</label></div>
+				<div class="form-group"><label for="prnewtab47" ><input type="checkbox"  id="prnewtab47"  value="CO"  class="othercheckbox country_selector country_selectorCO" /> Colombia</label></div>
+				<div class="form-group"><label for="prnewtab48" ><input type="checkbox"  id="prnewtab48"  value="KM"  class="othercheckbox country_selector country_selectorKM" /> Comoros</label></div>
+				<div class="form-group"><label for="prnewtab49" ><input type="checkbox"  id="prnewtab49"  value="CG"  class="othercheckbox country_selector country_selectorCG" /> Congo</label></div>
+				<div class="form-group"><label for="prnewtab50" ><input type="checkbox"  id="prnewtab50"  value="CD"  class="othercheckbox country_selector country_selectorCD" /> Congo, The Democratic Republic of the</label></div>
+				<div class="form-group"><label for="prnewtab51" ><input type="checkbox"  id="prnewtab51"  value="CK"  class="othercheckbox country_selector country_selectorCK" /> Cook Islands</label></div>
+				<div class="form-group"><label for="prnewtab52" ><input type="checkbox"  id="prnewtab52"  value="CR"  class="othercheckbox country_selector country_selectorCR" /> Costa Rica</label></div>
+				<div class="form-group"><label for="prnewtab53" ><input type="checkbox"  id="prnewtab53"  value="CI"  class="othercheckbox country_selector country_selectorCI" /> Cote D'Ivoire</label></div>
+				<div class="form-group"><label for="prnewtab54" ><input type="checkbox"  id="prnewtab54"  value="HR"  class="othercheckbox country_selector country_selectorHR" /> Croatia</label></div>
+				<div class="form-group"><label for="prnewtab55" ><input type="checkbox"  id="prnewtab55"  value="CU"  class="othercheckbox country_selector country_selectorCU" /> Cuba</label></div>
+				<div class="form-group"><label for="prnewtab56" ><input type="checkbox"  id="prnewtab56"  value="CY"  class="othercheckbox country_selector country_selectorCY" /> Cyprus</label></div>
+				<div class="form-group"><label for="prnewtab57" ><input type="checkbox"  id="prnewtab57"  value="CZ"  class="othercheckbox country_selector country_selectorCZ" /> Czech Republic</label></div>
+				<div class="form-group"><label for="prnewtab58" ><input type="checkbox"  id="prnewtab58"  value="DK"  class="othercheckbox country_selector country_selectorDK" /> Denmark</label></div>
+				<div class="form-group"><label for="prnewtab59" ><input type="checkbox"  id="prnewtab59"  value="DJ"  class="othercheckbox country_selector country_selectorDJ" /> Djibouti</label></div>
+				<div class="form-group"><label for="prnewtab60" ><input type="checkbox"  id="prnewtab60"  value="DM"  class="othercheckbox country_selector country_selectorDM" /> Dominica</label></div>
+				<div class="form-group"><label for="prnewtab61" ><input type="checkbox"  id="prnewtab61"  value="DO"  class="othercheckbox country_selector country_selectorDO" /> Dominican Republic</label></div>
+				<div class="form-group"><label for="prnewtab62" ><input type="checkbox"  id="prnewtab62"  value="EC"  class="othercheckbox country_selector country_selectorEC" /> Ecuador</label></div>
+				<div class="form-group"><label for="prnewtab63" ><input type="checkbox"  id="prnewtab63"  value="EG"  class="othercheckbox country_selector country_selectorEG" /> Egypt</label></div>
+				<div class="form-group"><label for="prnewtab64" ><input type="checkbox"  id="prnewtab64"  value="SV"  class="othercheckbox country_selector country_selectorSV" /> El Salvador</label></div>
+				<div class="form-group"><label for="prnewtab65" ><input type="checkbox"  id="prnewtab65"  value="GQ"  class="othercheckbox country_selector country_selectorGQ" /> Equatorial Guinea</label></div>
+				<div class="form-group"><label for="prnewtab66" ><input type="checkbox"  id="prnewtab66"  value="ER"  class="othercheckbox country_selector country_selectorER" /> Eritrea</label></div>
+				<div class="form-group"><label for="prnewtab67" ><input type="checkbox"  id="prnewtab67"  value="EE"  class="othercheckbox country_selector country_selectorEE" /> Estonia</label></div>
+				<div class="form-group"><label for="prnewtab68" ><input type="checkbox"  id="prnewtab68"  value="ET"  class="othercheckbox country_selector country_selectorET" /> Ethiopia</label></div>
+				<div class="form-group"><label for="prnewtab69" ><input type="checkbox"  id="prnewtab69"  value="FK"  class="othercheckbox country_selector country_selectorFK" /> Falkland Islands (Malvinas)</label></div>
+				<div class="form-group"><label for="prnewtab70" ><input type="checkbox"  id="prnewtab70"  value="FO"  class="othercheckbox country_selector country_selectorFO" /> Faroe Islands</label></div>
+				<div class="form-group"><label for="prnewtab71" ><input type="checkbox"  id="prnewtab71"  value="FJ"  class="othercheckbox country_selector country_selectorFJ" /> Fiji</label></div>
+				<div class="form-group"><label for="prnewtab72" ><input type="checkbox"  id="prnewtab72"  value="FI"  class="othercheckbox country_selector country_selectorFI" /> Finland</label></div>
+				<div class="form-group"><label for="prnewtab73" ><input type="checkbox"  id="prnewtab73"  value="FR"  class="othercheckbox country_selector country_selectorFR" /> France</label></div>
+				<div class="form-group"><label for="prnewtab74" ><input type="checkbox"  id="prnewtab74"  value="GF"  class="othercheckbox country_selector country_selectorGF" /> French Guiana</label></div>
+				<div class="form-group"><label for="prnewtab75" ><input type="checkbox"  id="prnewtab75"  value="PF"  class="othercheckbox country_selector country_selectorPF" /> French Polynesia</label></div>
+				<div class="form-group"><label for="prnewtab76" ><input type="checkbox"  id="prnewtab76"  value="TF"  class="othercheckbox country_selector country_selectorTF" /> French Southern Territories</label></div>
+				<div class="form-group"><label for="prnewtab77" ><input type="checkbox"  id="prnewtab77"  value="GA"  class="othercheckbox country_selector country_selectorGA" /> Gabon</label></div>
+				<div class="form-group"><label for="prnewtab78" ><input type="checkbox"  id="prnewtab78"  value="GM"  class="othercheckbox country_selector country_selectorGM" /> Gambia</label></div>
+				<div class="form-group"><label for="prnewtab79" ><input type="checkbox"  id="prnewtab79"  value="GE"  class="othercheckbox country_selector country_selectorGE" /> Georgia</label></div>
+				<div class="form-group"><label for="prnewtab80" ><input type="checkbox"  id="prnewtab80"  value="DE"  class="othercheckbox country_selector country_selectorDE" /> Germany</label></div>
+				<div class="form-group"><label for="prnewtab81" ><input type="checkbox"  id="prnewtab81"  value="GH"  class="othercheckbox country_selector country_selectorGH" /> Ghana</label></div>
+				<div class="form-group"><label for="prnewtab82" ><input type="checkbox"  id="prnewtab82"  value="GI"  class="othercheckbox country_selector country_selectorGI" /> Gibraltar</label></div>
+				<div class="form-group"><label for="prnewtab83" ><input type="checkbox"  id="prnewtab83"  value="GR"  class="othercheckbox country_selector country_selectorGR" /> Greece</label></div>
+				<div class="form-group"><label for="prnewtab84" ><input type="checkbox"  id="prnewtab84"  value="GL"  class="othercheckbox country_selector country_selectorGL" /> Greenland</label></div>
+				<div class="form-group"><label for="prnewtab85" ><input type="checkbox"  id="prnewtab85"  value="GD"  class="othercheckbox country_selector country_selectorGD" /> Grenada</label></div>
+				<div class="form-group"><label for="prnewtab86" ><input type="checkbox"  id="prnewtab86"  value="GP"  class="othercheckbox country_selector country_selectorGP" /> Guadeloupe</label></div>
+				<div class="form-group"><label for="prnewtab87" ><input type="checkbox"  id="prnewtab87"  value="GU"  class="othercheckbox country_selector country_selectorGU" /> Guam</label></div>
+				<div class="form-group"><label for="prnewtab88" ><input type="checkbox"  id="prnewtab88"  value="GT"  class="othercheckbox country_selector country_selectorGT" /> Guatemala</label></div>
+				<div class="form-group"><label for="prnewtab89" ><input type="checkbox"  id="prnewtab89"  value="GG"  class="othercheckbox country_selector country_selectorGG" /> Guernsey</label></div>
+				<div class="form-group"><label for="prnewtab90" ><input type="checkbox"  id="prnewtab90"  value="GN"  class="othercheckbox country_selector country_selectorGN" /> Guinea</label></div>
+				<div class="form-group"><label for="prnewtab91" ><input type="checkbox"  id="prnewtab91"  value="GW"  class="othercheckbox country_selector country_selectorGW" /> Guinea-Bissau</label></div>
+				<div class="form-group"><label for="prnewtab92" ><input type="checkbox"  id="prnewtab92"  value="GY"  class="othercheckbox country_selector country_selectorGY" /> Guyana</label></div>
+				<div class="form-group"><label for="prnewtab93" ><input type="checkbox"  id="prnewtab93"  value="HT"  class="othercheckbox country_selector country_selectorHT" /> Haiti</label></div>
+				<div class="form-group"><label for="prnewtab94" ><input type="checkbox"  id="prnewtab94"  value="HM"  class="othercheckbox country_selector country_selectorHM" /> Heard Island and Mcdonald Islands</label></div>
+				<div class="form-group"><label for="prnewtab95" ><input type="checkbox"  id="prnewtab95"  value="VA"  class="othercheckbox country_selector country_selectorVA" /> Holy See (Vatican City State)</label></div>
+				<div class="form-group"><label for="prnewtab96" ><input type="checkbox"  id="prnewtab96"  value="HN"  class="othercheckbox country_selector country_selectorHN" /> Honduras</label></div>
+				<div class="form-group"><label for="prnewtab97" ><input type="checkbox"  id="prnewtab97"  value="HK"  class="othercheckbox country_selector country_selectorHK" /> Hong Kong</label></div>
+				<div class="form-group"><label for="prnewtab98" ><input type="checkbox"  id="prnewtab98"  value="HU"  class="othercheckbox country_selector country_selectorHU" /> Hungary</label></div>
+				<div class="form-group"><label for="prnewtab99" ><input type="checkbox"  id="prnewtab99"  value="IS"  class="othercheckbox country_selector country_selectorIS" /> Iceland</label></div>
+				<div class="form-group"><label for="prnewtab100" ><input type="checkbox"  id="prnewtab100"  value="IN"  class="othercheckbox country_selector country_selectorIN" /> India</label></div>
+				<div class="form-group"><label for="prnewtab101" ><input type="checkbox"  id="prnewtab101"  value="ID"  class="othercheckbox country_selector country_selectorID" /> Indonesia</label></div>
+				<div class="form-group"><label for="prnewtab102" ><input type="checkbox"  id="prnewtab102"  value="IR"  class="othercheckbox country_selector country_selectorIR" /> Iran, Islamic Republic Of</label></div>
+				<div class="form-group"><label for="prnewtab103" ><input type="checkbox"  id="prnewtab103"  value="IQ"  class="othercheckbox country_selector country_selectorIQ" /> Iraq</label></div>
+				<div class="form-group"><label for="prnewtab104" ><input type="checkbox"  id="prnewtab104"  value="IE"  class="othercheckbox country_selector country_selectorIE" /> Ireland</label></div>
+				<div class="form-group"><label for="prnewtab105" ><input type="checkbox"  id="prnewtab105"  value="IM"  class="othercheckbox country_selector country_selectorIM" /> Isle of Man</label></div>
+				<div class="form-group"><label for="prnewtab106" ><input type="checkbox"  id="prnewtab106"  value="IL"  class="othercheckbox country_selector country_selectorIL" /> Israel</label></div>
+				<div class="form-group"><label for="prnewtab107" ><input type="checkbox"  id="prnewtab107"  value="IT"  class="othercheckbox country_selector country_selectorIT" /> Italy</label></div>
+				<div class="form-group"><label for="prnewtab108" ><input type="checkbox"  id="prnewtab108"  value="JM"  class="othercheckbox country_selector country_selectorJM" /> Jamaica</label></div>
+				<div class="form-group"><label for="prnewtab109" ><input type="checkbox"  id="prnewtab109"  value="JP"  class="othercheckbox country_selector country_selectorJP" /> Japan</label></div>
+				<div class="form-group"><label for="prnewtab110" ><input type="checkbox"  id="prnewtab110"  value="JE"  class="othercheckbox country_selector country_selectorJE" /> Jersey</label></div>
+				<div class="form-group"><label for="prnewtab111" ><input type="checkbox"  id="prnewtab111"  value="JO"  class="othercheckbox country_selector country_selectorJO" /> Jordan</label></div>
+				<div class="form-group"><label for="prnewtab112" ><input type="checkbox"  id="prnewtab112"  value="KZ"  class="othercheckbox country_selector country_selectorKZ" /> Kazakhstan</label></div>
+				<div class="form-group"><label for="prnewtab113" ><input type="checkbox"  id="prnewtab113"  value="KE"  class="othercheckbox country_selector country_selectorKE" /> Kenya</label></div>
+				<div class="form-group"><label for="prnewtab114" ><input type="checkbox"  id="prnewtab114"  value="KI"  class="othercheckbox country_selector country_selectorKI" /> Kiribati</label></div>
+				<div class="form-group"><label for="prnewtab115" ><input type="checkbox"  id="prnewtab115"  value="KP"  class="othercheckbox country_selector country_selectorKP" /> Korea, Democratic People'S Republic of</label></div>
+				<div class="form-group"><label for="prnewtab116" ><input type="checkbox"  id="prnewtab116"  value="KR"  class="othercheckbox country_selector country_selectorKR" /> Korea, Republic of</label></div>
+				<div class="form-group"><label for="prnewtab117" ><input type="checkbox"  id="prnewtab117"  value="KW"  class="othercheckbox country_selector country_selectorKW" /> Kuwait</label></div>
+				<div class="form-group"><label for="prnewtab118" ><input type="checkbox"  id="prnewtab118"  value="KG"  class="othercheckbox country_selector country_selectorKG" /> Kyrgyzstan</label></div>
+				<div class="form-group"><label for="prnewtab119" ><input type="checkbox"  id="prnewtab119"  value="LA"  class="othercheckbox country_selector country_selectorLA" /> Lao People'S Democratic Republic</label></div>
+				<div class="form-group"><label for="prnewtab120" ><input type="checkbox"  id="prnewtab120"  value="LV"  class="othercheckbox country_selector country_selectorLV" /> Latvia</label></div>
+				<div class="form-group"><label for="prnewtab121" ><input type="checkbox"  id="prnewtab121"  value="LB"  class="othercheckbox country_selector country_selectorLB" /> Lebanon</label></div>
+				<div class="form-group"><label for="prnewtab122" ><input type="checkbox"  id="prnewtab122"  value="LS"  class="othercheckbox country_selector country_selectorLS" /> Lesotho</label></div>
+				<div class="form-group"><label for="prnewtab123" ><input type="checkbox"  id="prnewtab123"  value="LR"  class="othercheckbox country_selector country_selectorLR" /> Liberia</label></div>
+				<div class="form-group"><label for="prnewtab124" ><input type="checkbox"  id="prnewtab124"  value="LY"  class="othercheckbox country_selector country_selectorLY" /> Libyan Arab Jamahiriya</label></div>
+				<div class="form-group"><label for="prnewtab125" ><input type="checkbox"  id="prnewtab125"  value="LI"  class="othercheckbox country_selector country_selectorLI" /> Liechtenstein</label></div>
+				<div class="form-group"><label for="prnewtab126" ><input type="checkbox"  id="prnewtab126"  value="LT"  class="othercheckbox country_selector country_selectorLT" /> Lithuania</label></div>
+				<div class="form-group"><label for="prnewtab127" ><input type="checkbox"  id="prnewtab127"  value="LU"  class="othercheckbox country_selector country_selectorLU" /> Luxembourg</label></div>
+				<div class="form-group"><label for="prnewtab128" ><input type="checkbox"  id="prnewtab128"  value="MO"  class="othercheckbox country_selector country_selectorMO" /> Macao</label></div>
+				<div class="form-group"><label for="prnewtab129" ><input type="checkbox"  id="prnewtab129"  value="MK"  class="othercheckbox country_selector country_selectorMK" /> Macedonia, The Former Yugoslav Republic of</label></div>
+				<div class="form-group"><label for="prnewtab130" ><input type="checkbox"  id="prnewtab130"  value="MG"  class="othercheckbox country_selector country_selectorMG" /> Madagascar</label></div>
+				<div class="form-group"><label for="prnewtab131" ><input type="checkbox"  id="prnewtab131"  value="MW"  class="othercheckbox country_selector country_selectorMW" /> Malawi</label></div>
+				<div class="form-group"><label for="prnewtab132" ><input type="checkbox"  id="prnewtab132"  value="MY"  class="othercheckbox country_selector country_selectorMY" /> Malaysia</label></div>
+				<div class="form-group"><label for="prnewtab133" ><input type="checkbox"  id="prnewtab133"  value="MV"  class="othercheckbox country_selector country_selectorMV" /> Maldives</label></div>
+				<div class="form-group"><label for="prnewtab134" ><input type="checkbox"  id="prnewtab134"  value="ML"  class="othercheckbox country_selector country_selectorML" /> Mali</label></div>
+				<div class="form-group"><label for="prnewtab135" ><input type="checkbox"  id="prnewtab135"  value="MT"  class="othercheckbox country_selector country_selectorMT" /> Malta</label></div>
+				<div class="form-group"><label for="prnewtab136" ><input type="checkbox"  id="prnewtab136"  value="MH"  class="othercheckbox country_selector country_selectorMH" /> Marshall Islands</label></div>
+				<div class="form-group"><label for="prnewtab137" ><input type="checkbox"  id="prnewtab137"  value="MQ"  class="othercheckbox country_selector country_selectorMQ" /> Martinique</label></div>
+				<div class="form-group"><label for="prnewtab138" ><input type="checkbox"  id="prnewtab138"  value="MR"  class="othercheckbox country_selector country_selectorMR" /> Mauritania</label></div>
+				<div class="form-group"><label for="prnewtab139" ><input type="checkbox"  id="prnewtab139"  value="MU"  class="othercheckbox country_selector country_selectorMU" /> Mauritius</label></div>
+				<div class="form-group"><label for="prnewtab140" ><input type="checkbox"  id="prnewtab140"  value="YT"  class="othercheckbox country_selector country_selectorYT" /> Mayotte</label></div>
+				<div class="form-group"><label for="prnewtab141" ><input type="checkbox"  id="prnewtab141"  value="MX"  class="othercheckbox country_selector country_selectorMX" /> Mexico</label></div>
+				<div class="form-group"><label for="prnewtab142" ><input type="checkbox"  id="prnewtab142"  value="FM"  class="othercheckbox country_selector country_selectorFM" /> Micronesia, Federated States of</label></div>
+				<div class="form-group"><label for="prnewtab143" ><input type="checkbox"  id="prnewtab143"  value="MD"  class="othercheckbox country_selector country_selectorMD" /> Moldova, Republic of</label></div>
+				<div class="form-group"><label for="prnewtab144" ><input type="checkbox"  id="prnewtab144"  value="MC"  class="othercheckbox country_selector country_selectorMC" /> Monaco</label></div>
+				<div class="form-group"><label for="prnewtab145" ><input type="checkbox"  id="prnewtab145"  value="MN"  class="othercheckbox country_selector country_selectorMN" /> Mongolia</label></div>
+				<div class="form-group"><label for="prnewtab146" ><input type="checkbox"  id="prnewtab146"  value="MS"  class="othercheckbox country_selector country_selectorMS" /> Montserrat</label></div>
+				<div class="form-group"><label for="prnewtab147" ><input type="checkbox"  id="prnewtab147"  value="MA"  class="othercheckbox country_selector country_selectorMA" /> Morocco</label></div>
+				<div class="form-group"><label for="prnewtab148" ><input type="checkbox"  id="prnewtab148"  value="MZ"  class="othercheckbox country_selector country_selectorMZ" /> Mozambique</label></div>
+				<div class="form-group"><label for="prnewtab149" ><input type="checkbox"  id="prnewtab149"  value="MM"  class="othercheckbox country_selector country_selectorMM" /> Myanmar</label></div>
+				<div class="form-group"><label for="prnewtab150" ><input type="checkbox"  id="prnewtab150"  value="NA"  class="othercheckbox country_selector country_selectorNA" /> Namibia</label></div>
+				<div class="form-group"><label for="prnewtab151" ><input type="checkbox"  id="prnewtab151"  value="NR"  class="othercheckbox country_selector country_selectorNR" /> Nauru</label></div>
+				<div class="form-group"><label for="prnewtab152" ><input type="checkbox"  id="prnewtab152"  value="NP"  class="othercheckbox country_selector country_selectorNP" /> Nepal</label></div>
+				<div class="form-group"><label for="prnewtab153" ><input type="checkbox"  id="prnewtab153"  value="NL"  class="othercheckbox country_selector country_selectorNL" /> Netherlands</label></div>
+				<div class="form-group"><label for="prnewtab154" ><input type="checkbox"  id="prnewtab154"  value="AN"  class="othercheckbox country_selector country_selectorAN" /> Netherlands Antilles</label></div>
+				<div class="form-group"><label for="prnewtab155" ><input type="checkbox"  id="prnewtab155"  value="NC"  class="othercheckbox country_selector country_selectorNC" /> New Caledonia</label></div>
+				<div class="form-group"><label for="prnewtab156" ><input type="checkbox"  id="prnewtab156"  value="NZ"  class="othercheckbox country_selector country_selectorNZ" /> New Zealand</label></div>
+				<div class="form-group"><label for="prnewtab157" ><input type="checkbox"  id="prnewtab157"  value="NI"  class="othercheckbox country_selector country_selectorNI" /> Nicaragua</label></div>
+				<div class="form-group"><label for="prnewtab158" ><input type="checkbox"  id="prnewtab158"  value="NE"  class="othercheckbox country_selector country_selectorNE" /> Niger</label></div>
+				<div class="form-group"><label for="prnewtab159" ><input type="checkbox"  id="prnewtab159"  value="NG"  class="othercheckbox country_selector country_selectorNG" /> Nigeria</label></div>
+				<div class="form-group"><label for="prnewtab160" ><input type="checkbox"  id="prnewtab160"  value="NU"  class="othercheckbox country_selector country_selectorNU" /> Niue</label></div>
+				<div class="form-group"><label for="prnewtab161" ><input type="checkbox"  id="prnewtab161"  value="NF"  class="othercheckbox country_selector country_selectorNF" /> Norfolk Island</label></div>
+				<div class="form-group"><label for="prnewtab162" ><input type="checkbox"  id="prnewtab162"  value="MP"  class="othercheckbox country_selector country_selectorMP" /> Northern Mariana Islands</label></div>
+				<div class="form-group"><label for="prnewtab163" ><input type="checkbox"  id="prnewtab163"  value="NO"  class="othercheckbox country_selector country_selectorNO" /> Norway</label></div>
+				<div class="form-group"><label for="prnewtab164" ><input type="checkbox"  id="prnewtab164"  value="OM"  class="othercheckbox country_selector country_selectorOM" /> Oman</label></div>
+				<div class="form-group"><label for="prnewtab165" ><input type="checkbox"  id="prnewtab165"  value="PK"  class="othercheckbox country_selector country_selectorPK" /> Pakistan</label></div>
+				<div class="form-group"><label for="prnewtab166" ><input type="checkbox"  id="prnewtab166"  value="PW"  class="othercheckbox country_selector country_selectorPW" /> Palau</label></div>
+				<div class="form-group"><label for="prnewtab167" ><input type="checkbox"  id="prnewtab167"  value="PS"  class="othercheckbox country_selector country_selectorPS" /> Palestinian Territory, Occupied</label></div>
+				<div class="form-group"><label for="prnewtab168" ><input type="checkbox"  id="prnewtab168"  value="PA"  class="othercheckbox country_selector country_selectorPA" /> Panama</label></div>
+				<div class="form-group"><label for="prnewtab169" ><input type="checkbox"  id="prnewtab169"  value="PG"  class="othercheckbox country_selector country_selectorPG" /> Papua New Guinea</label></div>
+				<div class="form-group"><label for="prnewtab170" ><input type="checkbox"  id="prnewtab170"  value="PY"  class="othercheckbox country_selector country_selectorPY" /> Paraguay</label></div>
+				<div class="form-group"><label for="prnewtab171" ><input type="checkbox"  id="prnewtab171"  value="PE"  class="othercheckbox country_selector country_selectorPE" /> Peru</label></div>
+				<div class="form-group"><label for="prnewtab172" ><input type="checkbox"  id="prnewtab172"  value="PH"  class="othercheckbox country_selector country_selectorPH" /> Philippines</label></div>
+				<div class="form-group"><label for="prnewtab173" ><input type="checkbox"  id="prnewtab173"  value="PN"  class="othercheckbox country_selector country_selectorPN" /> Pitcairn</label></div>
+				<div class="form-group"><label for="prnewtab174" ><input type="checkbox"  id="prnewtab174"  value="PL"  class="othercheckbox country_selector country_selectorPL" /> Poland</label></div>
+				<div class="form-group"><label for="prnewtab175" ><input type="checkbox"  id="prnewtab175"  value="PT"  class="othercheckbox country_selector country_selectorPT" /> Portugal</label></div>
+				<div class="form-group"><label for="prnewtab176" ><input type="checkbox"  id="prnewtab176"  value="PR"  class="othercheckbox country_selector country_selectorPR" /> Puerto Rico</label></div>
+				<div class="form-group"><label for="prnewtab177" ><input type="checkbox"  id="prnewtab177"  value="QA"  class="othercheckbox country_selector country_selectorQA" /> Qatar</label></div>
+				<div class="form-group"><label for="prnewtab178" ><input type="checkbox"  id="prnewtab178"  value="RE"  class="othercheckbox country_selector country_selectorRE" /> Reunion</label></div>
+				<div class="form-group"><label for="prnewtab179" ><input type="checkbox"  id="prnewtab179"  value="RO"  class="othercheckbox country_selector country_selectorRO" /> Romania</label></div>
+				<div class="form-group"><label for="prnewtab180" ><input type="checkbox"  id="prnewtab180"  value="RU"  class="othercheckbox country_selector country_selectorRU" /> Russian Federation</label></div>
+				<div class="form-group"><label for="prnewtab181" ><input type="checkbox"  id="prnewtab181"  value="RW"  class="othercheckbox country_selector country_selectorRW" /> RWANDA</label></div>
+				<div class="form-group"><label for="prnewtab182" ><input type="checkbox"  id="prnewtab182"  value="SH"  class="othercheckbox country_selector country_selectorSH" /> Saint Helena</label></div>
+				<div class="form-group"><label for="prnewtab183" ><input type="checkbox"  id="prnewtab183"  value="KN"  class="othercheckbox country_selector country_selectorKN" /> Saint Kitts and Nevis</label></div>
+				<div class="form-group"><label for="prnewtab184" ><input type="checkbox"  id="prnewtab184"  value="LC"  class="othercheckbox country_selector country_selectorLC" /> Saint Lucia</label></div>
+				<div class="form-group"><label for="prnewtab185" ><input type="checkbox"  id="prnewtab185"  value="PM"  class="othercheckbox country_selector country_selectorPM" /> Saint Pierre and Miquelon</label></div>
+				<div class="form-group"><label for="prnewtab186" ><input type="checkbox"  id="prnewtab186"  value="VC"  class="othercheckbox country_selector country_selectorVC" /> Saint Vincent and the Grenadines</label></div>
+				<div class="form-group"><label for="prnewtab187" ><input type="checkbox"  id="prnewtab187"  value="WS"  class="othercheckbox country_selector country_selectorWS" /> Samoa</label></div>
+				<div class="form-group"><label for="prnewtab188" ><input type="checkbox"  id="prnewtab188"  value="SM"  class="othercheckbox country_selector country_selectorSM" /> San Marino</label></div>
+				<div class="form-group"><label for="prnewtab189" ><input type="checkbox"  id="prnewtab189"  value="ST"  class="othercheckbox country_selector country_selectorST" /> Sao Tome and Principe</label></div>
+				<div class="form-group"><label for="prnewtab190" ><input type="checkbox"  id="prnewtab190"  value="SA"  class="othercheckbox country_selector country_selectorSA" /> Saudi Arabia</label></div>
+				<div class="form-group"><label for="prnewtab191" ><input type="checkbox"  id="prnewtab191"  value="SN"  class="othercheckbox country_selector country_selectorSN" /> Senegal</label></div>
+				<div class="form-group"><label for="prnewtab192" ><input type="checkbox"  id="prnewtab192"  value="CS"  class="othercheckbox country_selector country_selectorCS" /> Serbia and Montenegro</label></div>
+				<div class="form-group"><label for="prnewtab193" ><input type="checkbox"  id="prnewtab193"  value="SC"  class="othercheckbox country_selector country_selectorSC" /> Seychelles</label></div>
+				<div class="form-group"><label for="prnewtab194" ><input type="checkbox"  id="prnewtab194"  value="SL"  class="othercheckbox country_selector country_selectorSL" /> Sierra Leone</label></div>
+				<div class="form-group"><label for="prnewtab195" ><input type="checkbox"  id="prnewtab195"  value="SG"  class="othercheckbox country_selector country_selectorSG" /> Singapore</label></div>
+				<div class="form-group"><label for="prnewtab196" ><input type="checkbox"  id="prnewtab196"  value="SK"  class="othercheckbox country_selector country_selectorSK" /> Slovakia</label></div>
+				<div class="form-group"><label for="prnewtab197" ><input type="checkbox"  id="prnewtab197"  value="SI"  class="othercheckbox country_selector country_selectorSI" /> Slovenia</label></div>
+				<div class="form-group"><label for="prnewtab198" ><input type="checkbox"  id="prnewtab198"  value="SB"  class="othercheckbox country_selector country_selectorSB" /> Solomon Islands</label></div>
+				<div class="form-group"><label for="prnewtab199" ><input type="checkbox"  id="prnewtab199"  value="SO"  class="othercheckbox country_selector country_selectorSO" /> Somalia</label></div>
+				<div class="form-group"><label for="prnewtab200" ><input type="checkbox"  id="prnewtab200"  value="ZA"  class="othercheckbox country_selector country_selectorZA" /> South Africa</label></div>
+				<div class="form-group"><label for="prnewtab201" ><input type="checkbox"  id="prnewtab201"  value="GS"  class="othercheckbox country_selector country_selectorGS" /> South Georgia and the South Sandwich Islands</label></div>
+				<div class="form-group"><label for="prnewtab202" ><input type="checkbox"  id="prnewtab202"  value="ES"  class="othercheckbox country_selector country_selectorES" /> Spain</label></div>
+				<div class="form-group"><label for="prnewtab203" ><input type="checkbox"  id="prnewtab203"  value="LK"  class="othercheckbox country_selector country_selectorLK" /> Sri Lanka</label></div>
+				<div class="form-group"><label for="prnewtab204" ><input type="checkbox"  id="prnewtab204"  value="SD"  class="othercheckbox country_selector country_selectorSD" /> Sudan</label></div>
+				<div class="form-group"><label for="prnewtab205" ><input type="checkbox"  id="prnewtab205"  value="SR"  class="othercheckbox country_selector country_selectorSR" /> Suriname</label></div>
+				<div class="form-group"><label for="prnewtab206" ><input type="checkbox"  id="prnewtab206"  value="SJ"  class="othercheckbox country_selector country_selectorSJ" /> Svalbard and Jan Mayen</label></div>
+				<div class="form-group"><label for="prnewtab207" ><input type="checkbox"  id="prnewtab207"  value="SZ"  class="othercheckbox country_selector country_selectorSZ" /> Swaziland</label></div>
+				<div class="form-group"><label for="prnewtab208" ><input type="checkbox"  id="prnewtab208"  value="SE"  class="othercheckbox country_selector country_selectorSE" /> Sweden</label></div>
+				<div class="form-group"><label for="prnewtab209" ><input type="checkbox"  id="prnewtab209"  value="CH"  class="othercheckbox country_selector country_selectorCH" /> Switzerland</label></div>
+				<div class="form-group"><label for="prnewtab210" ><input type="checkbox"  id="prnewtab210"  value="SY"  class="othercheckbox country_selector country_selectorSY" /> Syrian Arab Republic</label></div>
+				<div class="form-group"><label for="prnewtab211" ><input type="checkbox"  id="prnewtab211"  value="TW"  class="othercheckbox country_selector country_selectorTW" /> Taiwan, Province of China</label></div>
+				<div class="form-group"><label for="prnewtab212" ><input type="checkbox"  id="prnewtab212"  value="TJ"  class="othercheckbox country_selector country_selectorTJ" /> Tajikistan</label></div>
+				<div class="form-group"><label for="prnewtab213" ><input type="checkbox"  id="prnewtab213"  value="TZ"  class="othercheckbox country_selector country_selectorTZ" /> Tanzania, United Republic of</label></div>
+				<div class="form-group"><label for="prnewtab214" ><input type="checkbox"  id="prnewtab214"  value="TH"  class="othercheckbox country_selector country_selectorTH" /> Thailand</label></div>
+				<div class="form-group"><label for="prnewtab215" ><input type="checkbox"  id="prnewtab215"  value="TL"  class="othercheckbox country_selector country_selectorTL" /> Timor-Leste</label></div>
+				<div class="form-group"><label for="prnewtab216" ><input type="checkbox"  id="prnewtab216"  value="TG"  class="othercheckbox country_selector country_selectorTG" /> Togo</label></div>
+				<div class="form-group"><label for="prnewtab217" ><input type="checkbox"  id="prnewtab217"  value="TK"  class="othercheckbox country_selector country_selectorTK" /> Tokelau</label></div>
+				<div class="form-group"><label for="prnewtab218" ><input type="checkbox"  id="prnewtab218"  value="TO"  class="othercheckbox country_selector country_selectorTO" /> Tonga</label></div>
+				<div class="form-group"><label for="prnewtab219" ><input type="checkbox"  id="prnewtab219"  value="TT"  class="othercheckbox country_selector country_selectorTT" /> Trinidad and Tobago</label></div>
+				<div class="form-group"><label for="prnewtab220" ><input type="checkbox"  id="prnewtab220"  value="TN"  class="othercheckbox country_selector country_selectorTN" /> Tunisia</label></div>
+				<div class="form-group"><label for="prnewtab221" ><input type="checkbox"  id="prnewtab221"  value="TR"  class="othercheckbox country_selector country_selectorTR" /> Turkey</label></div>
+				<div class="form-group"><label for="prnewtab222" ><input type="checkbox"  id="prnewtab222"  value="TM"  class="othercheckbox country_selector country_selectorTM" /> Turkmenistan</label></div>
+				<div class="form-group"><label for="prnewtab223" ><input type="checkbox"  id="prnewtab223"  value="TC"  class="othercheckbox country_selector country_selectorTC" /> Turks and Caicos Islands</label></div>
+				<div class="form-group"><label for="prnewtab224" ><input type="checkbox"  id="prnewtab224"  value="TV"  class="othercheckbox country_selector country_selectorTV" /> Tuvalu</label></div>
+				<div class="form-group"><label for="prnewtab225" ><input type="checkbox"  id="prnewtab225"  value="UG"  class="othercheckbox country_selector country_selectorUG" /> Uganda</label></div>
+				<div class="form-group"><label for="prnewtab226" ><input type="checkbox"  id="prnewtab226"  value="UA"  class="othercheckbox country_selector country_selectorUA" /> Ukraine</label></div>
+				<div class="form-group"><label for="prnewtab227" ><input type="checkbox"  id="prnewtab227"  value="AE"  class="othercheckbox country_selector country_selectorAE" /> United Arab Emirates</label></div>
+				<div class="form-group"><label for="prnewtab228" ><input type="checkbox"  id="prnewtab228"  value="GB"  class="othercheckbox country_selector country_selectorGB" /> United Kingdom</label></div>
+				<div class="form-group"><label for="prnewtab229" ><input type="checkbox"  id="prnewtab229"  value="US"  class="othercheckbox country_selector country_selectorUS" /> United States</label></div>
+				<div class="form-group"><label for="prnewtab230" ><input type="checkbox"  id="prnewtab230"  value="UM"  class="othercheckbox country_selector country_selectorUM" /> United States Minor Outlying Islands</label></div>
+				<div class="form-group"><label for="prnewtab231" ><input type="checkbox"  id="prnewtab231"  value="UY"  class="othercheckbox country_selector country_selectorUY" /> Uruguay</label></div>
+				<div class="form-group"><label for="prnewtab232" ><input type="checkbox"  id="prnewtab232"  value="UZ"  class="othercheckbox country_selector country_selectorUZ" /> Uzbekistan</label></div>
+				<div class="form-group"><label for="prnewtab233" ><input type="checkbox"  id="prnewtab233"  value="VU"  class="othercheckbox country_selector country_selectorVU" /> Vanuatu</label></div>
+				<div class="form-group"><label for="prnewtab234" ><input type="checkbox"  id="prnewtab234"  value="VE"  class="othercheckbox country_selector country_selectorVE" /> Venezuela</label></div>
+				<div class="form-group"><label for="prnewtab235" ><input type="checkbox"  id="prnewtab235"  value="VN"  class="othercheckbox country_selector country_selectorVN" /> Viet Nam</label></div>
+				<div class="form-group"><label for="prnewtab236" ><input type="checkbox"  id="prnewtab236"  value="VG"  class="othercheckbox country_selector country_selectorVG" /> Virgin Islands, British</label></div>
+				<div class="form-group"><label for="prnewtab237" ><input type="checkbox"  id="prnewtab237"  value="VI"  class="othercheckbox country_selector country_selectorVI" /> Virgin Islands, U.S.</label></div>
+				<div class="form-group"><label for="prnewtab238" ><input type="checkbox"  id="prnewtab238"  value="WF"  class="othercheckbox country_selector country_selectorWF" /> Wallis and Futuna</label></div>
+				<div class="form-group"><label for="prnewtab239" ><input type="checkbox"  id="prnewtab239"  value="EH"  class="othercheckbox country_selector country_selectorEH" /> Western Sahara</label></div>
+				<div class="form-group"><label for="prnewtab240" ><input type="checkbox"  id="prnewtab240"  value="YE"  class="othercheckbox country_selector country_selectorYE" /> Yemen</label></div>
+				<div class="form-group"><label for="prnewtab241" ><input type="checkbox"  id="prnewtab241"  value="ZM"  class="othercheckbox country_selector country_selectorZM" /> Zambia</label></div>
+				<div class="form-group"><label for="prnewtab242" ><input type="checkbox"  id="prnewtab242"  value="ZW"  class="othercheckbox country_selector country_selectorZW" /> Zimbabwe</label></div>
+			</div>
+			<div class="modal-footer" style="text-align: right">
+				<button type="button" id="countries_set" class="btn btn-lg  btn-primary" data-dismiss="modal" aria-hidden="true"><i class="fa fa-check"></i> Set</button>
+			</div>
+		</div>
+	</div>
+</div>

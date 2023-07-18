@@ -1,0 +1,129 @@
+<% extend "admin/layout.ect" %>
+<section class="content-header"><h1><i class="fa fa-dashboard"></i> Dashboard</h1></section>
+
+<section class="content">
+	<div class="row">
+
+		<% for slug, i in @slugs : %>
+		
+			<% if slug._id=="product" :%>
+				<div class="col-lg-3 col-xs-6">
+					<div class="small-box bg-aqua">
+						<div class="inner">
+							<h3><%- slug.count %></h3>
+							<p>Products</p>
+						</div>
+						<div class="icon">
+							<i class="fa fa-shopping-cart"></i>
+						</div>
+						<a href="/admin/category/<%- slug._id %>" class="small-box-footer">More  <i class="fa fa-arrow-circle-right"></i></a>
+					</div>
+				</div>
+			<% end %>
+			
+			<% if slug._id=="solution" :%>
+				<div class="col-lg-3 col-xs-6">
+					<div class="small-box bg-green">
+						<div class="inner">
+							<h3><%- slug.count %></h3>
+							<p>Solutions</p>
+						</div>
+						<div class="icon">
+							<i class="fa fa-star-half-empty"></i>
+						</div>
+						<a href="/admin/category/<%- slug._id %>" class="small-box-footer">More  <i class="fa fa-arrow-circle-right"></i></a>
+					</div>
+				</div>
+			<% end %>
+			
+			<% if slug._id=="service" :%>
+				<div class="col-lg-3 col-xs-6">
+					<div class="small-box bg-yellow">
+						<div class="inner">
+							<h3><%- slug.count %></h3>
+							<p>Services</p>
+						</div>
+						<div class="icon">
+							<i class="fa fa-tasks"></i>
+						</div>
+						<a href="/admin/category/<%- slug._id %>" class="small-box-footer">More  <i class="fa fa-arrow-circle-right"></i></a>
+					</div>
+				</div>
+			<% end %>
+			
+			<% if slug._id=="page" :%>
+				<div class="col-lg-3 col-xs-6">
+					<div class="small-box bg-red">
+						<div class="inner">
+							<h3><%- slug.count %></h3>
+							<p>Additional Pages</p>
+						</div>
+						<div class="icon">
+							<i class="fa fa-copy"></i>
+						</div>
+						<a href="/admin/category/<%- slug._id %>" class="small-box-footer">More  <i class="fa fa-arrow-circle-right"></i></a>
+					</div>
+				</div>
+			<% end %>
+			
+			<% if slug._id=="team" :%>
+				<div class="col-lg-3 col-xs-6">
+					<div class="small-box bg-aqua">
+						<div class="inner">
+							<h3><%- slug.count %></h3>
+							<p>Team Members</p>
+						</div>
+						<div class="icon">
+							<i class="fa fa-user"></i>
+						</div>
+						<a href="/admin/category/<%- slug._id %>" class="small-box-footer">More  <i class="fa fa-arrow-circle-right"></i></a>
+					</div>
+				</div>
+			<% end %>
+			
+			<% if slug._id=="team" :%>
+				<div class="col-lg-3 col-xs-6">
+					<div class="small-box bg-green">
+						<div class="inner">
+							<h3><%- slug.count %></h3>
+							<p>All Jobs</p>
+						</div>
+						<div class="icon">
+							<i class="fa fa-briefcase"></i>
+						</div>
+						<a href="/admin/category/<%- slug._id %>" class="small-box-footer">More  <i class="fa fa-arrow-circle-right"></i></a>
+					</div>
+				</div>
+			<% end %>
+			
+		<% end %>
+		
+	</div>	
+	<div class="row">
+		<div class="col-lg-12 col-xs-12">
+			<div class="box">
+				<div class="box-header with-border">
+					<h3 class="box-title"><i class="fa   fa-globe"></i> Website Languages</h3>
+				</div>
+				<div class="box-body">
+					<div class="row">		
+						<% for optio, i in @options : %>	
+							<div class="col-lg-3 col-xs-6">
+								<div class="info-box">
+									<span class="info-box-icon bg-aqua" style="height: 90px;text-transform: uppercase;"><%- optio.language.code %></span>
+									<div class="info-box-content" style="margin-right: auto;">
+										<span class="info-box-text"><%- optio.language.name %></span>
+										<span class="info-box-number"><%- optio.language.countries.length %><small> countries selected</small></span>
+									</div>
+								</div>
+							</div>	
+						<% end %>
+					</div>	
+				</div>
+			</div>	
+		</div>
+	</div>
+</section>
+  
+  
+  

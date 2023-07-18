@@ -1,0 +1,39 @@
+{
+  "name": "rosatom",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "@mongoosejs/double": "^0.2.0",
+    "@sendgrid/mail": "^7.7.0",
+    "async": "^3.2.3",
+    "body-parser": "*",
+    "connect-redis": "^5.2.0",
+    "cors": "*",
+    "ect": "*",
+    "errorhandler": "*",
+    "express": "^4.17.1",
+    "express-session": "*",
+    "express-validator": "*",
+    "forever": "*",
+    "json2csv": "^4.5.4",
+    "method-override": "*",
+    "moment": "*",
+    "mongoose": "^5.11.5",
+    "morgan": "*",
+    "multer": "*",
+    "node-abort-controller": "^3.0.1",
+    "node-fetch": "^2.6.1",
+    "node-uuid": "^1.4.8",
+    "nodemailer": "^6.7.5",
+    "passport": "^0.2.2",
+    "passport-local": "^1.0.0",
+    "redis": "^3.1.2",
+    "serve-favicon": "*"
+  },
+  "scripts": {
+    "start": "node app"
+  },
+  "engines": {
+    "node": "14.x"
+  }
+}

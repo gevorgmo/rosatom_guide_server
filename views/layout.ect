@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>ROSATOM</title>
+    <meta name="viewport" content="width=device-width, maximum-scale=1.0, minimum-scale=1.0, initial-scale=1" />
+	<link rel="shortcut icon" href="/img/favicon.png">
+	
+	<!-- Bootstrap 3.3.7 -->
+	<link rel="stylesheet" type="text/css" href="/admin/css/bootstrap.min.css">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+	<!-- Ionicons -->
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+	<link rel="stylesheet" type="text/css" href="/admin/js/plugins/jqueryui/jquery-ui.min.css">
+	
+	<% if (typeof(@user_status) != "undefined") :%>
+		<!-- Datetime Picker -->
+		<link rel="stylesheet" type="text/css" href="/admin/js/plugins/datepicker/bootstrap-datetimepicker.min.css">
+		<!-- iCheck -->
+		<link rel="stylesheet" type="text/css" href="/admin/js/plugins/icheck/flat/blue.css">
+		<!-- Pace style -->
+		<link rel="stylesheet" type="text/css" href="/admin/js/plugins/pace/pace.min.css">
+		<!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->	
+		<link rel="stylesheet" type="text/css" href="/admin/js/plugins/fileuploader/blueimp-gallery.min.css">
+		<link rel="stylesheet" type="text/css" href="/admin/js/plugins/fileuploader/jquery.fileupload.css">
+		<link rel="stylesheet" type="text/css" href="/admin/js/plugins/fileuploader/jquery.fileupload-ui.css">	
+		<!-- bootstrap slider -->
+		<link rel="stylesheet" type="text/css" href="/admin/js/plugins/bootstrap-slider/slider.css">
+		<!-- Select2 -->
+		<link rel="stylesheet" type="text/css" href="/admin/js/plugins/select2/select2.min.css">
+		
+		<link rel="stylesheet" href="/admin/js/plugins/trumbowyg/ui/trumbowyg.min.css">
+		
+		<link rel="stylesheet" type="text/css" href="/admin/css/editor.css?v=1">
+	<% end %>
+	<link rel="stylesheet" type="text/css" href="/admin/css/AdminLTE.min.css">
+	<link rel="stylesheet" type="text/css" href="/admin/css/skins/skin-blue.min.css">	 
+	<link rel="stylesheet" href="/admin/css/style.css?v=3">	
+
+  </head>
+
+
+	<body class="hold-transition skin-blue sidebar-mini">
+		<% if (typeof(@user_status) != "undefined") :%>
+			<div class="wrapper">
+				<% include "nav.ect" %>
+				<div class="content-wrapper">
+		<% end %>
+
+		<% content %>
+  
+  
+	<% if (typeof(@user_status) != "undefined") :%>
+					</div>
+					<div class="wait_overlay"></div>
+				</div>
+				
+				<footer class="main-footer">
+					Developed by <a href="https://nrgaming.com">NRGaming</a>.
+				</footer>
+				<!-- jQuery 3.1.1 -->
+				<script src="/admin/js/plugins/jquery/jquery-1.12.4.min.js"></script>
+				<!-- jQuery scroll -->
+				<script src="/admin/js/plugins/jquery-nicescroll/jquery.nicescroll.min.js"></script>
+				<!-- jQuery UI 1.12.1 -->
+				<script src="/admin/js/plugins/jqueryui/jquery-ui.min.js"></script>
+				<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+
+				<!-- Bootstrap 3.3.7 -->
+				<script src="/admin/js/bootstrap.min.js"></script>
+				<!-- PACE -->
+				<script src="/admin/js/plugins/pace/pace.min.js"></script>
+				<!-- date-range-picker -->
+				<script src="/admin/js/plugins/moment/moment.min.js"></script>
+				<!-- datetime picker -->
+				<script src="/admin/js/plugins/datepicker/bootstrap-datetimepicker.min.js"></script>
+				<!-- iCheck -->
+				<script src="/admin/js/plugins/icheck/icheck.min.js"></script>
+				<!-- Select2 -->
+				<script src="/admin/js/plugins/select2/select2.full.min.js"></script>
+				<script src="/admin/js/plugins/fileuploader/tmpl.min.js"></script>
+				<!-- The Load Image plugin is included for the preview images and image resizing functionality -->
+				<script src="/admin/js/plugins/fileuploader/load-image.all.min.js"></script>
+				<!-- The Canvas to Blob plugin is included for image resizing functionality -->
+				<script src="/admin/js/plugins/fileuploader/canvas-to-blob.min.js"></script>
+				<!-- blueimp Gallery script -->
+				<script src="/admin/js/plugins/fileuploader/jquery.blueimp-gallery.min.js"></script>
+				<script src="/admin/js/plugins/fileuploader/jquery.iframe-transport.js"></script>
+				<!-- The basic File Upload plugin -->
+				<script src="/admin/js/plugins/fileuploader/jquery.fileupload.js"></script>
+				<!-- The File Upload processing plugin -->
+				<script src="/admin/js/plugins/fileuploader/jquery.fileupload-process.js"></script>
+				<!-- The File Upload image preview & resize plugin -->
+				<script src="/admin/js/plugins/fileuploader/jquery.fileupload-image.js"></script>
+				<!-- The File Upload validation plugin -->
+				<script src="/admin/js/plugins/fileuploader/jquery.fileupload-validate.js"></script>
+				<!-- The File Upload user interface plugin -->
+				<script src="/admin/js/plugins/fileuploader/jquery.fileupload-ui.js"></script>	
+				<!-- AdminLTE App -->
+				<script src="/admin/js/adminlte.min.js"></script>
+
+
+
+				<script src="/admin/js/plugins/trumbowyg/trumbowyg.min.js"></script>
+				<script src="/admin/js/plugins/trumbowyg/plugins/cleanpaste/trumbowyg.cleanpaste.min.js"></script>
+				
+				<script src="/admin/js/editor.js?v=1"></script>
+				
+				<script src="/admin/js/script.js?v=19"></script>
+			
+				<!-- The blueimp Gallery widget -->
+				<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-filter=":even">
+					<div class="slides"></div>
+					<h3 class="title"></h3>
+					<a class="prev">‹</a>
+					<a class="next">›</a>
+					<a class="close">×</a>
+					<a class="play-pause"></a>
+					<ol class="indicator"></ol>
+				</div>	
+				
+				
+
+				<div class="modal fade" id="media_library" data-page="1" data-itm="" data-type="">
+					<div class="modal-dialog modal-lg">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+								<h4 class="modal-title">Media Library</h4><p>Select the media file from list and click on "Set" button.</p>
+								<div class="form-group media_uploader" style="text-align:center;min-height:58px;margin-bottom: 0;">
+									<label  type="button" class="btn btn-lg  btn-success  btn-mediauploader"><i class="fa fa-cloud-upload"></i> Upload Media<input type="file" id="fileupload"  class="fileuploaderinput" name="image-file"></label>
+									<div class="progress progress-xxs" style="opacity:0;margin-bottom: 0;height: 10px;"><div class="progress-bar progress-bar-danger progress-bar-striped"   style="width: 0%"></div></div>	
+								</div>
+							</div>
+							<div class="modal-body" style="position:relative;border:1px solid #eeeeee;">
+								<div id="media_list"></div>	
+								<div class="form-group more_media" style="text-align: center;margin:20px">
+									<button type="button" class="btn btn-info load_more_media"><i class="fa  fa-cloud-download"></i> Load more</button>
+									<img src="/admin/img/loader.gif" class="media_loading_animation" />
+								</div>	
+								<div class="media_wait"></div>	
+							</div>
+							<div class="modal-footer" style="text-align: right">
+								<button id="media_set" type="button" class="btn btn-lg  btn-primary" data-dismiss="modal" aria-hidden="true"><i class="fa fa-check"></i> Set</button>
+							</div>
+						</div>
+					</div>
+				</div>	   
+  <% end %>
+  
+  
+  
+
+  </body>
+</html>
+
+
