@@ -1,6 +1,7 @@
 var mongoose       = require('mongoose')
   , User = mongoose.model('User')
   , Page = mongoose.model('Page')
+  , Option = mongoose.model('Option')
   , Media = mongoose.model('Media')
   , moment = require('moment')
   , passport  = require('passport')
@@ -16,8 +17,8 @@ var mongoose       = require('mongoose')
 
 
 var _all_roles=["user","admin"];
-var _all_categories=["product","solution","service","team","career","page"];
-var _all_global_pages=["home","products","solutions","services","company","careers","contact","about","team"];
+var _all_categories=["exhibition","event","service","exhibit"];
+var _all_global_pages=["home","exhibitions","events","services","maps"];
 
 exports.init = function (app) {
 
@@ -26,7 +27,7 @@ exports.init = function (app) {
 	app.get('/createuser', function(req, res) {
 		var __user= {
 			fullname:"Administrator",
-			username:"gevorgmo@gmail.com",
+			username:"developer@loremipsumcorp.com",
 			password:"qqqqqqQ1",
 			updated:Date.now(),
 			created:Date.now(),
@@ -39,11 +40,46 @@ exports.init = function (app) {
 	});
 */
 /////////////////////////////////////////////////////////////
-	app.get('/explore', function(req, res) {
-		return res.render('explore', {pagename:"explore"});
+	app.get('/test', function(req, res) {
+		return res.render('templates/test',{});
+	});
+/////////////////////////////////////////////////////////////
+	app.get('/explore/:lang/:slug', function(req, res) {
+		res.setHeader('Access-Control-Allow-Origin', '*');
+		var _language=escape(req.params.lang || "ru").trim().toLowerCase();
+		var _slug=escape(req.params.slug || "home").trim().toLowerCase();
+		var _all_categories={"exhibitions":"exhibition","events":"event","services":"service"};
+		Option.find().sort({ord:1}).exec(function(err, _options){	
+			if(_all_categories[_slug]){ 
+				Page.find({active:true, category:_all_categories[_slug]}).sort({ord:1}).exec(function(err, _pages){
+					if(err || !_pages) {
+						Page.findOne({active:true, slug:"home"}).exec(function(_err, __home){
+							return res.render('templates/home', {lang:_language, page:__home.toObject(), options:_options});
+						});
+					} else {
+						return res.render('templates/'+_slug, {lang:_language, category:_slug, pages:_pages,  options:_options});	
+					}
+				});	
+			} else {
+				Page.findOne({active:true, slug:_slug}).exec(function(_err, __page){
+					if(_err || !__page) {
+						Page.findOne({active:true, slug:"home"}).exec(function(_err, __home){
+							return res.render('templates/home', {lang:_language, page:__home.toObject(), options:_options});
+						});	
+					} else {
+						return res.render('templates/'+_slug, {lang:_language, page:__page.toObject(),   options:_options});
+					}
+				});
+			}	
+		});	
 	});
 //////////////////////////////////////////////////////////////////////////
 	app.post('/explore',  function(req, res){
+		res.setHeader('Access-Control-Allow-Origin', '*');
+		res.setHeader('Access-Control-Allow-Headers', 'X-Custom-Heade');
+		res.setHeader('Content-Type', 'text/html; charset=utf-8');
+		res.setHeader('content-type', 'text/javascript');
+		
 		var _language=escape(req.body.language || "ru").trim().toLowerCase();
 		var _slug=escape(req.body.slug || "home").trim().toLowerCase();
 		Page.findOne({active:true, slug:_slug}).exec(function(_err, __page){
@@ -110,29 +146,71 @@ exports.init = function (app) {
 		}
 	});
 /////////////////////////////////////////////////////////////
+	app.get('/category/:categoryname', isLoggedIn, function(req, res) {
+		Page.find({category:req.params.categoryname}).sort({ord:1}).exec(function(err, _pages){
+			if(err || !_pages) return res.render("index", {user_status:_all_roles[req.user.role],  pagename:"dashboard"});					
+			return res.render("category", {user_status:_all_roles[req.user.role],  pagename:req.params.categoryname, pages:_pages});
+		});
+	});
+/////////////////////////////////////////////////////////////
+	app.get('/page/:pagename', isLoggedIn, function(req, res) {
+		Option.find().sort({ord:1}).exec(function(err, _options){
+			Page.findOne({category:req.params.pagename}).exec(function(err, _page){
+				if(err || !_page) return res.render("index", {user_status:_all_roles[req.user.role],  pagename:"dashboard"});					
+				return res.render("globalpage", {user_status:_all_roles[req.user.role],  pagename:req.params.pagename, item:_page.toObject(), options:_options});
+			});
+		});	
+	});
+/////////////////////////////////////////////////////////////
+	app.get('/options/:optionid', isLoggedIn, function(req, res) {
+		if(req.params.optionid=="all"){
+			Option.find().sort({ord:1}).exec(function(err, _options){
+				if(err || !_options) return res.render("index", {user_status:_all_roles[req.user.role],  pagename:"dashboard"});					
+				return res.render("options", {user_status:_all_roles[req.user.role],  pagename:req.params.pagename, options:_options});
+			});
+		} else if(req.params.optionid=="new"){
+			return res.render("option", {user_status:_all_roles[req.user.role],  pagename:req.params.pagename, option:{}});
+		} else {
+			Option.findById(req.params.optionid).exec(function(err, _option){
+				if(err || !_option) return res.render("index", {user_status:_all_roles[req.user.role],  pagename:"dashboard"});					
+				return res.render("option", {user_status:_all_roles[req.user.role],  pagename:req.params.pagename, option:_option.toObject()});
+			});
+		}	
+	});
+/////////////////////////////////////////////////////////////
 	app.get('/item/:itemid', isLoggedIn, function(req, res) {
 		if(req.params.itemid){
+			Option.find().sort({ord:1}).exec(function(err, _options){
 				if(req.params.itemid!='new'){
-					Page.findById(req.params.itemid}.exec(function(err, _page){
+					Page.findById(req.params.itemid).exec(function(err, _page){
 						if(err || !_page) return res.render("index", {user_status:_all_roles[req.user.role],  pagename:"dashboard"});					
-						if(_all_global_pages.indexOf(_page.category)==-1){
-							return res.render("item", {user_status:_all_roles[req.user.role],  pagename:_page.category, item:_page});
+						if(_all_categories.indexOf(_page.category)!=-1){
+							return res.render("item", {user_status:_all_roles[req.user.role],  pagename:_page.category, item:_page.toObject(), options:_options});
 						} else {
-							return res.render("globalpage", {user_status:_all_roles[req.user.role],  pagename:_page.category, item:_page});
+							return res.render("globalpage", {user_status:_all_roles[req.user.role],  pagename:_page.category, item:_page.toObject(), options:_options});
 						}
 					});
 				} else {
 					var _category=req.query.category || "page";
-					var _slug=req.query.slug || "none";
 					if(_all_categories.indexOf(_category)==-1 && _all_global_pages.indexOf(_category)==-1) _category="page";
-					return res.render("item", {user_status:_all_roles[req.user.role],  pagename:_category, item:{slug:"none"}, pages:[]});
+					return res.render("item", {user_status:_all_roles[req.user.role],  pagename:_category, item:{slug:"", _id:"new"}, options:_options});
 				}
-			});
+			});	
 		} else {
 			return res.redirect('/');
 		}
 	});
-
+///////////////////////////////////////////////////////////////////
+	app.post('/deleteoption', isLoggedIn, function(req, res) {
+		if(req.body.id){
+			Option.deleteOne({_id:req.body.id}, function (__err) {
+				if(__err) return res.status(200).send({status:false});
+				return res.status(200).send({status:true});
+			});
+		} else {
+			return res.status(200).send({status:false});
+		}
+	});
 ///////////////////////////////////////////////////////////////////
 	app.post('/deleteitem', isLoggedIn, function(req, res) {
 		if(req.body.id){
@@ -182,20 +260,12 @@ exports.init = function (app) {
 				ftyp='image';
 			}else if (/\.svg$/i.test(images.originalname) || images.mimetype == 'image/svg' || images.mimetype == 'image/svg+xml'){
 				ftyp='image';
-			}else if (/\.tif$/i.test(images.originalname) || images.mimetype == 'image/tiff'){
-				ftyp='image';
-			}else if (/\.tiff$/i.test(images.originalname) || images.mimetype == 'image/tiff'){
-				ftyp='image';
 			}else if (/\.mp4$/i.test(images.originalname) || images.mimetype == 'video/mp4'){
 				ftyp='video';
 			}else if (/\.ogv$/i.test(images.originalname) || images.mimetype == 'video/ogg'){
 				ftyp='video';
-			}else if (/\.pdf$/i.test(images.originalname) || images.mimetype == 'application/pdf'){
-				ftyp='pdf';
-			}else if (/\.doc$/i.test(images.originalname) || images.mimetype == 'application/msword'){
-				ftyp='doc';
-			}else if (/\.xls$/i.test(images.originalname) || images.mimetype == 'application/vnd.ms-excel'){
-				ftyp='xls';
+			}else if (/\.mp3$/i.test(images.originalname) || images.mimetype == 'audio/mp3'){
+				ftyp='audio';
 			}else{
 				msg = 'Invalid format.';
 			}
@@ -255,31 +325,22 @@ exports.init = function (app) {
 ///////////////////////////////////////////////////////////////////
 	app.post('/saveitem', isLoggedIn, function(req, res) {
 		var _page={
-			active:(req.body.active ? (parseInt(req.body.active)==1 ? true : false) : false),
-			title:(req.body.title || ""),	
+			active:(req.body.active ? (parseInt(req.body.active)==1 ? true : false) : true),	
 			category:(req.body.category || "page").trim().toLowerCase(),
+			ord:(req.body.ord || 1),
+			poster:(req.body.poster || ""),
+			title:(req.body.title || {}),	
 			content:(req.body.content || {}),
 			audio:(req.body.audio || {}),
 			video:(req.body.video || {}),
 			text:(req.body.text || {}),
+			published:(req.body.published || new Date())	
 		};
-
-		var _slug=req.body.slug || "none";
-		var _category=(req.body.category || "page").trim().toLowerCase();
-
-		if(_all_global_pages.indexOf(_category)>-1){
-			if(_category=="home"){
-				_page.active=true;
-				_page.title="Home Page";
-			}
-			_slug=_category;
+		
+		if(_all_global_pages.indexOf(_page.category)==-1){
+			var _slug=GenerateSlug(req.body.slug || "none");
+			_page.slug=_slug;
 		}
-
-		if(_slug=="" || _slug=="none") _slug=_page.title;
-		
-		_slug=GenerateSlug(_slug);
-		
-		_page.slug=_slug;
 		
 		if(req.body.id=="new"){
 			Page.find({slug: _slug}, function (err1, _slugs) {
@@ -292,14 +353,34 @@ exports.init = function (app) {
 					return res.status(200).send({"status":true});
 				});
 			});
-			
 		} else {
 			Page.update({_id:req.body.id},  {$set:_page}, {}, function(err, ___page) {
 				if (err){ console.log(err); }
 				return res.status(200).send({"status":true});
 			});
-		});
+		}
 
+	});
+///////////////////////////////////////////////////////////////////
+	app.post('/saveoption', isLoggedIn, function(req, res) {
+		var _option={
+			language_code:(req.body.language_code || "en"),	
+			language_title:(req.body.language_title || "en").trim(),
+			translations:(req.body.translations || {}),
+			ord:parseInt(req.body.ord || 0)
+		};
+
+		if(req.body.id=="new"){
+			Option.create(_option,  function(err3, __option) {
+				if (err3 || !__option) return res.status(200).send({"status":false});
+				return res.status(200).send({"status":true});
+			});
+		} else {
+			Option.update({_id:req.body.id},  {$set:_option}, {}, function(err, __option) {
+				if (err){ console.log(err); }
+				return res.status(200).send({"status":true});
+			});
+		}
 	});
 //////////////////////////////////////////////////////////////////////////////////////
 	app.post('/saveuser', isLoggedIn, function(req, res) {

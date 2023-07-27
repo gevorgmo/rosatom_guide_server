@@ -1,0 +1,73 @@
+		<header class="header">
+			<div class="header_top home">
+				<div class="custom_container">
+					<div class="logo_block">
+						<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/home">
+							<img src="https://rosatom.loremipsumcorp.com/css/images/logo.svg" alt="" title=""/>
+						</a>
+					</div>
+					<div class="lang_block">
+						<% opt=@options[0]  %>
+						<% for option in @options : %>
+							<div class="lang_cont <% if option.language_code==@lang  :%>selected<% opt=option  %><% end %>" data-lang="<%- (option.language_code || "")  %>"><%- (option.language_title || "")  %></div>
+						<% end %>	 
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<span class="cb"></span> 
+
+		<main class="content">
+			<div class="home_blocks_container">
+				<div class="home_block">
+					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/exhibitions">
+						<div style="background-image: url('<% if @page.content :%><% if @page.content[@lang] :%><%- "https://rosatom.loremipsumcorp.com"+(@page.content[@lang].image1 || "") %><% end %><% end %>');" class="home_block_img"></div>
+						<span><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].title1 || "" %><% end %><% end %></span>
+					</a>
+				</div>
+				<div class="home_block">
+					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/events">
+						<div style="background-image: url('<% if @page.content :%><% if @page.content[@lang] :%><%- "https://rosatom.loremipsumcorp.com"+(@page.content[@lang].image2 || "") %><% end %><% end %>');" class="home_block_img"></div>
+						<span><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].title2 || "" %><% end %><% end %></span>
+					</a>
+				</div>
+				<div class="home_block">
+					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/sevices">
+						<div style="background-image: url('<% if @page.content :%><% if @page.content[@lang] :%><%- "https://rosatom.loremipsumcorp.com"+(@page.content[@lang].image3 || "") %><% end %><% end %>');" class="home_block_img"></div>
+						<span><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].title3 || "" %><% end %><% end %></span>
+					</a>
+				</div>
+				<div class="home_block">
+					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/maps">
+						<div style="background-image: url('<% if @page.content :%><% if @page.content[@lang] :%><%- "https://rosatom.loremipsumcorp.com"+(@page.content[@lang].image4 || "") %><% end %><% end %>');" class="home_block_img"></div>
+						<span><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].title4 || "" %><% end %><% end %></span>
+					</a>
+				</div>
+			</div>
+			<span class="cb"></span>
+
+		</main>
+
+		<span class="cb"></span>
+
+		<footer class="footer">
+			<div class="footer_menu">
+				<div class="qr_button">
+					<img src="https://rosatom.loremipsumcorp.com/css/images/qr.svg" alt="" title="" />
+				</div>
+			</div>			
+			<span class="cb"></span>
+		</footer>
+
+		<script>
+			var _trs_qr="<% if opt.translations :%><%- opt.translations.qr || "" %><% end %>";
+			var _trs_media_guide="<% if opt.translations :%><%- opt.translations.media_guide || "" %><% end %>";
+			var _trs_exibitions="<% if opt.translations :%><%- opt.translations.exibitions || "" %><% end %>";
+			var _trs_events="<% if opt.translations :%><%- opt.translations.events || "" %><% end %>";
+			var _trs_services="<% if opt.translations :%><%- opt.translations.services || "" %><% end %>";
+			var _trs_maps="<% if opt.translations :%><%- opt.translations.maps || "" %><% end %>";
+			var _lang="<%- @lang %>";
+		</script>
+
+

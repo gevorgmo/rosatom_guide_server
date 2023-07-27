@@ -1,0 +1,25 @@
+<% extend "layout.ect" %>
+<section class="content-header p-options"><h1>All Languages</h1></section>
+
+<section class="content-header">
+	<a href="/options/new" class="btn btn-primary"><i class="fa fa-plus"></i>Create new</a>
+</section>
+
+
+<section class="content">
+	<% for option in @options : %>
+			<div class="info-box" id="<%- option._id %>" style="min-height: unset;">
+				<div class="info-box-right" style="text-align:right;">	
+					<a href="/options/<%- option._id %>" class="btn btn-success btn-xs btn-flat"><i class="fa fa-edit"></i></a>
+					<button type="button" data-id="<%- option._id %>"  class="btn btn-danger btn-xs btn-flat btn-deleteoption"><i class="glyphicon glyphicon-trash"></i></button>							
+				</div>
+				<div class="info-box-content" style="margin-left: 0;">
+					<span class="info-box-number"><%- (option.language_title || "")  %></span>								
+				</div>	
+			</div>	
+	<% end %>
+</section>
+
+
+
+

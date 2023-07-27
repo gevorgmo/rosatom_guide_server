@@ -87,8 +87,14 @@ if (!fs.existsSync('./public/tmp')) {
 }
 
 app.use(function(req, res, next){
-	res.status(404).render('404');
+    res.setHeader("Access-Control-Allow-Origin", "*");
+	res.setHeader("Content-Security-Policy", "default-src 'self';");
+   next();
 });
+
+ 
+
+
 
 app.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

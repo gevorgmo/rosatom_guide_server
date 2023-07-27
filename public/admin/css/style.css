@@ -145,19 +145,19 @@ html {
 
 .skin-blue .main-sidebar{position:fixed;height:100%;}
 .skin-blue .sidebar a{color:#fff}
-.skin-blue .sidebar-menu>li.active>a{border-left-color: #fff;background-color:#404040}
-.skin-blue .main-header .logo,.skin-blue .main-header .logo:hover{color:#404040 }
-.skin-blue .main-header .navbar,.skin-blue .main-header .logo{color:#fff;background-color:#2d2d2d }
-.skin-blue .sidebar-menu>li:hover>a{background-color:#404040}
+.skin-blue .sidebar-menu>li.active>a{border-left-color: #fff;background-color:#49a9fb}
+.skin-blue .main-header .logo,.skin-blue .main-header .logo:hover{color:#49a9fb }
+.skin-blue .main-header .navbar,.skin-blue .main-header .logo{color:#fff;background-color:#2699fb }
+.skin-blue .sidebar-menu>li:hover>a{background-color:#49a9fb}
 
-.skin-blue .sidebar-menu>li.menu-open>a{background:#101010}
-.skin-blue .sidebar-menu>li>.treeview-menu{background-color: #303030;}
-.skin-blue .sidebar-menu .treeview-menu>li>a{color: #b9b9b9;}
+.skin-blue .sidebar-menu>li.menu-open>a{background:#00457f}
+.skin-blue .sidebar-menu>li>.treeview-menu{background-color: #005dab;}
+.skin-blue .sidebar-menu .treeview-menu>li>a{color: #fff;}
 
 .skin-blue .main-header .navbar .sidebar-toggle,.skin-blue .main-header .navbar .nav>li>a{color:#ffffff}
-.skin-blue .main-header .navbar .sidebar-toggle:hover,.skin-blue .main-header .navbar .nav>li>a:hover,.skin-blue .main-header .logo:hover{background-color: #404040;color:#fff}
-.box.box-primary{    border-top-color: #404040;}
-.skin-blue .main-sidebar{background-color: #202020;}
+.skin-blue .main-header .navbar .sidebar-toggle:hover,.skin-blue .main-header .navbar .nav>li>a:hover,.skin-blue .main-header .logo:hover{background-color: #49a9fb;color:#fff}
+.box.box-primary{    border-top-color: #49a9fb;}
+.skin-blue .main-sidebar{background-color: #006fcd;}
 
 .main-header{position:fixed;width:100%;}
 .content-wrapper{padding-top:60px}
@@ -299,7 +299,7 @@ th.action {text-align:center;vertical-align:top!important; padding: 10px;}
 .trumbowyg-h1-dropdown-button {display:none!important}
 
 
-
+.skin-blue .sidebar-menu .treeview-menu>li.active>a{background-color: #2780cb;}
 
 .wait_overlay,.wait_overlay_stores
 {

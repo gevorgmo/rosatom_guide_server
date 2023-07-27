@@ -1,0 +1,20 @@
+<svg id="Mark" xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60">
+  
+  <style>
+    path {
+      opacity: 0;
+      animation: 1.5s opacity infinite;
+    }
+    @keyframes opacity {
+      15% {opacity: 0} 
+      35% {opacity: 1}
+      65% {opacity: 1} 
+      85% {opacity: 0}
+    }
+    #Path_2135 {animation-delay: 0.1s}
+    #Path_2136 {animation-delay: 0.2s}
+  </style>
+  
+  <path id="Path_2135" data-name="Path 2135" d="M223.58,0a30,30,0,1,0,30,30,30,30,0,0,0-30-30m0,48.758A18.758,18.758,0,1,1,242.338,30,18.758,18.758,0,0,1,223.58,48.759" transform="translate(-193.58 -0.001)" fill="#fff"/>
+  <path id="Path_2136" data-name="Path 2136" d="M252.437,58.858a7.462,7.462,0,1,1,0-10.554,7.464,7.464,0,0,1,0,10.554" transform="translate(-217.16 -23.581)" fill="#fff"/>
+</svg>

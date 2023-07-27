@@ -1,0 +1,19 @@
+<svg id="Events" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="58.932" height="52.187" viewBox="0 0 58.932 52.187">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_1806" data-name="Rectangle 1806" width="58.932" height="52.187" fill="#fff"/>
+    </clipPath>
+  </defs>
+  <g id="Group_159" data-name="Group 159" clip-path="url(#clip-path)">
+    <path id="Path_2122" data-name="Path 2122" d="M51.857,2.7H49.728V0H46.685V2.7H12.247V0H9.2V2.7H7.074A7.082,7.082,0,0,0,0,9.779V45.113a7.083,7.083,0,0,0,7.074,7.075H51.857a7.083,7.083,0,0,0,7.075-7.075V9.779A7.082,7.082,0,0,0,51.857,2.7m4.032,42.409a4.036,4.036,0,0,1-4.032,4.032H7.074a4.036,4.036,0,0,1-4.031-4.032V9.779A4.036,4.036,0,0,1,7.074,5.747H9.2v3.3h3.043v-3.3H46.685v3.3h3.043v-3.3h2.129a4.036,4.036,0,0,1,4.032,4.031Z" transform="translate(0 -0.001)" fill="#fff"/>
+    <rect id="Rectangle_1797" data-name="Rectangle 1797" width="43.952" height="3.043" transform="translate(7.49 12.207)" fill="#fff"/>
+    <rect id="Rectangle_1798" data-name="Rectangle 1798" width="10.812" height="3.043" transform="translate(7.49 21.352)" fill="#fff"/>
+    <rect id="Rectangle_1799" data-name="Rectangle 1799" width="10.812" height="3.043" transform="translate(7.49 30.496)" fill="#fff"/>
+    <rect id="Rectangle_1800" data-name="Rectangle 1800" width="10.812" height="3.043" transform="translate(7.49 39.64)" fill="#fff"/>
+    <rect id="Rectangle_1801" data-name="Rectangle 1801" width="10.812" height="3.043" transform="translate(24.06 21.352)" fill="#fff"/>
+    <rect id="Rectangle_1802" data-name="Rectangle 1802" width="10.812" height="3.043" transform="translate(24.06 30.496)" fill="#fff"/>
+    <rect id="Rectangle_1803" data-name="Rectangle 1803" width="10.812" height="3.043" transform="translate(24.06 39.64)" fill="#fff"/>
+    <rect id="Rectangle_1804" data-name="Rectangle 1804" width="10.812" height="3.043" transform="translate(40.63 21.352)" fill="#fff"/>
+    <rect id="Rectangle_1805" data-name="Rectangle 1805" width="10.812" height="3.043" transform="translate(40.63 30.496)" fill="#fff"/>
+  </g>
+</svg>

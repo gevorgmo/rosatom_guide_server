@@ -7,10 +7,6 @@ var PageSchema = new Schema({
         type: Boolean,
         default: true
     },
-	title: {
-        type: String,
-        trim: true
-    },
 	slug: {
         type: String,
         trim: true
@@ -19,12 +15,21 @@ var PageSchema = new Schema({
         type: String,
         trim: true
     },
+	poster: {
+        type: String,
+        trim: true
+    },
+	ord: {
+        type: Number,
+        default: 0
+    },
+	title:{},
 	content:{},
 	audio:{},
 	video:{},
 	text:{},
-	created: {type: Date, default: Date.now},
-    updated: {type: Date, default: Date.now}
+	published: {type: Date, default: Date.now},
+	created: {type: Date, default: Date.now}
 });
 
 mongoose.model('Page', PageSchema);

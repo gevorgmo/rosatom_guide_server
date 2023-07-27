@@ -1,15 +1,12 @@
-<% extend "admin/layout.ect" %>
+<% extend "layout.ect" %>
 
 <section class="content-header p-item-<%- @pagename %>"><h1 class="categoryname"><%- @pagename %> Management</h1></section>
 
 <section class="content">
 	<div class="row">
-		<input type="hidden" id="prid" value="<%- @item.id || "new" %>" />
+		<input type="hidden" id="prid" value="<%- @item._id || "new" %>" />
 		<input type="hidden" id="prcategory" value="<%- @pagename || "page" %>" />
-		<input type="hidden" id="prlanguage" value="<%- @item.language || "en" %>" />
-		<input type="hidden" id="prslugid" value="<%- @item.slugid.id || "none" %>" />
 		<div class="col-md-3">
-			
 			<div class="box box-primary">
 				<div class="box-header">
 					<h3 class="box-title"><i class="fa fa-image"></i> Primary Image</h3>												
@@ -20,47 +17,7 @@
 						<div class="selected_media_itm"  style="<%- if @item.poster then "background-image:url("+ @item.poster+")" else "display:none" %>"  data-src="<%- @item.poster || "/admin/img/temp.png" %>"  data-type="image"  id="prposter"><a class="media_itm_link lightbox btn btn-warning btn-flat" id="k0" href="<%- @item.poster || "/admin/img/temp.png" %>" target="_blank" title=""><i class="fa  fa-eye"></i></a><button type="button" class="btn-selectedmediaremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button></div>
 					</div>	
 				</div>
-			</div>
-			
-			<% if @pagename=="product" :%>
-				<div class="box box-primary">
-					<div class="box-header">
-						<h3 class="box-title"><i class="fa fa-image"></i> Slideshow</h3>												
-					</div>
-					<div class="box-body">
-						<div class="form-group" style="text-align: center;">
-							<button type="button" class="btn-ineraddslide btn btn-success btn-flat"><i class="fa fa-plus"></i> Add Slide</button>
-						</div>
-						<div class="connectedSortable" id="iteminnerslideshow" data-placeholder="external-event sort-highlight" data-connect=".sortingitm" data-handle=".sortingitm">
-							<% if @item.additional.slideshow :%>
-								<% for slide, i in @item.additional.slideshow : %>
-									<div class="sortingitm iteminnerslideshow_itm">	
-										<div class="slide_itm_wrap">
-											<button type="button" class="media_btn btn btn-info btn-flat" style="display:none"><i class="fa fa-image"></i> Select Media</button>
-											<div class="selected_media_itm"  data-src="<%- slide %>" data-type="image" style="background-image:url(<%- slide %>)"  id="prslide<%- i %>"><a class="media_itm_link lightbox btn btn-warning btn-flat" id="m<%- i %>" href="<%- slide %>" target="_blank" title=""><i class="fa  fa-eye"></i></a><button type="button" class="btn-selectedmediaremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button></div>
-										</div>	
-										<button type="button" class="slide_remove  btn  btn-danger btn-xs"><i class="fa fa-times"></i></button>
-									</div>		
-								<% end %>	
-							<% end %>
-						</div>
-					</div>
-				</div>
-			<% end %>	
-			
-			<% if @pagename!="product" and  @pagename!="team" and  @pagename!="career" :%>
-				<div class="box box-primary">
-					<div class="box-header">
-						<h3 class="box-title"><i class="fa fa-image"></i> Background Image</h3>												
-					</div>
-					<div class="box-body">
-						<div class="form-group" style="text-align: center;">
-							<button type="button" class="media_btn btn btn-info btn-flat" style="<%- if @item.additional.background then "display:none" %>"><i class="fa fa-plus"></i> Select Media</button>
-							<div class="selected_media_itm"  style="<%- if @item.additional.background then "background-image:url("+@item.additional.background+")" else "display:none" %>"    data-src="<%- @item.additional.background || "" %>" data-type="image"  id="prbackground"><a class="media_itm_link lightbox btn btn-warning btn-flat" id="z1" href="<%- @item.additional.background || "" %>" target="_blank" title=""><i class="fa  fa-eye"></i></a><button type="button" class="btn-selectedmediaremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button></div>
-						</div>	
-					</div>
-				</div>
-			<% end %>	
+			</div>	
 		</div>
 		
 		<div class="col-md-9">		
@@ -70,137 +27,36 @@
 					<div class="material-switch pull-right"><span class="switcherleft">Off</span><input id="practive" name="practive" type="checkbox" <%- if @item.active then "checked" %> /><label for="practive" class="label-primary"></label><span class="switcherright">On</span></div>
 				</div>
 				<div class="box-body">
-					<div class="row">
-						<div class="col-md-12 col-ms-12">
-							<div class="form-group">
-								<label>Languages</label>
-								<div>
-									<% for optio in @options : %>
-										<% if @item.language==optio.language.code :%>
-											<button type="button" class="btn btn-default btn-flat languagebtn"><%- optio.language.code %></button>
-										<% else :%>	
-											<% find_lang=false %>
-											<% for page in @pages : %>
-												<% if page.language==optio.language.code :%>
-													<a href="/admin/item/<%- page.id %>" class="btn <%- if page.active then "btn-success"  else "btn-warning" %> btn-flat languagebtn"><%- optio.language.code %></a>
-													<% find_lang=true %>
-													<% break %>
-												<% end %>	
-											<% end %>	
-											<% if find_lang :%>
-											<% else :%>	
-												<a href="/admin/item/new?language=<%- optio.language.code %>&category=<%- @pagename %>&slugid=<%- @item.slugid.id || "none" %>" class="btn btn-danger btn-flat languagebtn"><%- optio.language.code %></a>
-											<% end %>	
-										<% end %>	
-									<% end %>	
-								</div>
-							</div>	
-						</div>	
-						
-						<div class="col-md-12 col-ms-12">	
-							<div class="form-group">
-								<label>Global handle for all languages</label>
-								<div class="input-group">
-									<span class="input-group-addon slug-input-group">https://nrgaming.com/<%- @item.language || "en" %>/<%- @pagename || "page" %>/</span>
-									<input type="text" class="slug-input-control form-control" id="prslug"  value="<%- @item.slugid.slug || "" %>">
-									<span class="input-group-addon <%- if @item.slugid.slug then "" else "hidden" %>" id="prslugview">
-										<a href="/<%- @item.language || "en" %>/<%- @pagename || "page" %>/<%- @item.slugid.slug || "" %>"  target="_blanck"><i class="fa fa-eye"></i></a>
-									</span>
+					<div class="row">										
+						<% if @pagename=="exhibit" :%>
+							<div class="col-md-4 col-ms-4">	
+								<div class="form-group">
+									<label>Slug</label>
+									<input type="text" class="form-control" id="prslug" placeholder="Enter slug" value="<%- @item.slug || "" %>">
 								</div>
 							</div>
-						</div>	
-						
-						<% if @pagename=="career" :%>
-							<div class="col-md-6 col-ms-6">	
+						<% end %>
+						<% if @pagename!="event" :%>
+							<div class="col-md-4 col-ms-4">	
+								<div class="form-group">
+									<label>Sorting order</label>
+									<input type="number" class="form-control" id="prord" placeholder="Enter number" value="<%- @item.ord || 1 %>">
+								</div>
+							</div>
+						<% end %>
+						<% if @pagename=="event" :%>
+							<div class="col-md-4 col-ms-4">	
 								<div class="form-group">	
-									<label>Published Date</label>
+									<label>Date</label>
 									<div class="input-group date">
 										<div class="input-group-addon"><i class="fa fa-calendar"></i></div>
 										<input type="text" class="form-control pull-right" id="prpublished" value="" readonly="readonly">
 									</div>	
 								</div>	
 							</div>
-							<div class="col-md-6 col-ms-6">	
-								<div class="form-group">	
-									<label>Expiring Date</label>
-									<div class="input-group date">
-										<div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-										<input type="text" class="form-control pull-right" id="prexpiring" value="" readonly="readonly">
-									</div>	
-								</div>	
-							</div>
-						<% end %>	
+						<% end %>
+
 						
-						
-						<% if @pagename=="team" :%>
-							<div class="col-md-6 col-ms-6">	
-								<div class="form-group">
-									<label>Name</label>
-									<input type="text" class="form-control" id="prtitle" placeholder="Enter Name" value="<%- @item.title || "" %>">
-								</div>
-							</div>
-							<div class="col-md-6 col-ms-6">	
-								<div class="form-group">
-									<label>Position</label>
-									<input type="text" class="form-control" id="prposition" placeholder="Enter Position" value="<%- @item.additional.position || "" %>">
-								</div>
-							</div>
-						<% else :%>	
-							<div class="col-md-12 col-ms-12">	
-								<div class="form-group">
-									<label>Title</label>
-									<input type="text" class="form-control" id="prtitle" placeholder="Enter title" value="<%- @item.title || "" %>">
-								</div>
-							</div>	
-							<div class="col-md-12 col-ms-12">
-								<div class="form-group small_editor prsub_title">
-									<label>Sub Title</label>
-									<textarea id="prsub_title" class="form-control htmlcont_small"   cols="20"  ></textarea>
-								</div>
-							</div>
-						<% end %>	
-						
-						
-						<% if @pagename=="product" :%>
-							<div class="col-md-12 col-ms-12">
-								<h4 class="page-header"></h4>
-								<div class="form-group">
-									<label>Product screenshot</label><br>
-									<button type="button" class="media_btn btn btn-info btn-flat" style="<%- if @item.additional.screenshot then "display:none" %>"><i class="fa fa-plus"></i> Select Media</button>
-									<div class="selected_media_itm"  style="<%- if @item.additional.screenshot then "background-image:url("+@item.additional.screenshot+")" else "display:none" %>"    data-src="<%- @item.additional.screenshot || "" %>" data-type="image"  id="prscreenshot"><a class="media_itm_link lightbox btn btn-warning btn-flat" id="z2" href="<%- @item.additional.screenshot || "" %>" target="_blank" title=""><i class="fa  fa-eye"></i></a><button type="button" class="btn-selectedmediaremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button></div>
-								</div>
-								<div class="form-group small_editor prinformation">
-									<label>Product information</label>
-									<textarea id="prinformation" class="form-control htmlcont_small"  cols="20"  ></textarea>
-								</div>
-								<div class="form-group small_editor prspecification">
-									<label>Product specification</label>
-									<textarea id="prspecification" class="form-control htmlcont_small"   cols="20"  ></textarea>
-								</div>
-								<div class="form-group">
-									<label>Filtering tags</label>
-									<select class="form-control selectors" id="prtags" multiple="multiple" style="width: 100%;" ></select>	
-								</div>
-							</div>
-							<div class="col-md-12 col-ms-12">
-								<h4 class="page-header"></h4>
-								<div class="form-group">
-									<label> Related Products</label><br>
-									<select class="form-control select2" id="prproduct" data-category="product" style="width: 100%;"></select>	
-								</div>
-								<div class="connectedSortable" id="prproduct_wrap" data-placeholder="external-event sort-highlight" data-connect=".sortingitm" data-handle=".sortingitm">
-									<% if @item.rel_products :%>
-										<% for product in @item.rel_products : %>
-											<div class="sortingitm spec_itm_li prproduct_itm prproduct_<%- product.id %>" id="<%- product.id %>">	
-												<div class="spec_itm_li_media"><img src="<%- product.poster || "/admin/img/temp.png"  %>"  /></div>	
-												<div class="spec_itm_li_title"><%- product.title %></div>	
-												<button type="button" class="btn-sitemdelete  btn  btn-danger btn-xs btn-removerelatedproduct"><i class="fa fa-times"></i></button>
-											</div>		
-										<% end %>	
-									<% end %>
-								</div>		
-							</div>
-						<% end %>	
 					</div>	
 				</div>
 			</div>
@@ -208,110 +64,159 @@
 		</div>
 	</div>
 	
-	<% if @pagename!="team" :%>		
-			<div class="box box-primary">
-				<div class="box-header">
-					<h3 class="box-title">Content Editor</h3>
-				</div>
-				<div class="box-body">
-					<div class="edit_contr_cont">
-						<div class="edit_contr_left">
-							<div class="edit_contr_modules">
-								<h4 style="margin-top:0"><i class="fa fa-sticky-note-o"></i> Templates</h4>
-								<div class="edit_contr_modules_templs">
-									<a class="edit_templ edit_templ_1" data-type="0" href="#" title="Big Image"></a>
-									<a class="edit_templ edit_templ_2" data-type="1" href="#" title="2 Images"></a>
-									<a class="edit_templ edit_templ_3" data-type="2" href="#" title="Image with Text"></a>
-									<a class="edit_templ edit_templ_4" data-type="3" href="#" title="Text with Image"></a>		
-									<a class="edit_templ edit_templ_5" data-type="4" href="#" title="Big Text"></a>
-									<a class="edit_templ edit_templ_6" data-type="5" href="#" title="2 Texts"></a>
-									<a class="edit_templ edit_templ_7" data-type="6" href="#" title="Embedded Video"></a>
-									<a class="edit_templ edit_templ_8" data-type="7" href="#" title="Video file"></a>
-									<a class="edit_templ edit_templ_9" data-type="8" href="#" title="Slide Show"></a>
+	
+	
+	
+	
+	<div class="row">
+		<div class="col-md-12 col-ms-12">	
+		
+		
+		
+			<div class="nav-tabs-custom">
+				<ul class="nav nav-tabs">
+					<% for option, i in @options : %>
+						<li class="<%- if i==0 then "active" %>"><a href="#tab_<%- i %>" data-toggle="tab" aria-expanded="<%- if i==0 then "true" else "false" %>"><%- option.language_title %></a></li>
+					<% end %>		
+				</ul>
+				<div class="tab-content">
+					<% for option, i in @options : %>
+						<div class="tab-pane <%- if i==0 then "active" %>" id="tab_<%- i %>">
+
+							<div class="box box-primary">
+								<div class="box-header">
+									<h3 class="box-title">Media Content</h3>
+								</div>
+								<div class="box-body">
+									<div class="row">
+										<div class="col-md-4 col-ms-4">	
+											<div class="form-group">
+												<label>Title</label>
+												<input type="text" class="form-control  prtitle"  placeholder="Enter title"  data-lang="<%- option.language_code %>" value="<% if @item.title :%><% if @item.title[option.language_code] :%><%- @item.title[option.language_code] %><% end %><% end %>">
+											</div>
+										</div>
+										
+										<% if @pagename=="exhibition" :%>
+											<div class="col-md-4 col-ms-4">	
+												<div class="form-group">	
+													<label>Floor</label>
+													<input type="text" class="form-control prtxt" data-id="floor" placeholder="Enter Floor" data-lang="<%- option.language_code %>" value="<% if @item.content :%><% if @item.content[option.language_code] :%><%- @item.content[option.language_code].floor "" || %><% end %><% end %>">
+												</div>	
+											</div>
+										<% end %>
+
+										<% if  @pagename=="event" :%>
+											<div class="col-md-4 col-ms-4">	
+												<div class="form-group">	
+													<label>Place</label>
+													<input type="text" class="form-control prtxt" data-id="place" placeholder="Enter Place" data-lang="<%- option.language_code %>" value="<% if @item.content :%><% if @item.content[option.language_code] :%><%- @item.content[option.language_code].place || "" %><% end %><% end %>">
+												</div>	
+											</div>
+										<% end %>
+										
+										
+										
+										<% if @pagename=="exhibit" :%>
+											<div class="col-md-4 col-ms-4">	
+												<div class="form-group">
+													<label>Audio file</label><br>
+													<button type="button" class="media_btn btn btn-info btn-flat" style="
+														<% finded=false %>			
+														<% if @item.audio :%>
+															<% if @item.audio[option.language_code] :%>
+																<% finded=true %>
+																display:none
+															<% end %>	
+														<% end %>	
+													"><i class="fa fa-plus"></i> Select Media</button>
+													<div class="selected_media_itm praudio" id="praudio<%- option.language_code %>" style="<%- if !finded then "display:none" %>;background-image:url(/admin/img/audio.png);" data-src="<%- if finded then @item.audio[option.language_code] else "" %>" data-type="audio"  data-lang="<%- option.language_code %>"><a class="media_itm_link btn btn-warning btn-flat"  href="<%- if finded then @item.audio[option.language_code] %>" target="_blank" title=""><i class="fa  fa-eye"></i></a><button type="button" class="btn-selectedmediaremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button></div>
+												</div>
+											</div>
+											<div class="col-md-4 col-ms-4">	
+												<div class="form-group">
+													<label>Video file</label><br>
+													<button type="button" class="media_btn btn btn-info btn-flat" style="
+														<% finded=false %>
+														
+														<% if @item.video :%>
+															<% if @item.video[option.language_code] :%>
+																<% finded=true %>
+																display:none
+															<% end %>	
+														<% end %>	
+													"><i class="fa fa-plus"></i> Select Media</button>
+													<div class="selected_media_itm prvideo" id="prvideo<%- option.language_code %>" style="<%- if !finded then "display:none" %>;background-image:url(/admin/img/video.png);" data-src="<%- if finded then @item.video[option.language_code] else "" %>" data-type="video"  data-lang="<%- option.language_code %>"><a class="media_itm_link btn btn-warning btn-flat"  href="<%- if finded then @item.video[option.language_code] %>" target="_blank" title=""><i class="fa  fa-eye"></i></a><button type="button" class="btn-selectedmediaremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button></div>
+												</div>
+											</div>	
+										<% end %>
+									</div>
+									
+										<div class="row">
+											<div class="col-md-12 col-ms-12">
+												<div class="form-group">
+													<% if @pagename=="exhibit" :%>
+														<label>Transcription</label>
+													<% end %>
+													<% if @pagename=="exhibition" or @pagename=="event" :%>
+														<label>Short description</label>
+													<% end %>
+													<textarea  class="form-control htmlcont_small prtranscript"  data-lang="<%- option.language_code %>"  cols="20"  ><% if @item.text :%><% if @item.text[option.language_code] :%><%- @item.text[option.language_code] %><% end %><% end %></textarea>
+												</div>
+											</div>
+										</div>
+									
+									
 								</div>
 							</div>
+							
+							
+							<div class="box box-primary">
+								<div class="box-header">
+									<h3 class="box-title">Visual Content</h3>
+								</div>
+								<div class="box-body">
+									<div class="edit_contr_cont">
+										<div class="edit_contr_left">
+											<div class="edit_contr_modules">
+												<h4 style="margin-top:0"><i class="fa fa-sticky-note-o"></i> Templates</h4>
+												<div class="edit_contr_modules_templs">
+													<a class="edit_templ edit_templ<%- option.language_code %> edit_templ_1" data-type="0" href="#" title="Image"></a>
+													<a class="edit_templ edit_templ<%- option.language_code %> edit_templ_2" data-type="1" href="#" title="Text"></a>
+												</div>
+											</div>
+										</div>
+										<div class="edit_contr_right">
+											<h4><i class="fa fa-eye"></i> Preview</h4>
+											<div class="edit_contr_items">
+												<div class="edit_contr_items_list" id="edit_contr_items_list<%- option.language_code %>" data-lang="<%- option.language_code %>"></div>	
+												<h3 class="box-title edit_bottom_drag_text"><i class="fa fa-arrows"></i> Drag & Drop items from templates</h3>
+											</div>	
+										</div>	
+										
+									</div>	
+								</div>
+							</div>
+							
+
 						</div>
-						<div class="edit_contr_right">
-							<h4><i class="fa fa-eye"></i> Preview</h4>
-							<div class="edit_contr_items">
-								<div id="edit_contr_items_list"></div>	
-								<h3 class="box-title edit_bottom_drag_text"><i class="fa fa-arrows"></i> Drag & Drop items from templates</h3>
-							</div>	
-						</div>	
-						
-					</div>	
+					<% end %>	
 				</div>
-			</div>
-	<% end %>	
-	
-	
-	<% if @pagename=="page" :%>		
-	
-		<div class="box box-primary">
-			<div class="box-header">
-				<h3 class="box-title"><i class="fa fa-link"></i> Bottom Links</h3>										
-			</div>
-			<div class="box-body">
-				<div class="row">
-					<div class="col-md-6 col-ms-6">	
-						<div class="form-group">
-							<label>Title 1</label>
-							<input type="text" class="form-control" id="prbottom_link_title1" placeholder="Enter title" value="<%- @item.additional.bottom_link_title1 || "" %>">
-						</div>
-						<div class="form-group">
-							<label>URL 1</label>
-							<input type="text" class="form-control" id="prbottom_link_url1" placeholder="Enter URL" value="<%- @item.additional.bottom_link_url1 || "" %>">
-						</div>
-					</div>	
-					<div class="col-md-6 col-ms-6">	
-						<div class="form-group">
-							<label>Title 2</label>
-							<input type="text" class="form-control" id="prbottom_link_title2" placeholder="Enter title" value="<%- @item.additional.bottom_link_title2 || "" %>">
-						</div>
-						<div class="form-group">
-							<label>URL 2</label>
-							<input type="text" class="form-control" id="prbottom_link_url2" placeholder="Enter URL" value="<%- @item.additional.bottom_link_url2 || "" %>">
-						</div>
-					</div>	
-				</div>		
 			</div>		
-		</div>
-				
-	<% end %>
-	
-	
-	<div class="box box-primary">
-		<div class="box-header">
-			<h3 class="box-title"><i class="fa fa-edit"></i> SEO</h3>										
-		</div>
-		<div class="box-body">
-			<div class="row">
-				<div class="col-md-6 col-ms-6">	
-					<div class="form-group">
-						<label>Meta keywords</label>
-						<textarea id="prseo_keywords" class="form-control"  rows="2" cols="80"  ><%- @item.seo_keywords || "" %></textarea>
+		
+		
+
+			<div class="box">
+				<div class="box-footer">
+					<div class="pull-right">
+						<a  href="/category/<%- @pagename %>" class="btn btn-default"><i class="fa fa-angle-left"></i> Back</a>
+						<button type="button"  class="btn btn-success btn-saveitem"><i class="fa fa-save"></i> Save</button>
+						<button type="button"  data-href="/category/<%- @pagename %>" class="btn btn-info andexit btn-saveitem"><i class="fa fa-save"></i> Save and exit</button>
 					</div>
-				</div>
-				<div class="col-md-6 col-ms-6">	
-					<div class="form-group">
-						<label>Meta description</label>
-						<textarea id="prseo_description" class="form-control"  rows="2" cols="80"  ><%- @item.seo_description || "" %></textarea>
-					</div>
-				</div>
-			</div>	
-		</div>
-	</div>
-	
-	
-	<div class="box">
-		<div class="box-footer">
-			<div class="pull-right">
-				<a  href="/admin/category/<%- @pagename %>" class="btn btn-default"><i class="fa fa-angle-left"></i> Back</a>
-				<button type="button"  class="btn btn-success btn-saveitem"><i class="fa fa-save"></i> Save</button>
-				<button type="button"  data-href="/admin/category/<%- @pagename %>" class="btn btn-info andexit btn-saveitem"><i class="fa fa-save"></i> Save and exit</button>
+				</div>	
 			</div>
-		</div>	
-	</div>
+			
+		</div>
+	</div>	
 </section>
 
 
@@ -323,14 +228,7 @@
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 				<h4 class="modal-title">Template Values 
 					<img src="/admin/img/temp1.png" class="edit_ttpls edit_ttpls1" />
-					<img src="/admin/img/temp2.png" class="edit_ttpls edit_ttpls2" />
-					<img src="/admin/img/temp3.png" class="edit_ttpls edit_ttpls3" />
-					<img src="/admin/img/temp4.png" class="edit_ttpls edit_ttpls4" />
-					<img src="/admin/img/temp5.png" class="edit_ttpls edit_ttpls5" />
-					<img src="/admin/img/temp6.png" class="edit_ttpls edit_ttpls6" />	
-					<img src="/admin/img/temp7.png" class="edit_ttpls edit_ttpls7" />	
-					<img src="/admin/img/temp8.png" class="edit_ttpls edit_ttpls8" />	
-					<img src="/admin/img/temp9.png" class="edit_ttpls edit_ttpls9" />	
+					<img src="/admin/img/temp5.png" class="edit_ttpls edit_ttpls2" />
 				</h4>
 			</div>
 			<div class="modal-body">
@@ -338,77 +236,25 @@
 					<div class="col-md-3 col-ms-6">	
 					
 						<div class="form-group editor_img1">
-							<label>Image 1</label>
+							<label>Image</label>
 							<div>
 								<button type="button" class="media_btn btn btn-info btn-flat "><i class="fa fa-plus"></i> Select Media</button>
 								<div class="selected_media_itm" style="display:none"    data-src="" data-type="image"  id="primg1"><a class="media_itm_link lightbox btn btn-warning btn-flat" id="k1" href="#" target="_blank" title=""><i class="fa  fa-eye"></i></a><button type="button" class="btn-selectedmediaremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button></div>
 							</div>
 						</div>
-						<div class="form-group editor_img2">
-							<label>Image 2</label>
-							<div>
-								<button type="button" class="media_btn btn btn-info btn-flat "><i class="fa fa-plus"></i> Select Media</button>
-								<div class="selected_media_itm" style="display:none"    data-src="" data-type="image"  id="primg2"><a class="media_itm_link lightbox btn btn-warning btn-flat" id="k2" href="#" target="_blank" title=""><i class="fa  fa-eye"></i></a><button type="button" class="btn-selectedmediaremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button></div>
-							</div>
-						</div>	
-						
-						<div class="form-group editor_videof">
-							<label>Video MP4 file</label>
-							<div>
-								<button type="button" class="media_btn btn btn-info btn-flat "><i class="fa fa-plus"></i> Select Media</button>
-								<div class="selected_media_itm" style="display:none"    data-src="" data-type="video"  id="prvideof1"><a class="media_itm_link  btn btn-warning btn-flat" id="k3" href="#" target="_blank" title=""><i class="fa  fa-eye"></i></a><button type="button" class="btn-selectedmediaremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button></div>
-							</div>
-						</div>
 					</div>	
-					<div class="col-md-9 col-ms-6">	
-					
+					<div class="col-md-9 col-ms-6">		
 						<div class="form-group editor_img1">
-							<label>Image 1 caption</label>
-							<input type="text" class="form-control" id="prcaption1" placeholder="Enter image 1 caption" value="">
-						</div>
-						<div class="form-group editor_img2">
-							<label>Image 2 caption</label>
-							<input type="text" class="form-control" id="prcaption2" placeholder="Enter image 2 caption" value="">
-						</div>	
-						<div class="form-group editor_videof">
-							<label>Video OGV file</label>
-							<div>
-								<button type="button" class="media_btn btn btn-info btn-flat "><i class="fa fa-plus"></i> Select Media</button>
-								<div class="selected_media_itm" style="display:none"   data-src="" data-type="video"  id="prvideof2"><a class="media_itm_link  btn btn-warning btn-flat" id="z0" href="#" target="_blank" title=""><i class="fa  fa-eye"></i></a><button type="button" class="btn-selectedmediaremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button></div>
-							</div>
+							<label>Image caption</label>
+							<input type="text" class="form-control" id="prcaption1" placeholder="Enter image caption" value="">
 						</div>
 					</div>	
 					
-					<div class="col-md-12 col-ms-12">		
-						
-						<div class="form-group editor_videof">
-							<label>Video caption</label>
-							<input type="text" class="form-control" id="prvideofcaption" placeholder="Enter Video caption" value="">
-						</div>
-						
+					<div class="col-md-12 col-ms-12">							
 						<div class="form-group editor_text1 prtext1">
-							<label>Text 1</label>
+							<label>Text</label>
 							<textarea id="prtext1" class="form-control htmlcont_small"  rows="4" cols="50"  ></textarea>
 						</div>	
-						
-						<div class="form-group editor_text2 prtext2">
-							<label>Text 2</label>
-							<textarea id="prtext2" class="form-control htmlcont_small"  rows="4" cols="50"  ></textarea>
-						</div>	
-				
-						<div class="form-group editor_video">
-							<label>Video Iframe URL</label>
-							<input type="text" class="form-control" id="prvideo" placeholder="Enter Iframe URL" value="">
-						</div>
-				
-						<div class="form-group editor_video">
-							<label>Video caption</label>
-							<input type="text" class="form-control" id="prvideocaption" placeholder="Enter Video caption" value="">
-						</div>
-						<div class="form-group editor_slideshow">
-							<button type="button" class="btn_add_slide btn btn-success btn-lg"><i class="fa fa-plus"></i> Add Slide</button>
-							<div id="slideshow_list"></div>
-						</div>
 					</div>
 				</div>	
 			</div>
@@ -425,11 +271,10 @@
 
 <script type="text/javascript">
 	var _item_det=<%- JSON.stringify @item %>;
-	var _tags=<%- JSON.stringify @tags[@item.language || "en"] %>;
 </script>
 
 
-
+  
 
 
 
