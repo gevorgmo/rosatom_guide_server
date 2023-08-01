@@ -17,7 +17,7 @@ var mongoose       = require('mongoose')
 
 
 var _all_roles=["user","admin"];
-var _all_categories=["exhibition","event","service","exhibit"];
+var _all_categories=["exhibition","event","service","media"];
 var _all_global_pages=["home","exhibitions","events","services","maps"];
 
 exports.init = function (app) {
@@ -48,10 +48,12 @@ exports.init = function (app) {
 		res.setHeader('Access-Control-Allow-Origin', '*');
 		var _language=escape(req.params.lang || "ru").trim().toLowerCase();
 		var _slug=escape(req.params.slug || "home").trim().toLowerCase();
-		var _all_categories={"exhibitions":"exhibition","events":"event","services":"service"};
+		var _categories={"exhibitions":"exhibition","events":"event","services":"service"};
+		var _all_item={"home":"home","exhibition":"exhibition","media":"media","event":"event","service":"service","maps":"maps"};
+		
 		Option.find().sort({ord:1}).exec(function(err, _options){	
-			if(_all_categories[_slug]){ 
-				Page.find({active:true, category:_all_categories[_slug]}).sort({ord:1}).exec(function(err, _pages){
+			if(_categories[_slug]){ 
+				Page.find({active:true, category:_categories[_slug]}).sort({ord:1}).exec(function(err, _pages){
 					if(err || !_pages) {
 						Page.findOne({active:true, slug:"home"}).exec(function(_err, __home){
 							return res.render('templates/home', {lang:_language, page:__home.toObject(), options:_options});
@@ -67,7 +69,12 @@ exports.init = function (app) {
 							return res.render('templates/home', {lang:_language, page:__home.toObject(), options:_options});
 						});	
 					} else {
-						return res.render('templates/'+_slug, {lang:_language, page:__page.toObject(),   options:_options});
+						var _p=__page.toObject();
+						if(_all_item[_p.category]){ 
+							return res.render('templates/'+_p.category, {lang:_language, page:__page.toObject(),   options:_options});
+						} else {
+							return res.render('templates/media', {lang:_language, page:__page.toObject(),   options:_options});
+						}						
 					}
 				});
 			}	
@@ -336,14 +343,11 @@ exports.init = function (app) {
 			text:(req.body.text || {}),
 			published:(req.body.published || new Date())	
 		};
-		
-		if(_all_global_pages.indexOf(_page.category)==-1){
-			var _slug=GenerateSlug(req.body.slug || "none");
-			_page.slug=_slug;
-		}
-		
+		_page.slug=GenerateSlug(req.body.slug || new Date().getTime());
+
+		 
 		if(req.body.id=="new"){
-			Page.find({slug: _slug}, function (err1, _slugs) {
+			Page.find({slug: _page.slug}, function (err1, _slugs) {
 				if(err1) return res.status(200).send({"status":false});
 				if(_slugs){
 					if(_slugs.length>0) return res.status(200).send({"status":false});

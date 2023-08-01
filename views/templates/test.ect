@@ -19,7 +19,10 @@
 				e.src ="https://rosatom.loremipsumcorp.com/js/script.js";
 				document.body.appendChild(e);
 			}
-			function StartScan(){
+			function StartScan(_cb){
+				_cb("ex1");
+			}
+			function StopScan(){
 				console.log(1000);
 			}
 		</script>

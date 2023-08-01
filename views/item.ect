@@ -28,7 +28,7 @@
 				</div>
 				<div class="box-body">
 					<div class="row">										
-						<% if @pagename=="exhibit" :%>
+						<% if @pagename=="media" :%>
 							<div class="col-md-4 col-ms-4">	
 								<div class="form-group">
 									<label>Slug</label>
@@ -92,7 +92,7 @@
 										<div class="col-md-4 col-ms-4">	
 											<div class="form-group">
 												<label>Title</label>
-												<input type="text" class="form-control  prtitle"  placeholder="Enter title"  data-lang="<%- option.language_code %>" value="<% if @item.title :%><% if @item.title[option.language_code] :%><%- @item.title[option.language_code] %><% end %><% end %>">
+												<input type="text" class="form-control  prtitle"  placeholder="Enter title"  data-lang="<%- option.language_code %>" value="<% if @item.title :%><%- @item.title[option.language_code] || "" %><% end %>">
 											</div>
 										</div>
 										
@@ -100,7 +100,7 @@
 											<div class="col-md-4 col-ms-4">	
 												<div class="form-group">	
 													<label>Floor</label>
-													<input type="text" class="form-control prtxt" data-id="floor" placeholder="Enter Floor" data-lang="<%- option.language_code %>" value="<% if @item.content :%><% if @item.content[option.language_code] :%><%- @item.content[option.language_code].floor "" || %><% end %><% end %>">
+													<input type="text" class="form-control prtxt" data-id="floor" placeholder="Enter Floor" data-lang="<%- option.language_code %>" value="<% if @item.content :%><% if @item.content[option.language_code] :%><%- @item.content[option.language_code].floor || "" %><% end %><% end %>">
 												</div>	
 											</div>
 										<% end %>
@@ -116,7 +116,7 @@
 										
 										
 										
-										<% if @pagename=="exhibit" :%>
+										<% if @pagename=="media" :%>
 											<div class="col-md-4 col-ms-4">	
 												<div class="form-group">
 													<label>Audio file</label><br>
@@ -154,7 +154,7 @@
 										<div class="row">
 											<div class="col-md-12 col-ms-12">
 												<div class="form-group">
-													<% if @pagename=="exhibit" :%>
+													<% if @pagename=="media" :%>
 														<label>Transcription</label>
 													<% end %>
 													<% if @pagename=="exhibition" or @pagename=="event" :%>

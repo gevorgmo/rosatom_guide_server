@@ -1,0 +1,197 @@
+		<header class="header">
+			<div class="header_top">
+				<div class="custom_container">
+				
+					<div class="back_page">
+						<a href="/">
+							<img src="https://rosatom.loremipsumcorp.com/css/images/back_arrow_black.svg" alt="" title="" />
+						</a>
+					</div>
+					
+					<div class="header_title_block">
+						<%- @category %>
+					</div>
+					<div class="inner_logo_block">
+						<img src="https://rosatom.loremipsumcorp.com/css/images/mark_black.svg" alt="" title=""/>
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<span class="cb"></span>
+
+		<main class="content">
+
+			<div class="events_blocks_container">
+			
+				<img src="images/exb.jpg" alt="" title="" />
+				
+				<div class="events_categories">
+					<span class="selected" data-type="today">TODAY</span>
+					<span data-type="upcoming">UPCOMING EVENTS</span> 
+				</div>
+
+				<div class="events_select">
+					<div class="events_select_cont">
+						<div class="selected" data-type="all"><span>All Events</span><i class="arrow down"></i></div>
+						<ul>
+							<li data-type="lobby">Lobby</li>
+							<li data-type="hall">Conference Hall</li>
+							<li data-type="laboratory">Laboratory</li>
+							<li data-type="atomarium">Atomarium</li>
+						</ul>
+					</div>
+				</div>
+
+				
+				<div class="events_container">
+					<div data-type="today">
+						<div class="event_block" data-type="lobby">
+							<div class="event_location">
+								<span class="event_time">14:00</span>
+								<span class="event_place">Lobby</span>
+							</div>	
+							<div class="event_info">
+								<a href="https://rosatom.loremipsumcorp.com/explore/ru/event">
+								<img src="images/exb.jpg" alt="" title="" />
+								</a>
+								<h2>DOLOREM IPSUM</h2>
+								<span>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium totam rem aperiam, eaque ipsa quae.</span>
+							</div>
+						</div>
+
+						<div class="event_block" data-type="hall">
+							<div class="event_location">
+								<span class="event_time">14:00</span>
+								<span class="event_place">Conference Hall</span>
+							</div>	
+							<div class="event_info">
+								<img src="images/event1.png" alt="" title="" />
+								<h2>DOLOREM IPSUM</h2>
+								<span>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium totam rem aperiam, eaque ipsa quae.</span>
+							</div>
+						</div>
+
+						<div class="event_block" data-type="laboratory">
+							<div class="event_location">
+								<span class="event_time">14:00</span>
+								<span class="event_place">Laboratory</span>
+							</div>	
+							<div class="event_info">
+								<img src="images/event2.png" alt="" title="" />
+								<h2>DOLOREM IPSUM</h2>
+								<span>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium totam rem aperiam, eaque ipsa quae.</span>
+							</div>
+						</div>
+
+						<div class="event_block" data-type="hall">
+							<div class="event_location">
+								<span class="event_time">14:00</span>
+								<span class="event_place">Conference Hall</span>
+							</div>	
+							<div class="event_info">
+								<img src="images/event3.png" alt="" title="" />
+								<h2>DOLOREM IPSUM</h2>
+								<span>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium totam rem aperiam, eaque ipsa quae.</span>
+							</div>
+						</div>
+
+						<div class="event_block" data-type="atomarium">
+							<div class="event_location">
+								<span class="event_time">14:00</span>
+								<span class="event_place">Atomarium</span>
+							</div>	
+							<div class="event_info">
+								<img src="images/event4.png" alt="" title="" />
+								<h2>DOLOREM IPSUM</h2>
+								<span>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium totam rem aperiam, eaque ipsa quae.</span>
+							</div>
+						</div>
+					</div>
+
+					<div data-type="upcoming">
+						<div class="event_block" data-type="lobby">
+							<div class="event_location">
+								<span class="event_time">14:00</span>
+								<span class="event_place">Atomarium</span>
+							</div>	
+							<div class="event_info">
+								<img src="images/event4.png" alt="" title="" />
+								<h2>DOLOREM IPSUM</h2>
+								<span>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium totam rem aperiam, eaque ipsa quae.</span>
+							</div>
+						</div>
+
+						<div class="event_block" data-type="hall">
+							<div class="event_location">
+								<span class="event_time">14:00</span>
+								<span class="event_place">Conference Hall</span>
+							</div>	
+							<div class="event_info">
+								<img src="images/event1.png" alt="" title="" />
+								<h2>DOLOREM IPSUM</h2>
+								<span>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium totam rem aperiam, eaque ipsa quae.</span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<span class="cb"></span>
+
+		</main>
+
+		<span class="cb"></span>
+
+		<footer class="footer">
+			<div class="inner_footer_menu">
+				
+				
+				<%  opt=@options[0] %>
+				<% for optionn in @options : %>
+					<% if optionn.language_code==@lang :%>
+						<%  opt=optionn %>
+						<% break %>
+					<% end %>
+				<% end %>		
+				
+				<div class="inner_footer_menu_block">
+					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/exhibitions">
+						<img src="css/images/exhibits_black.svg" alt="" title="" />
+						<span><% if opt.translations :%><%- opt.translations.exibitions || "" %><% end %></span>
+					</a>
+				</div>
+
+				<div class="inner_footer_menu_block selected">
+					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/events">
+						<img src="css/images/events_black.svg" alt="" title="" />
+						<span><% if opt.translations :%><%- opt.translations.events || "" %><% end %></span>
+					</a>
+				</div>
+
+				<div class="inner_footer_menu_block">
+					<div class="qr_button">
+						<img src="https://rosatom.loremipsumcorp.com/css/images/qr_black.svg" alt="" title="" />
+					</div>
+				</div>
+
+				<div class="inner_footer_menu_block">
+					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/services">
+						<img src="css/images/services_black.svg" alt="" title="" />
+						<span><% if opt.translations :%><%- opt.translations.services || "" %><% end %></span>
+					</a>
+				</div>
+
+				<div class="inner_footer_menu_block">
+					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/maps">
+						<img src="css/images/maps_black.svg" alt="" title="" />
+						<span><% if opt.translations :%><%- opt.translations.maps || "" %><% end %></span>
+					</a>
+				</div>
+			</div>				
+			<span class="cb"></span>
+		</footer>
+
+
+
+

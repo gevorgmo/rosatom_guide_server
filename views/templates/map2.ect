@@ -3,7 +3,7 @@
 				<div class="custom_container">
 					<div class="back_page">
 						<a href="map1.html">
-							<span class="arrow left"></span><span class="arrow_tail"></span>
+							<span class="arrow_left"></span><span class="arrow_tail"></span>
 						</a>
 					</div>
 					<div class="header_title_block">
@@ -31,32 +31,47 @@
 
 		<footer class="footer">
 			<div class="inner_footer_menu">
-				<div class="inner_footer_menu_block selected">
-					<img src="css/images/exhibits_black.svg" alt="" title="" />
-					<span>Выставки</span>
+				<%  opt=@options[0] %>
+				<% for optionn in @options : %>
+					<% if optionn.language_code==@lang :%>
+						<%  opt=optionn %>
+						<% break %>
+					<% end %>
+				<% end %>		
+				
+				<div class="inner_footer_menu_block">
+					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/exhibitions">
+						<img src="css/images/exhibits_black.svg" alt="" title="" />
+						<span><% if opt.translations :%><%- opt.translations.exibitions || "" %><% end %></span>
+					</a>
 				</div>
 
 				<div class="inner_footer_menu_block">
-					<img src="css/images/events_black.svg" alt="" title="" />
-					<span>Мероприятия</span>
+					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/events">
+						<img src="css/images/events_black.svg" alt="" title="" />
+						<span><% if opt.translations :%><%- opt.translations.events || "" %><% end %></span>
+					</a>
 				</div>
 
 				<div class="inner_footer_menu_block">
 					<div class="qr_button">
-						<img src="css/images/qr_black.svg" alt="" title="" />
+						<img src="https://rosatom.loremipsumcorp.com/css/images/qr_black.svg" alt="" title="" />
 					</div>
 				</div>
 
 				<div class="inner_footer_menu_block">
-					<img src="css/images/services_black.svg" alt="" title="" />
-					<span>СЕРВИСЫ</span>
+					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/sevices">
+						<img src="css/images/services_black.svg" alt="" title="" />
+						<span><% if opt.translations :%><%- opt.translations.services || "" %><% end %></span>
+					</a>
 				</div>
 
-				<div class="inner_footer_menu_block">
-					<img src="css/images/maps_black.svg" alt="" title="" />
-					<span>Карта</span>
+				<div class="inner_footer_menu_block selected">
+					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/maps">
+						<img src="css/images/maps_black.svg" alt="" title="" />
+						<span><% if opt.translations :%><%- opt.translations.maps || "" %><% end %></span>
+					</a>
 				</div>
 			</div>				
 			<span class="cb"></span>
 		</footer>
-		

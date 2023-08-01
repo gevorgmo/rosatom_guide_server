@@ -1,11 +1,14 @@
 		<header class="header">
 			<div class="header_top">
 				<div class="custom_container">
-					<div class="header_title_block">
-						КАРТА
+					<div class="back_page">
+						<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/maps">
+							<span class="arrow left"></span><span class="arrow_tail"></span>
+						</a>
 					</div>
+					<div class="header_title_block">TEST</div>
 					<div class="inner_logo_block">
-						<img src="css/images/mark_black.svg" alt="" title=""/>
+						<img src="https://rosatom.loremipsumcorp.com/css/images/mark_black.svg" alt="" title=""/>
 					</div>
 				</div>
 			</div>
@@ -14,21 +17,19 @@
 		<span class="cb"></span>
 
 		<main class="content">
-			<div class="map_blocks_container">
-				<img src="images/map1.png" alt="" title="" >
-
-				<span class="map_text">
-					Пожалуйста, выберите этаж
-				</span>
-			</div>
+			<button id="audio_buttn" data-status="play" >STOP</button>
+			<audio id="audio_player" data-src="https://streamingp.shoutcast.com/ABC-Jazz?lang=en-US%2cen%3bq%3d0.9%2cru%3bq%3d0.8%2cpt%3bq%3d0.7%2chy%3bq%3d0.6%2cda%3bq%3d0.5%2ctr%3bq%3d0.4" style="display:none" src="https://streamingp.shoutcast.com/ABC-Jazz?lang=en-US%2cen%3bq%3d0.9%2cru%3bq%3d0.8%2cpt%3bq%3d0.7%2chy%3bq%3d0.6%2cda%3bq%3d0.5%2ctr%3bq%3d0.4" preload="preload" autoplay="autoplay" controls="none"></audio>
+			
 			<span class="cb"></span>
-
 		</main>
 
 		<span class="cb"></span>
 
+
 		<footer class="footer">
 			<div class="inner_footer_menu">
+				
+				
 				<%  opt=@options[0] %>
 				<% for optionn in @options : %>
 					<% if optionn.language_code==@lang :%>
@@ -37,39 +38,40 @@
 					<% end %>
 				<% end %>		
 				
-				<div class="inner_footer_menu_block">
+				<div class="inner_footer_menu_block selected">
 					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/exhibitions">
-						<img src="css/images/exhibits_black.svg" alt="" title="" />
+						<img src="https://rosatom.loremipsumcorp.com/css/images/exhibits.svg" alt="" title="" />
 						<span><% if opt.translations :%><%- opt.translations.exibitions || "" %><% end %></span>
 					</a>
 				</div>
 
 				<div class="inner_footer_menu_block">
 					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/events">
-						<img src="css/images/events_black.svg" alt="" title="" />
+						<img src="https://rosatom.loremipsumcorp.com/css/images/events.svg" alt="" title="" />
 						<span><% if opt.translations :%><%- opt.translations.events || "" %><% end %></span>
 					</a>
 				</div>
 
 				<div class="inner_footer_menu_block">
 					<div class="qr_button">
-						<img src="https://rosatom.loremipsumcorp.com/css/images/qr_black.svg" alt="" title="" />
+						<img src="https://rosatom.loremipsumcorp.com/css/images/qr.svg" alt="" title="" />
 					</div>
 				</div>
 
 				<div class="inner_footer_menu_block">
-					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/sevices">
-						<img src="css/images/services_black.svg" alt="" title="" />
+					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/services">
+						<img src="https://rosatom.loremipsumcorp.com/css/images/services.svg" alt="" title="" />
 						<span><% if opt.translations :%><%- opt.translations.services || "" %><% end %></span>
 					</a>
 				</div>
 
-				<div class="inner_footer_menu_block selected">
+				<div class="inner_footer_menu_block">
 					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/maps">
-						<img src="css/images/maps_black.svg" alt="" title="" />
+						<img src="https://rosatom.loremipsumcorp.com/css/images/maps.svg" alt="" title="" />
 						<span><% if opt.translations :%><%- opt.translations.maps || "" %><% end %></span>
 					</a>
 				</div>
 			</div>				
 			<span class="cb"></span>
 		</footer>
+		

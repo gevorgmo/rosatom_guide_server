@@ -15,7 +15,19 @@
 
 		<main class="content">
 			<div class="map_blocks_container">
-				<img src="<% if @page.content :%><% if @page.content[@lang] :%><%- "https://rosatom.loremipsumcorp.com"+(@page.content[@lang].image0 || "") %><% end %><% end %>" alt="" title="" >
+				<img  usemap="#image-map" src="<% if @page.content :%><% if @page.content[@lang] :%><%- "https://rosatom.loremipsumcorp.com"+(@page.content[@lang].image0 || "") %><% end %><% end %>" alt="" title="" >
+				
+
+				<map name="image-map">
+					<area href="google.com" target="" alt="map1" title="map1" href="" coords="623,30,136,221,123,238,609,460,1078,240" shape="poly">
+					<area target="" alt="map2" title="map2" href="" coords="122,466,612,695,1076,483,845,369,617,463,369,367" shape="poly">
+					<area target="" alt="map3" title="map3" href="" coords="617,932,1079,714,845,602,610,707,365,602,122,706" shape="poly">
+					<area target="" alt="map4" title="map4" href="" coords="607,1162,1076,948,844,838,612,944,369,837,118,939" shape="poly">
+					<area target="" alt="map5" title="map5" href="" coords="607,1402,1074,1183,848,1075,612,1181,369,1075,123,1173" shape="poly">
+					<area target="" alt="map6" title="map6" href="" coords="610,1634,1079,1422,845,1309,611,1416,369,1309,120,1409" shape="poly">
+					<area target="" alt="map7" title="map7" href="" coords="609,1869,1076,1653,843,1546,604,1657,367,1543,121,1645" shape="poly">
+				</map>
+
 				<span class="map_text"><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].title0 || "" %><% end %><% end %></span>
 			</div>
 			<span class="cb"></span>
@@ -35,34 +47,34 @@
 				
 				<div class="inner_footer_menu_block">
 					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/exhibitions">
-						<img src="css/images/exhibits.svg" alt="" title="" />
+						<img src="css/images/exhibits_black.svg" alt="" title="" />
 						<span><% if opt.translations :%><%- opt.translations.exibitions || "" %><% end %></span>
 					</a>
 				</div>
 
 				<div class="inner_footer_menu_block">
 					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/events">
-						<img src="css/images/events.svg" alt="" title="" />
+						<img src="css/images/events_black.svg" alt="" title="" />
 						<span><% if opt.translations :%><%- opt.translations.events || "" %><% end %></span>
 					</a>
 				</div>
 
 				<div class="inner_footer_menu_block">
 					<div class="qr_button">
-						<img src="https://rosatom.loremipsumcorp.com/css/images/qr.svg" alt="" title="" />
+						<img src="https://rosatom.loremipsumcorp.com/css/images/qr_black.svg" alt="" title="" />
 					</div>
 				</div>
 
 				<div class="inner_footer_menu_block">
-					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/sevices">
-						<img src="css/images/services.svg" alt="" title="" />
+					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/services">
+						<img src="css/images/services_black.svg" alt="" title="" />
 						<span><% if opt.translations :%><%- opt.translations.services || "" %><% end %></span>
 					</a>
 				</div>
 
 				<div class="inner_footer_menu_block selected">
 					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/maps">
-						<img src="css/images/maps.svg" alt="" title="" />
+						<img src="css/images/maps_black.svg" alt="" title="" />
 						<span><% if opt.translations :%><%- opt.translations.maps || "" %><% end %></span>
 					</a>
 				</div>

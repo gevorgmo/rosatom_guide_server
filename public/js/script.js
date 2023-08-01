@@ -3,6 +3,7 @@
 
 
 
+
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -13,11 +14,12 @@ $(document).ready(function() {
 	LanguageLoad('ru');
 
 
-
-
 	$('body').on('click', 'a', function(evt) {
 		evt.preventDefault();
 		$('.loader_start').css({'visibility':'visible','opacity':'1'});
+		$('.guide_blocks_container').hide();	
+		$('#global_wrap').show();
+		StopScan(); 	
 		GetContent($(this).attr('href'),function(){});
 		return false;
 	});	
@@ -28,8 +30,13 @@ $(document).ready(function() {
 		evt.preventDefault();	
 		$('.guide_blocks_container').show();	
 		$('#global_wrap').hide();
-		StartScan(function(_resp){
+		StartScan(function(_resp){	
 			console.log(_resp);
+			var _tt=_resp.replace('http://',"").replace('https://',"");
+			StopScan(); 
+			$('.guide_blocks_container').hide();	
+			$('#global_wrap').show();	
+			GetContent("https://rosatom.loremipsumcorp.com/explore/"+_lang+"/media",function(){});
 		}); 
 		return false;
 	});	
@@ -52,6 +59,25 @@ $(document).ready(function() {
 		return false;
 	});	
 	
+	
+	$('body').on('click', '#audio_buttn', function(evt) {
+		evt.preventDefault();	
+		var ply = document.getElementById('audio_player');
+		if($(this).attr('data-status')=="stop"){
+			ply.src = $('#audio_player').attr('data-src');
+			ply.play();
+			$(this).attr('data-status', 'play');
+			$(this).text('STOP');
+		} else {
+			ply.pause();
+			ply.currentTime = 0;
+			ply.src = "";
+			$(this).attr('data-status', 'stop');
+			$(this).text('PLAY');
+		}	
+		return false;
+	});	
+	
 
 });
 
@@ -62,15 +88,69 @@ function GetContent(_url, _cb){
 		$('.loader_start').css({'visibility':'hidden','opacity':'0'});
 		$('#global_wrap').empty();
 		$('#global_wrap').append(data);
-		
-		$('body').removeClass('media_page').removeClass('map_page');
+		console.log(_url, '_url');
+		$('body').removeClass('media_page').removeClass('events_page').removeClass('map_page');
 		if(_url.indexOf('/maps')>-1){
 			if(!$('body').hasClass('map_page')) $('body').addClass('map_page');
 		}
-		_cb();
+		else if(_url.indexOf('/media')>-1){
+			if(!$('body').hasClass('media_page')) $('body').addClass('media_page');
+		}
+		
+		else if(_url.indexOf('/events')>-1 || _url.indexOf('/event')>-1){
+			if(!$('body').hasClass('events_page')) $('body').addClass('events_page');
+		}
+
+
+		if($('.inner_block h2 span').length){
+			$('.inner_block').each(function(){
+				$(this).find('h2 span').height($(this).find('h2').innerHeight()-15);
+			});
+		}
+
+		$('.events_categories span').on('click', function(){
+			$('.events_categories span').removeClass('selected');
+			$(this).addClass('selected');
+			$('.events_container > div').hide();
+			$('.events_container > div[data-type="'+$(this).data('type')+'"]').show();
+		});
+
+		$('.events_select .events_select_cont .selected').on('click', function(){
+			$('.events_select').toggleClass('opened');
+			$('.events_select .arrow').toggleClass('opened');
+		});
+
+		$('.events_select li').on('click', function(e){
+			$('.events_select').removeClass('opened');
+			$('.events_select_cont > div span').text($(this).text());
+			filterEvents($(e.currentTarget), $('.events_container'), '.event_block');
+		});
+
+		_cb();		
+		
 	});
 }
 //////////////////////////////////////////////////////////////////////////////////////////////
+
+function filterEvents($filterBtn, $list, $block){
+	
+		let $filterType = $filterBtn.data('type');
+		if($filterType === 'all') {
+			$list.children().removeClass('filtered');
+		} else {
+			$list.find($block).each((i,listItem) => {
+				let $eventType = $(listItem).data('type').split(',');
+			
+				console.log($eventType, $filterType);
+				if($eventType.some((item) => $filterType === item.trim())) {
+					$(listItem).removeClass('filtered')
+				} else {
+					$(listItem).addClass('filtered')
+				}
+			})
+		};
+}
+
  function LanguageLoad(_l){
  	GetContent("https://rosatom.loremipsumcorp.com/explore/"+_l+"/home",function(){
 		$('body').append('<div class="guide_blocks_container"><div class="header"><div class="header_top"><div class="custom_container"><div class="header_title_block">'+_trs_media_guide+'</div><div class="inner_logo_block"><img src="https://rosatom.loremipsumcorp.com/css/images/inner_logo.svg" alt="" title=""/></div></div></div></div>'+
