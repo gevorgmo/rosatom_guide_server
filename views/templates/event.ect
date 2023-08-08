@@ -1,18 +1,24 @@
-		<header class="header">
+<%  opt=@options[0] %>
+<% for optionn in @options : %>
+	<% if optionn.language_code==@lang :%>
+		<%  opt=optionn %>
+		<% break %>
+	<% end %>
+<% end %>		
+		
+		<header class="header" data-index="evnet_iner_page">
 			<div class="header_top">
-				<div class="custom_container">
-				
+				<div class="custom_container">	
 					<div class="back_page">
-						<a href="/">
+						<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/events">
 							<img src="https://rosatom.loremipsumcorp.com/css/images/back_arrow_black.svg" alt="" title="" />
 						</a>
 					</div>
-					
-					<div class="header_title_block">
-						EVENTS
-					</div>
+					<div class="header_title_block"><% if opt.translations :%><%- opt.translations.events || "" %><% end %></div>
 					<div class="inner_logo_block">
-						<img src="https://rosatom.loremipsumcorp.com/css/images/mark_black.svg" alt="" title=""/>
+						<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/home">
+							<img src="https://rosatom.loremipsumcorp.com/css/images/mark_black.svg" alt="" title=""/>
+						</a>	
 					</div>
 				</div>
 			</div>
@@ -24,59 +30,40 @@
 
 			<div class="events_blocks_container">
 			
-				<img src="images/exb.jpg" alt="" title="" />
-				
-				<div class="event_container">
-				
-					<h2>DOLOREM IPSUM</h2>
+
+				<% if @page.poster :%><img src="https://rosatom.loremipsumcorp.com<%- @page.poster %>" alt="" title="" /><% end %>	
+				<div class="event_container">	
+					<h2><% if @page.title :%><%- @page.title[@lang] || "" %><% end %></h2>
 					
 					<div class="event_info">
-						<span>14:00</span> 
-						<span>12.08.23</span> 
-						<span>Conference Hall</span> 
-						<span>Capacity:24</span>
+						<span><%- @page.time %></span> 
+						<span><%- @page.date %></span> 
+						<span><% if opt.translations :%><% if @page.content :%><% if @page.content.place :%><%- opt.translations[@page.content.place] || "" %><% end %><% end %><% end %></span> 
+						<span><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].floor || "" %><% end %><% end %></span>
 					</div>
-					
-					<span>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</span>
-							
+					<% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].content || "" %><% end %><% end %>		
 				</div>
 				
-				<div class="event_speakers">
-					<h2>SPEAKERS</h2>
-					<div class="speakers_container">
-						<div class="speaker_block">
-							<img src="images/speaker1.png" alt="" title="" />
-							<div class="speaker_info">
-								<h3>NAME SURNAME</h3>
-								<span>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati.</span>
+				<% if @page.content :%>
+					<% if @page.content[@lang] :%>
+						<% if @page.content[@lang].speakers :%>
+							<div class="event_speakers">
+								<h2><% if opt.translations :%><%- opt.translations.speakers || "" %><% end %></h2>
+								<div class="speakers_container">
+									<% for speaker in @page.content[@lang].speakers : %>
+										<div class="speaker_block">
+											<% if speaker.photo :%><img src="https://rosatom.loremipsumcorp.com<%- speaker.photo %>" alt="" title="" /><% end %>
+											<div class="speaker_info">
+												<h3><%- speaker.name %></h3>
+												<span><%- speaker.info %></span>
+											</div>
+										</div>
+									<% end %>	
+								</div>
 							</div>
-						</div>
-						
-						<div class="speaker_block">
-							<img src="images/speaker2.png" alt="" title="" />
-							<div class="speaker_info">
-								<h3>NAME SURNAME</h3>
-								<span>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati.</span>
-							</div>
-						</div>
-						
-						<div class="speaker_block">
-							<img src="images/speaker1.png" alt="" title="" />
-							<div class="speaker_info">
-								<h3>NAME SURNAME</h3>
-								<span>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati.</span>
-							</div>
-						</div>
-						
-						<div class="speaker_block">
-							<img src="images/speaker2.png" alt="" title="" />
-							<div class="speaker_info">
-								<h3>NAME SURNAME</h3>
-								<span>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati.</span>
-							</div>
-						</div>
-					</div>
-				</div>
+						<% end %>		
+					<% end %>
+				<% end %>
 
 			</div>
 			<span class="cb"></span>
@@ -86,44 +73,30 @@
 		<span class="cb"></span>
 
 		<footer class="footer">
-			<div class="inner_footer_menu">
-				
-				
-				<%  opt=@options[0] %>
-				<% for optionn in @options : %>
-					<% if optionn.language_code==@lang :%>
-						<%  opt=optionn %>
-						<% break %>
-					<% end %>
-				<% end %>		
-				
+			<div class="inner_footer_menu">		
 				<div class="inner_footer_menu_block">
 					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/exhibitions">
 						<img src="css/images/exhibits_black.svg" alt="" title="" />
 						<span><% if opt.translations :%><%- opt.translations.exibitions || "" %><% end %></span>
 					</a>
 				</div>
-
 				<div class="inner_footer_menu_block selected">
 					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/events">
 						<img src="css/images/events_black.svg" alt="" title="" />
 						<span><% if opt.translations :%><%- opt.translations.events || "" %><% end %></span>
 					</a>
 				</div>
-
 				<div class="inner_footer_menu_block">
 					<div class="qr_button">
 						<img src="https://rosatom.loremipsumcorp.com/css/images/qr_black.svg" alt="" title="" />
 					</div>
 				</div>
-
 				<div class="inner_footer_menu_block">
 					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/services">
 						<img src="css/images/services_black.svg" alt="" title="" />
 						<span><% if opt.translations :%><%- opt.translations.services || "" %><% end %></span>
 					</a>
 				</div>
-
 				<div class="inner_footer_menu_block">
 					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/maps">
 						<img src="css/images/maps_black.svg" alt="" title="" />

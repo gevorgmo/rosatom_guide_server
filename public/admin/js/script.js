@@ -364,6 +364,31 @@ $(document).ready(function(){
 			}	
 		});		
 	});
+	
+	
+	
+	$('body').on('click', '.itemturnicon-turn', function(event) {
+		event.preventDefault();	
+		var _id=$(this).attr('data-id');
+		var _status=$(this).attr('data-status')=='0' ? 1 : 0;
+		var _this=this;
+		$(this).find('.fa').removeClass('fa-toggle-off').removeClass('fa-toggle-on').addClass('fa-spinner').addClass('fa-spin');
+		$('.wait_overlay').css({'visibility':'visible','opacity':'1'});
+		PostRec('/changepagestatus', {'id': _id, 'status':_status}, function(_err, _data){
+			$('.wait_overlay').css({'visibility':'hidden','opacity':'0'});
+			if(_data.status){
+				$(_this).empty();
+				if(_status==1){	
+					$(_this).html("<i class='fa fa-toggle-on'></i>on");
+					$(_this).attr('data-status', 1);
+				} else{	
+					$(_this).html("<i class='fa fa-toggle-off'></i>off");
+					$(_this).attr('data-status', 0);
+				}
+			}
+		});	
+		return false;
+	});	
 ///////////////////////////ITEM//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	if($('#prpublished')[0]){	
@@ -372,10 +397,115 @@ $(document).ready(function(){
 			format: "YYYY-MM-DD HH:mm",
 			ignoreReadonly:true,
 			defaultDate: (_item_det.published!="" ? new Date(_item_det.published) : new Date())
-		});		
+		});	
 	}
-
 	
+	
+	
+	if($("#prmedia_type")[0]){
+		$(".mediatyp").hide();
+		$(".mediatyp"+$("#prmedia_type").val()).show();
+	}
+	
+	
+	$("#prmedia_type").on( "change", function() {
+		var _ii=$(this).val()
+		$(".mediatyp").hide();
+		$(".mediatyp"+_ii).show();
+	});
+	
+	
+
+		
+	$('body').on('click', '.btn-addspeaker', function(event) {
+		event.preventDefault();		
+		var _ll=$(this).attr('data-lang');
+		$('.all_speakers'+_ll).append(
+				'<div class="row speakeritem" data-lang="'+_ll+'">'+
+					'<div class="col-md-4 col-ms-4">'+	
+						'<div class="form-group">'+
+							'<label>Name</label>'+
+							'<input type="text" class="form-control  prname"  placeholder="Enter name"  data-lang="'+_ll+'" value="">'+
+						'</div>'+
+					'</div>'+
+					'<div class="col-md-3 col-ms-3">'+	
+						'<div class="form-group">'+
+							'<label>Photo</label><br>'+
+							'<button type="button" class="media_btn btn btn-info btn-flat" ><i class="fa fa-plus"></i> Select Media</button>'+
+							'<div class="selected_media_itm prphoto" id="prphoto'+_ll+(new Date()).getTime()+'" style="display:none;background-image:url(/admin/img/image_icon.jpg);" data-src="" data-type="image"  data-lang="'+_ll+'"><a class="media_itm_link btn btn-warning btn-flat"  href="" target="_blank" title=""><i class="fa  fa-eye"></i></a><button type="button" class="btn-selectedmediaremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button></div>'+
+						'</div>'+
+					'</div>'+
+					'<div class="col-md-4 col-ms-4">'+
+						'<div class="form-group">'+
+							'<label>Information</label>'+
+							'<textarea  class="form-control htmlcont_small prinfo"  data-lang="'+_ll+'"  cols="20"  ></textarea>'+
+						'</div>'+
+					'</div>'+
+					'<div class="col-md-1 col-ms-1">'+
+						'<button type="button"  class="btn  btn-danger btn-deletespeaker"><i class="fa fa-trash"></i></button>'+
+					'</div>'+
+				'</div>');
+	});
+	
+	
+	
+	$('body').on('click', '.btn-addmenusection', function(event) {
+		event.preventDefault();		
+		var _ll=$(this).attr('data-lang');
+		$('.all_menus'+_ll).append(
+			'<div class="sectionitm" data-lang="'+_ll+'">'+
+				'<button type="button"  class="btn btn-success btn-addmenuitem pull-right"><i class="fa fa-plus"></i> Add item</button>'+
+				'<button type="button"  class="btn  btn-danger btn-deletemenusection pull-right"><i class="fa fa-trash"></i> Delete section</button>'+
+				'<div class="form-group">'+
+					'<label>Section name</label>'+
+					'<input type="text" class="form-control  prsection"  placeholder="Enter title"  value="">'+
+				'</div>'+		
+				'<div class="all_menuitems"></div>'+
+			'</div>');
+	});
+	
+	
+	
+	
+	$('body').on('click', '.btn-addmenuitem', function(event) {
+		event.preventDefault();		
+		var _ll=$(this).attr('data-lang');
+		$(this).parent().find('.all_menuitems').append(
+				'<div class="row menuitem">'+
+					'<div class="col-md-4 col-ms-4">'+	
+						'<div class="form-group">'+
+							'<label>Name</label>'+
+							'<input type="text" class="form-control  prname"  placeholder="Enter name"  value="">'+
+						'</div>'+
+					'</div>'+
+					'<div class="col-md-4 col-ms-4">'+
+						'<div class="form-group">'+
+							'<label>Information</label>'+
+							'<textarea  class="form-control htmlcont_small prinfo"    cols="20"  ></textarea>'+
+						'</div>'+
+					'</div>'+
+					'<div class="col-md-3 col-ms-3">'+	
+						'<div class="form-group">'+
+							'<label>Price</label>'+
+							'<input type="text" class="form-control  prprice"  placeholder="Enter price"  value="">'+
+						'</div>'+
+					'</div>'+
+					'<div class="col-md-1 col-ms-1">'+
+						'<button type="button"  class="btn  btn-danger btn-deletespeaker"><i class="fa fa-trash"></i></button>'+
+					'</div>'+
+				'</div>');
+	});
+	
+	
+	$('body').on('click', '.btn-deletespeaker', function(event) {
+		event.preventDefault();		
+		$(this).parent().parent().remove();
+	});
+	
+	$('body').on('click', '.btn-deletemenusection', function(event) {
+		event.preventDefault();		
+		$(this).parent().remove();
+	});
 	
 	
 	$('body').on('click', '.btn-saveitem', function(evt) {
@@ -383,6 +513,7 @@ $(document).ready(function(){
 		var _this=$(this);
 		var _data={};
 		_data["active"]=($('#practive')[0] ? ($('#practive').prop('checked') ? 1 : 0 ) : 1);
+		_data["media_type"]=($('#prmedia_type')[0] ? $('#prmedia_type').val() : 0);
 		_data['id']=$('#prid').val();
 		_data['category']=$('#prcategory').val();
 		
@@ -400,6 +531,40 @@ $(document).ready(function(){
 		_data['text']={};
 		_data['content']={};
 		
+		if($('.speakeritem')[0]){
+			$('.speakeritem').each(function(){
+				if(!_data["content"][$(this).attr('data-lang')]) _data["content"][$(this).attr('data-lang')]={};
+				if(!_data["content"][$(this).attr('data-lang')].speakers) _data["content"][$(this).attr('data-lang')].speakers=[];
+				_data["content"][$(this).attr('data-lang')].speakers.push({name: $(this).find('.prname').val(), photo: $(this).find('.prphoto').attr('data-src'), info: $(this).find('.prinfo').val()});
+			});
+		}	
+		
+		if($('.sectionitm')[0]){
+			$('.sectionitm').each(function(){
+				if(!_data["content"][$(this).attr('data-lang')]) _data["content"][$(this).attr('data-lang')]={};
+				if(!_data["content"][$(this).attr('data-lang')].menu) _data["content"][$(this).attr('data-lang')].menu=[];
+				var _itmms=[];
+				 $(this).find('.menuitem').each(function(){
+					_itmms.push({name:$(this).find('.prname').val(),info: $(this).find('.prinfo').val(),price: $(this).find('.prprice').val()});
+				 });
+				_data["content"][$(this).attr('data-lang')].menu.push({section: $(this).find('.prsection').val(), items: _itmms});
+			});
+		}
+		
+		if($('#prplace')[0]){
+			_data['content']['place']=$('#prplace').val();
+		}
+		
+		
+		if($('#prmonday')[0]){
+			_data['content']['monday']=$('#prmonday').val();
+			_data['content']['tuesday']=$('#prtuesday').val();
+			_data['content']['wednesday']=$('#prwednesday').val();
+			_data['content']['thursday']=$('#prthursday').val();
+			_data['content']['friday']=$('#prfriday').val();
+			_data['content']['saturday']=$('#prsaturday').val();
+			_data['content']['sunday']=$('#prsunday').val();
+		}
 
 		if($('.prtitle')[0]){
 			$('.prtitle').each(function(){

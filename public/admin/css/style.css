@@ -119,8 +119,8 @@ html {
 .sortingitm:hover{background:#aad9ff}
 
 .acclinkk{font-size:0!important}
-.itemturnicon-turn {font-size:0px;}
-.itemturnicon-turn .fa{font-size:24px;}
+.itemturnicon-turn {font-size:0px;vertical-align: middle!important;}
+.itemturnicon-turn .fa{font-size:26px;}
 .itemturnicon-turn .fa-toggle-off{color:#ff0000}
 .itemturnicon-turn .fa-spinner{color:#1bd010}
 .btn-sml{background:none;border: 0;border-radius:0; padding: 0;margin-left:5px;}
@@ -225,11 +225,13 @@ th.action {text-align:center;vertical-align:top!important; padding: 10px;}
 
 .info-box{min-height:60px}
 .info-box-icon{min-height:60px;height: 40px;}
-.info-box-content{margin-right: 232px;padding:10px}
-.info-box-right {float: right; width:80px;padding:10px}
+.info-box-content{margin-right: 110px;padding:10px}
+.info-box-right {float: right; width:110px;padding:10px;vertical-align: middle!important;}
 .info-box-center {float: right; width:182px;padding:10px}
 .info-box-text{text-transform: none;}
 
+.btn-deleteitem{margin-left:30px}
+.itemturnicon-turn .fa{display: inline-block; vertical-align: middle!important;}
 .th1{display:block}
 
 .slider.ui-slider-horizontal .ui-slider-tick, .slider.ui-slider-horizontal .ui-slider-handle{    margin-top: -2px;background: #ffffff;}
@@ -298,6 +300,8 @@ th.action {text-align:center;vertical-align:top!important; padding: 10px;}
 .trumbowyg-h2-dropdown-button ,
 .trumbowyg-h1-dropdown-button {display:none!important}
 
+
+.info-box-number{font-size: 16px;line-height: 20px;}
 
 .skin-blue .sidebar-menu .treeview-menu>li.active>a{background-color: #2780cb;}
 
@@ -376,6 +380,9 @@ th.action {text-align:center;vertical-align:top!important; padding: 10px;}
 	.main-header .navbar{ min-height: 40px;}
 	.content-wrapper { padding-top: 100px;}
 	.skin-blue .main-header .navbar .dropdown-menu li a { color: #777;}
+	.info-box-right{width: 54px;}
+	.btn-deleteitem{margin-left: 0;margin-top:14px}
+	.info-box-content{ margin-right: 47px;}
 }
 
 

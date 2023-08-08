@@ -9,6 +9,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 
+var _audio,_playstatus=false,_playButton,_progress,_progress_drag,_media_type,_trans_id=-1;
+
+
 $(document).ready(function() {
 	
 	LanguageLoad('ru');
@@ -32,11 +35,11 @@ $(document).ready(function() {
 		$('#global_wrap').hide();
 		StartScan(function(_resp){	
 			console.log(_resp);
-			var _tt=_resp.replace('http://',"").replace('https://',"");
+			var _media=_resp.replace('http://',"").replace('https://',"");
 			StopScan(); 
 			$('.guide_blocks_container').hide();	
 			$('#global_wrap').show();	
-			GetContent("https://rosatom.loremipsumcorp.com/explore/"+_lang+"/media",function(){});
+			GetContent("https://rosatom.loremipsumcorp.com/explore/"+_lang+"/"+_media,function(){});
 		}); 
 		return false;
 	});	
@@ -78,70 +81,222 @@ $(document).ready(function() {
 		return false;
 	});	
 	
+	
+	$('body').on('click', '.main_map_block .map_path', function(evt) {
+		evt.preventDefault();	
+		$('.main_map_block').hide();
+		$('.map_inner').hide();
+		$('.'+$(this).attr('data-type')).show();	
+		$('.header_title_block').text($('.'+$(this).attr('data-type')).attr('data-title'));
+		return false;
+	});	
+
+	
+	$('body').on('click', '.map_back_btn', function(evt) {	
+		evt.preventDefault();
+		if($('.map_inner').is(':visible')){
+			$('.main_map_block').show();
+			$('.map_inner').hide();
+			$('.header_title_block').text($('.header_title_block').attr('data-title'));
+		} else {
+			$('.loader_start').css({'visibility':'visible','opacity':'1'});
+			$('.guide_blocks_container').hide();	
+			$('#global_wrap').show(); 	
+			GetContent($('.map_back_btn').attr('data-link'),function(){});
+		}
+		return false;
+	});	
+	 
+		
+	$('body').on('click', '.serv_categories span', function(evt) {
+		evt.preventDefault();	
+		$('.serv_categories span').removeClass('selected');
+		$(this).addClass('selected');
+		$('.serv_container > div').hide();
+		$('.serv_container > div[data-type="'+$(this).attr('data-type')+'"]').show();
+		return false;
+	});	
+	
+	$('body').on('click', '.events_categories span', function(evt) {
+		evt.preventDefault();	
+		$('.events_categories span').removeClass('selected');
+		$(this).addClass('selected');
+		$('.events_container > div').hide();
+		$('.events_container > div[data-type="'+$(this).attr('data-type')+'"]').show();
+		return false;
+	});	
+	
+	
+	$('body').on('click', '.events_select .events_select_cont .selected', function(evt) {
+		evt.preventDefault();	
+		$('.events_select').toggleClass('opened');
+		$('.events_select .arrow').toggleClass('opened');
+		return false;
+	});	
+	
+	
+	$('body').on('click', '.events_select li', function(evt) {
+		evt.preventDefault();
+		$('.events_select').removeClass('opened');
+		$('.events_select_cont > div span').text($(this).text());
+		filterEvents($(evt.currentTarget), $('.events_container'), '.event_block');
+		return false;
+	});	
+	
 
 });
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 function GetContent(_url, _cb){
+	if(_playstatus){
+		_audio.pause();
+		_audio.src="";
+		_playstatus=false;
+		_audio=null;
+	}
+	
 	$.get(_url, function(data, status){
 		$('.loader_start').css({'visibility':'hidden','opacity':'0'});
 		$('#global_wrap').empty();
 		$('#global_wrap').append(data);
+		
 		console.log(_url, '_url');
-		$('body').removeClass('media_page').removeClass('events_page').removeClass('map_page');
+		
+		$('body').removeClass('media_page').removeClass('events_page').removeClass('map_page').removeClass('services_page');
+		
 		if(_url.indexOf('/maps')>-1){
 			if(!$('body').hasClass('map_page')) $('body').addClass('map_page');
-		}
-		else if(_url.indexOf('/media')>-1){
+		} else if(data.indexOf('media_iner_page')>-1){
 			if(!$('body').hasClass('media_page')) $('body').addClass('media_page');
-		}
-		
-		else if(_url.indexOf('/events')>-1 || _url.indexOf('/event')>-1){
+		} else if(data.indexOf('evnet_page')>-1 || data.indexOf('evnet_iner_page')>-1){
 			if(!$('body').hasClass('events_page')) $('body').addClass('events_page');
+		} else if(data.indexOf('services_page')>-1 || data.indexOf('services_iner_page')>-1){
+			if(!$('body').hasClass('services_page')) $('body').addClass('services_page');
 		}
-
 
 		if($('.inner_block h2 span').length){
 			$('.inner_block').each(function(){
 				$(this).find('h2 span').height($(this).find('h2').innerHeight()-15);
 			});
 		}
+		
 
-		$('.events_categories span').on('click', function(){
-			$('.events_categories span').removeClass('selected');
-			$(this).addClass('selected');
-			$('.events_container > div').hide();
-			$('.events_container > div[data-type="'+$(this).data('type')+'"]').show();
+		if($('.media_blocks_container')[0]){
+			_media_type=$('.media_blocks_container').attr('data-type');
+			var _media_url=$('.media_blocks_container').attr('data-url');
+			var _media_id=$('.media_blocks_container').attr('data-id');
+			_playstatus=true;
+			_audio= new Audio();
+			_audio.src =_media_url;
+			_audio.addEventListener('timeupdate', updateProgressBar);
+			_audio.addEventListener('canplay', function(){
+				_audio.play();
+			});
+			_progress = document.getElementById('progress');
+			_progress.style.width = "0%";
+			if(_media_type=="1"){
+				_progress_drag= document.getElementById('progress_drag');
+				_progress_drag.addEventListener("touchstart", dragstart, false)
+				_progress_drag.addEventListener("touchend", dragend, false)
+				_progress_drag.addEventListener("touchmove", drag)	
+				_playButton = document.getElementById('player_button');
+				_playButton.addEventListener('click', playAudio);	
+			}
+			if($('.media_player_block_text_cont')[0]){
+				var _match = $('.media_player_block_text_cont').text();
+				var _eachLine = _match.split('\n');
+				if(_eachLine.length>1){
+					$('.media_player_block_text_cont').empty();
+					var _id=0;
+					_trans_id=-1;
+					for(var i = 0, l = _eachLine.length; i < l; i++) {
+						if(_eachLine[i].trim().length>0) {
+							$('.media_player_block_text_cont').append('<div class="trans_item" id="trans_item'+_id+'">'+_eachLine[i].trim()+'</div>');
+							_id++;
+						}
+					}
+				}
+			}
+		}
+		
+		
+		
+		
+		setTimeout(function(){ window.scrollTo(0,0);},10);
+
+		/*const imageElement = document.getElementById("map_image_1");
+
+		imageElement.addEventListener('touchstart', (event) => {
+		console.log('touchstart', event);
 		});
 
-		$('.events_select .events_select_cont .selected').on('click', function(){
-			$('.events_select').toggleClass('opened');
-			$('.events_select .arrow').toggleClass('opened');
+		imageElement.addEventListener('touchmove', (event) => {
+		console.log('touchmove', event);
 		});
 
-		$('.events_select li').on('click', function(e){
-			$('.events_select').removeClass('opened');
-			$('.events_select_cont > div span').text($(this).text());
-			filterEvents($(e.currentTarget), $('.events_container'), '.event_block');
-		});
+		imageElement.addEventListener('touchend', (event) => {
+		console.log('touchend', event);
+		});*/
+
+		if(_url.indexOf('/maps')>-1){
+
+			//set the elements
+			var wrapper = document.getElementById("map_image_1_wrapper");
+			var timg = document.getElementById("map_image_1") , rs = 1;
+
+			//to retrive the pinch e
+			function dist(a) {
+				var zw = a.touches[0].pageX - a.touches[1].pageX, zh = a.touches[0].pageY - a.touches[1].pageY;
+				return Math.sqrt(zw * zw + zh * zh);
+			}
+
+			//attach the events
+			wrapper.addEventListener('touchstart', function(event) {
+				if (event.touches.length > 1) {
+				event.preventDefault();
+				d1 = dist(event);				
+				}filterEvents
+			});
+			wrapper.addEventListener('touchmove', function(event) {
+				if (event.touches.length > 1) {
+					event.preventDefault();
+
+					//get the ratio
+					rf = dist(event) / d1 * rs;
+					if(rf>1){
+						timg.style.transform = "scale(" + rf + ")";
+					}
+					else{
+						timg.style.transform = "scale(1)";
+						rs = 1
+					}
+				}
+			});
+
+			//check if scale is less than 1 and keep the previous ratio
+			// wrapper.addEventListener('touchend', function(event) {				
+			// 	if (event.touches.length > 1) {
+			// 		event.preventDefault();
+			// 		rf = dist(event) / d1 * rs;
+			// 		alert(rf+'%%%');
+			// 		//rf < 1 ? (timg.style.transform = "scale(1)", rs = 1) : rs = rf;
+			// 	}
+			// });
+		}
+		
 
 		_cb();		
-		
 	});
 }
 //////////////////////////////////////////////////////////////////////////////////////////////
-
 function filterEvents($filterBtn, $list, $block){
-	
-		let $filterType = $filterBtn.data('type');
+		let $filterType = $filterBtn.attr('data-type');
 		if($filterType === 'all') {
 			$list.children().removeClass('filtered');
 		} else {
 			$list.find($block).each((i,listItem) => {
-				let $eventType = $(listItem).data('type').split(',');
-			
-				console.log($eventType, $filterType);
+				let $eventType = $(listItem).attr('data-type').split(',');
 				if($eventType.some((item) => $filterType === item.trim())) {
 					$(listItem).removeClass('filtered')
 				} else {
@@ -150,7 +305,7 @@ function filterEvents($filterBtn, $list, $block){
 			})
 		};
 }
-
+//////////////////////////////////////////////////////////////////////////////////////////////
  function LanguageLoad(_l){
  	GetContent("https://rosatom.loremipsumcorp.com/explore/"+_l+"/home",function(){
 		$('body').append('<div class="guide_blocks_container"><div class="header"><div class="header_top"><div class="custom_container"><div class="header_title_block">'+_trs_media_guide+'</div><div class="inner_logo_block"><img src="https://rosatom.loremipsumcorp.com/css/images/inner_logo.svg" alt="" title=""/></div></div></div></div>'+
@@ -168,8 +323,79 @@ function filterEvents($filterBtn, $list, $block){
 			'</div>');
 	});
  }
-
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function playAudio() {
+	_playstatus=!_playstatus;
+	if(_playstatus){
+		_audio.play();
+		if(_media_type=="1") _playButton.className="player_button playing"
+	} else {
+		_audio.pause();
+		if(_media_type=="1") _playButton.className="player_button paused"
+	}	
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function updateProgressBar() {
+	if(_audio){
+	  const currentTime = _audio.currentTime;
+	  const duration = _audio.duration;
+	  const progressPercent = (currentTime / duration) * 100;
+	  _progress.style.width = progressPercent+"%";
+	  _progress_drag.style.left = progressPercent+"%";
+	  
+	  
+	  document.getElementById('player_current_time').innerHTML=formatTime(currentTime);
+	  document.getElementById('player_total_time').innerHTML=formatTime(duration);
+	  
+	  if (currentTime >= duration) {
+			_playstatus=false;
+			_audio.pause();
+			if(_media_type=="1") _playButton.className="player_button paused";
+	  }
+	  
+	 if($('.media_player_block_text_cont')[0]){	
+		var _o=Math.floor(currentTime/10);
+		if(_trans_id!=_o){
+			_trans_id=_o;
+			$('.trans_item').removeClass('active');
+			if($('#trans_item'+_o)[0]){
+				$('#trans_item'+_o).addClass('active');
+				var _po=document.getElementById("trans_item"+_o).offsetTop-100;
+				document.getElementById("trans_cont").scrollTo({ top: _po, behavior: 'smooth'});	
+			}
+		}
+	 } 
+  
+  }
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function dragstart(ev) {
+   _audio.pause();
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function drag(ev) {
+	let x = (ev.touches[0].clientX-50)/((window.innerWidth-100)/100);
+	if(x>100) x=100;
+	if(x<0) x=0;
+	_progress_drag.style.left=x+"%"
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function dragend(ev) {
+	ev.preventDefault();
+	var _t=_progress_drag.style.left.replace("%","").replace("px","");
+	var _y=parseInt(_t)*(_audio.duration/100);
+	_audio.currentTime=_y;
+	_audio.play();
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function formatTime(_t){
+	_t=Math.round(_t);
+	var _m=Math.floor(_t/60);
+	var _s=_t-_m*60;
+	var _f=_m>=10 ? _m : "0"+_m;
+	_f=_f+":"+(_s>=10 ? _s : "0"+_s);
+	return _f;
+}
 
 
 

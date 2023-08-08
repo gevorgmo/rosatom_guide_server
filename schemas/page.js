@@ -23,6 +23,10 @@ var PageSchema = new Schema({
         type: Number,
         default: 0
     },
+	media_type: {
+        type: Number,
+        default: 0
+    },
 	title:{},
 	content:{},
 	audio:{},

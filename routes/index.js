@@ -53,12 +53,31 @@ exports.init = function (app) {
 		
 		Option.find().sort({ord:1}).exec(function(err, _options){	
 			if(_categories[_slug]){ 
-				Page.find({active:true, category:_categories[_slug]}).sort({ord:1}).exec(function(err, _pages){
+				var _quer={active:true, category:_categories[_slug]};
+				var _sort={ord:1};
+				if(_slug=="events"){
+					_sort={published:1};
+					_quer.published={$gte: new Date()};
+				}
+				Page.find(_quer).sort(_sort).exec(function(err, _pages){
 					if(err || !_pages) {
 						Page.findOne({active:true, slug:"home"}).exec(function(_err, __home){
 							return res.render('templates/home', {lang:_language, page:__home.toObject(), options:_options});
 						});
 					} else {
+						if(_slug=="events"){
+							_pages.today=[];
+							_pages.upcoming=[];
+							_pages.map(function(_i){
+								var _p=_i.toObject();
+								_p.time=moment(_p.published).format("HH:mm");
+								if(isToday(_p.published)){
+									_pages.today.push(_p);
+								} else {
+									_pages.upcoming.push(_p);
+								}
+							});
+						}
 						return res.render('templates/'+_slug, {lang:_language, category:_slug, pages:_pages,  options:_options});	
 					}
 				});	
@@ -71,7 +90,11 @@ exports.init = function (app) {
 					} else {
 						var _p=__page.toObject();
 						if(_all_item[_p.category]){ 
-							return res.render('templates/'+_p.category, {lang:_language, page:__page.toObject(),   options:_options});
+							if(_p.category=="event"){
+								_p.time=moment(_p.published).format("HH:mm");
+								_p.date=moment(_p.published).format("DD.MM.YY");
+							}
+							return res.render('templates/'+_p.category, {lang:_language, page:_p,   options:_options});
 						} else {
 							return res.render('templates/media', {lang:_language, page:__page.toObject(),   options:_options});
 						}						
@@ -101,7 +124,6 @@ exports.init = function (app) {
 			return res.status(200).send({"status":true, page:_itm});
 		});
     });
-
 //////////////////////////////////////////////////////////////////////
 	app.get('/logout', function(req, res) {
 		req.logout();
@@ -154,8 +176,16 @@ exports.init = function (app) {
 	});
 /////////////////////////////////////////////////////////////
 	app.get('/category/:categoryname', isLoggedIn, function(req, res) {
-		Page.find({category:req.params.categoryname}).sort({ord:1}).exec(function(err, _pages){
-			if(err || !_pages) return res.render("index", {user_status:_all_roles[req.user.role],  pagename:"dashboard"});					
+		var _sort={ord:1};
+		if(req.params.categoryname=="event") _sort={published:1}
+		Page.find({category:req.params.categoryname}).sort(_sort).exec(function(err, _pages){
+			if(err || !_pages) return res.render("index", {user_status:_all_roles[req.user.role],  pagename:"dashboard"});		
+			if(req.params.categoryname=="event"){
+				_pages.map(function(_i){
+					_i.time=moment(_i.published).format("DD.MM.YY HH:mm");
+				});	
+			}
+			
 			return res.render("category", {user_status:_all_roles[req.user.role],  pagename:req.params.categoryname, pages:_pages});
 		});
 	});
@@ -341,6 +371,7 @@ exports.init = function (app) {
 			audio:(req.body.audio || {}),
 			video:(req.body.video || {}),
 			text:(req.body.text || {}),
+			media_type:(req.body.media_type || 0),
 			published:(req.body.published || new Date())	
 		};
 		_page.slug=GenerateSlug(req.body.slug || new Date().getTime());
@@ -364,6 +395,18 @@ exports.init = function (app) {
 			});
 		}
 
+	});
+///////////////////////////////////////////////////////////////////
+	app.post('/changepagestatus', isLoggedIn, function(req, res) {
+		if(req.body.id!=="undefined"){
+			var _active=(req.body.status ? (parseInt(req.body.status)==1 ? true : false) : true);
+			Page.updateOne({_id:req.body.id},{active:_active}, function (err1, _page) {
+				if(err1) return res.status(200).send({"status":false});
+				return res.status(200).send({"status":true});
+			});
+		} else {
+			return res.status(200).send({"status":false});
+		}
 	});
 ///////////////////////////////////////////////////////////////////
 	app.post('/saveoption', isLoggedIn, function(req, res) {
@@ -459,8 +502,28 @@ exports.init = function (app) {
 			return res.status(200).send({"status":false});
 		}
 	});
-
-
+//////////////////////////////////////////////////////////////////////////////////////
+	app.post('/sendemail', function(req, res) {
+		res.setHeader('Access-Control-Allow-Origin', '*');
+		res.setHeader('Access-Control-Allow-Headers', 'X-Custom-Heade');
+		res.setHeader('Content-Type', 'text/html; charset=utf-8');
+		res.setHeader('content-type', 'text/javascript');
+		if(req.body.name !== undefined && req.body.email !== undefined) {
+			var _email=escape(req.body.email || "").trim().toLowerCase();
+			var _name=req.body.name || "";
+			if(_email.match(/[\d\w\-\_\.]+@[\d\w\-\_\.]+\.[\w]{2,4}/i)){
+				var _msg="TEST";
+				SendEmail_to_address(_email, _msg, function(){
+					return res.status(200).send({"status":true});	
+				});	
+			}else {
+				return res.status(404).send({"status":false});	
+			}
+		}else {
+			return res.status(404).send({"status":false});
+		}
+	});
+	
 
 
 };
@@ -482,7 +545,7 @@ function isLoggedIn(req, res, next) {
     if (req.session.passport.user !== undefined){
         return next();
 	}
-    res.redirect('/explore');
+    res.redirect('/test');
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -498,27 +561,33 @@ function isLoggedIn(req, res, next) {
         });
         readStream.pipe(writeStream);
 }
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
-function SendEmail_sendgrid(_email, _subj, _msg, _cb){
-	const formData = require('form-data');
-	const Mailgun = require('mailgun.js');
-
-	const mailgun = new Mailgun(formData);
-	const client = mailgun.client({username: process.env.MAILGUN_USERNAME, key: process.env.MAILGUN_KEY ,url:"https://api.eu.mailgun.net"});
-
-
-	const messageData = {
-		from: process.env.MAILGUN_FROM,
-		to: _email,
-		subject: _subj,
-		html: _msg
+function isToday(date) {
+  const today = new Date();
+  if (today.toDateString() === date.toDateString()) {
+    return true;
+  }
+  return false;
+}
+////////////////////////////////////////////////////
+function SendEmail_to_address(_email, _msg, _cb){
+	var _dat={
+			"token":"Ijnsudyhfb76t4ib76gg45iunUb89bsdfuy87y",
+			"email":_email,
+			"subject":"CERTIFICATE",
+			"app": "ROSATOM",
+			"msg":_msg
 	};
-
-	client.messages.create(process.env.MAILGUN_DOMAIN, messageData).then((res) => {
-		return _cb(null);
-	})
-	.catch((err) => {
-		return _cb("Please try again later!");
+	fetch( 'https://li-apps.com/email_notifications.php', {
+        method: 'post',
+        body:  JSON.stringify(_dat),
+        headers: { 'Content-Type': 'application/json'},
+    })
+	 .then(res => res.text())
+	.then((text) => {
+		return _cb(null); 
+    }).catch(err => {
+		console.log(err.message);
+		return _cb("Please try again later!");  
 	});
 }

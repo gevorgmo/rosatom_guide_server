@@ -1,11 +1,26 @@
-		<header class="header">
+<%  opt=@options[0] %>
+<% for optionn in @options : %>
+	<% if optionn.language_code==@lang :%>
+		<%  opt=optionn %>
+		<% break %>
+	<% end %>
+<% end %>
+
+		<header class="header" data-index="services_iner_page">
 			<div class="header_top">
 				<div class="custom_container">
+					<div class="back_page">
+						<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/services">
+							<img src="https://rosatom.loremipsumcorp.com/css/images/back_arrow_black.svg" alt="" title="" />
+						</a>
+					</div>
 					<div class="header_title_block">
-						<%- @category %>
+						<% if @page.title :%><%- @page.title[@lang] || "" %><% end %>
 					</div>
 					<div class="inner_logo_block">
-						<img src="https://rosatom.loremipsumcorp.com/css/images/inner_logo.svg" alt="" title=""/>
+						<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/home">
+							<img src="https://rosatom.loremipsumcorp.com/css/images/mark_black.svg" alt="" title=""/>
+						</a>	
 					</div>
 				</div>
 			</div>
@@ -15,6 +30,71 @@
 
 		<main class="content">
 
+			<div class="service_blocks_container">
+			
+				<% if @page.poster :%><img src="https://rosatom.loremipsumcorp.com<%- @page.poster %>" alt="" title="" /><% end %>
+				
+				<div class="serv_categories">
+					<span class="selected" data-type="menu">
+							<% if @page.content :%>
+								<% if @page.content[@lang] :%>
+									<% if @page.content[@lang].menu :%>
+										<% if opt.translations :%><%- opt.translations.menu || "" %><% end %>
+									<% else :%>	
+										<% if opt.translations :%><%- opt.translations.information || "" %><% end %>
+									<% end %>
+								<% end %>
+							<% end %>
+											
+					</span>
+					<span data-type="open"><% if opt.translations :%><%- opt.translations.hours || "" %><% end %></span> 
+				</div>
+
+
+				<div class="serv_container">
+					<div data-type="menu">
+						<% if @page.content :%>
+							<% if @page.content[@lang] :%>
+								<% if @page.content[@lang].menu :%>
+									<% for menu in @page.content[@lang].menu : %>
+										<div class="menu_item">
+											<h2><%- menu.section || "" %></h2>
+											
+											<% if menu.items :%>
+												<% for iit in menu.items : %>	
+													<div class="menu_block">
+														<div class="menu_top">
+															<h3><%- iit.name || "" %></h3>
+															<span><%- iit.price || "" %></span>
+														</div>
+														<span><%- iit.info || "" %></span>
+													</div>
+												<% end %>
+											<% end %>	
+										</div>
+									<% end %>
+								<% else :%>		
+									<% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].content || "" %><% end %><% end %>
+								<% end %>
+							<% end %>
+						<% end %>	
+					</div>
+					<div data-type="open" style="display: none;">
+						<div class="menu_hours"> 
+							<ul>
+								<li><span><% if opt.translations :%><%- opt.translations.monday || "" %><% end %></span><span><% if @page.content :%><%- @page.content.monday || "" %><% end %></span></li>
+								<li><span><% if opt.translations :%><%- opt.translations.tuesday || "" %><% end %></span><span><% if @page.content :%><%- @page.content.tuesday || "" %><% end %></span></li>
+								<li><span><% if opt.translations :%><%- opt.translations.wednesday || "" %><% end %></span><span><% if @page.content :%><%- @page.content.wednesday || "" %><% end %></span></li>
+								<li><span><% if opt.translations :%><%- opt.translations.thursday || "" %><% end %></span><span><% if @page.content :%><%- @page.content.thursday || "" %><% end %></span></li>
+								<li><span><% if opt.translations :%><%- opt.translations.friday || "" %><% end %></span><span><% if @page.content :%><%- @page.content.friday || "" %><% end %></span></li>
+								<li><span><% if opt.translations :%><%- opt.translations.saturday || "" %><% end %></span><span><% if @page.content :%><%- @page.content.saturday || "" %><% end %></span></li>
+								<li><span><% if opt.translations :%><%- opt.translations.sunday || "" %><% end %></span><span><% if @page.content :%><%- @page.content.sunday || "" %><% end %></span></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				
+			</div>
 
 		</main>
 
@@ -22,46 +102,38 @@
 
 		<footer class="footer">
 			<div class="inner_footer_menu">
+			
 				
-				
-				<%  opt=@options[0] %>
-				<% for optionn in @options : %>
-					<% if optionn.language_code==@lang :%>
-						<%  opt=optionn %>
-						<% break %>
-					<% end %>
-				<% end %>		
-				
-				<div class="inner_footer_menu_block selected">
+				<div class="inner_footer_menu_block">
 					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/exhibitions">
-						<img src="https://rosatom.loremipsumcorp.com/css/images/exhibits.svg" alt="" title="" />
+						<img src="css/images/exhibits_black.svg" alt="" title="" />
 						<span><% if opt.translations :%><%- opt.translations.exibitions || "" %><% end %></span>
 					</a>
 				</div>
 
 				<div class="inner_footer_menu_block">
 					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/events">
-						<img src="https://rosatom.loremipsumcorp.com/css/images/events.svg" alt="" title="" />
+						<img src="css/images/events_black.svg" alt="" title="" />
 						<span><% if opt.translations :%><%- opt.translations.events || "" %><% end %></span>
 					</a>
 				</div>
 
-				<div class="inner_footer_menu_block">
+				<div class="inner_footer_menu_block ">
 					<div class="qr_button">
-						<img src="https://rosatom.loremipsumcorp.com/css/images/qr.svg" alt="" title="" />
+						<img src="https://rosatom.loremipsumcorp.com/css/images/qr_black.svg" alt="" title="" />
 					</div>
 				</div>
 
-				<div class="inner_footer_menu_block">
-					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/services">
-						<img src="https://rosatom.loremipsumcorp.com/css/images/services.svg" alt="" title="" />
+				<div class="inner_footer_menu_block selected">
+					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/sevices">
+						<img src="css/images/services_black.svg" alt="" title="" />
 						<span><% if opt.translations :%><%- opt.translations.services || "" %><% end %></span>
 					</a>
 				</div>
 
 				<div class="inner_footer_menu_block">
 					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/maps">
-						<img src="https://rosatom.loremipsumcorp.com/css/images/maps.svg" alt="" title="" />
+						<img src="css/images/maps_black.svg" alt="" title="" />
 						<span><% if opt.translations :%><%- opt.translations.maps || "" %><% end %></span>
 					</a>
 				</div>

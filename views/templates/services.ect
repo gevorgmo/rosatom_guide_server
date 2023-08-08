@@ -1,11 +1,25 @@
-		<header class="header">
+<%  opt=@options[0] %>
+<% for optionn in @options : %>
+	<% if optionn.language_code==@lang :%>
+		<%  opt=optionn %>
+		<% break %>
+	<% end %>
+<% end %>
+
+		<header class="header" data-index="services_page">
 			<div class="header_top">
 				<div class="custom_container">
-					<div class="header_title_block">
-						<%- @category %>
+				
+					<div class="back_page">
+						<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/home">
+							<img src="https://rosatom.loremipsumcorp.com/css/images/back_arrow_black.svg" alt="" title="" />
+						</a>
 					</div>
+					<div class="header_title_block"><% if opt.translations :%><%- opt.translations.services || "" %><% end %></div>
 					<div class="inner_logo_block">
-						<img src="https://rosatom.loremipsumcorp.com/css/images/inner_logo.svg" alt="" title=""/>
+						<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/home">
+							<img src="https://rosatom.loremipsumcorp.com/css/images/mark_black.svg" alt="" title=""/>
+						</a>	
 					</div>
 				</div>
 			</div>
@@ -14,54 +28,48 @@
 		<span class="cb"></span>
 
 		<main class="content">
-
-
+			<div class="services_container">
+				<% for page in @pages : %>	
+					<div class="service_block">
+						<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/<%- page.slug %>">
+							<div style="background-image: url('<% if page.poster :%>https://rosatom.loremipsumcorp.com<%- page.poster %><% end %>')" class="serv_block_img"></div>
+							<span><% if page.title :%><% if page.title[@lang] :%><%- page.title[@lang] %><% end %><% end %></span>
+						</a>
+					</div>
+				<% end %>				
+			</div>
 		</main>
 
 		<span class="cb"></span>
 
 		<footer class="footer">
 			<div class="inner_footer_menu">
-				
-				
-				<%  opt=@options[0] %>
-				<% for optionn in @options : %>
-					<% if optionn.language_code==@lang :%>
-						<%  opt=optionn %>
-						<% break %>
-					<% end %>
-				<% end %>		
-				
-				<div class="inner_footer_menu_block selected">
+				<div class="inner_footer_menu_block">
 					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/exhibitions">
-						<img src="https://rosatom.loremipsumcorp.com/css/images/exhibits.svg" alt="" title="" />
+						<img src="css/images/exhibits_black.svg" alt="" title="" />
 						<span><% if opt.translations :%><%- opt.translations.exibitions || "" %><% end %></span>
 					</a>
 				</div>
-
 				<div class="inner_footer_menu_block">
 					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/events">
-						<img src="https://rosatom.loremipsumcorp.com/css/images/events.svg" alt="" title="" />
+						<img src="css/images/events_black.svg" alt="" title="" />
 						<span><% if opt.translations :%><%- opt.translations.events || "" %><% end %></span>
 					</a>
 				</div>
-
-				<div class="inner_footer_menu_block">
+				<div class="inner_footer_menu_block ">
 					<div class="qr_button">
-						<img src="https://rosatom.loremipsumcorp.com/css/images/qr.svg" alt="" title="" />
+						<img src="https://rosatom.loremipsumcorp.com/css/images/qr_black.svg" alt="" title="" />
 					</div>
 				</div>
-
-				<div class="inner_footer_menu_block">
-					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/services">
-						<img src="https://rosatom.loremipsumcorp.com/css/images/services.svg" alt="" title="" />
+				<div class="inner_footer_menu_block selected">
+					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/sevices">
+						<img src="css/images/services_black.svg" alt="" title="" />
 						<span><% if opt.translations :%><%- opt.translations.services || "" %><% end %></span>
 					</a>
 				</div>
-
 				<div class="inner_footer_menu_block">
 					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/maps">
-						<img src="https://rosatom.loremipsumcorp.com/css/images/maps.svg" alt="" title="" />
+						<img src="css/images/maps_black.svg" alt="" title="" />
 						<span><% if opt.translations :%><%- opt.translations.maps || "" %><% end %></span>
 					</a>
 				</div>

@@ -4,7 +4,6 @@
 
 <section class="content-header p-category"><h1><%- if all_category_titles[@pagename] then all_category_titles[@pagename] else "" %></h1></section>
 
-
 <section class="content-header">
 	<a href="/item/new?category=<%- @pagename %>" class="btn btn-primary"><i class="fa fa-plus"></i>Create new</a>
 </section>
@@ -13,20 +12,28 @@
 <section class="content">
 	<% for page in @pages : %>
 			<div class="info-box" id="<%- page._id %>">
-				<span class="info-box-icon" style="background-size:contain;background-repeat:no-repeat;background-position:50% 50%;background-image:url(<%=  (page.poster || "") %>)"></span>
+				<a href="/item/<%- page._id %>"><span class="info-box-icon" style="background-size:contain;background-repeat:no-repeat;background-position:50% 50%;background-image:url(<%=  (page.poster || "") %>)"></span></a>
 				<div class="info-box-right" style="text-align:right;">	
-					<a href="/item/<%- page._id %>" class="btn btn-success btn-xs btn-flat"><i class="fa fa-edit"></i></a>
+					<% if page.active :%>
+						<a href="#" class="itemturnicon-turn" data-status="1" data-id="<%- page._id %>" id="statusswicher<%- page._id %>"><i class="fa fa-toggle-on"></i>on</a>
+					<% else :%>	
+						<a href="#" class="itemturnicon-turn" data-status="0" data-id="<%- page._id %>" id="statusswicher<%- page._id %>"><i class="fa fa-toggle-off"></i>off</a>
+					<% end %>		
 					<button type="button" data-id="<%- page._id %>"  class="btn btn-danger btn-xs btn-flat btn-deleteitem"><i class="glyphicon glyphicon-trash"></i></button>							
 				</div>
 				<div class="info-box-content">
 					<span class="info-box-number">																						
 						<% if page.title :%>
 							<% if page.title.ru :%>
-								 <%- page.title.ru %>
+								<a href="/item/<%- page._id %>"><%- page.title.ru %></a>
 							<% end %>	
-						<% end %>	
+						<% end %>
+						<% if @pagename=="event" :%>
+							<br><%- page.time %>
+						<% end %>
 					</span>								
-				</div>	
+				</div>
+				<div style="clear:both"></div>	
 			</div>	
 	<% end %>
 </section>

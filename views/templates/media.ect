@@ -1,43 +1,73 @@
+<%  opt=@options[0] %>
+<% for optionn in @options : %>
+	<% if optionn.language_code==@lang :%>
+		<%  opt=optionn %>
+		<% break %>
+	<% end %>
+<% end %>	
+	
 		<header class="header">
 			<div class="header_top">
-				<div class="custom_container">
+				<div class="custom_container">	
 					<div class="back_page">
-						<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/maps">
-							<span class="arrow left"></span><span class="arrow_tail"></span>
+						<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/home">
+							<img src="https://rosatom.loremipsumcorp.com/css/images/back_arrow.svg" alt="" title="" />
 						</a>
 					</div>
-					<div class="header_title_block">TEST</div>
+					<div class="header_title_block"><% if opt.translations :%><%- opt.translations.media_guide || "" %><% end %></div>
 					<div class="inner_logo_block">
-						<img src="https://rosatom.loremipsumcorp.com/css/images/mark_black.svg" alt="" title=""/>
+						<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/home">
+							<img src="https://rosatom.loremipsumcorp.com/css/images/inner_logo.svg" alt="" title=""/>
+						</a>	
 					</div>
 				</div>
 			</div>
 		</header>
 
 		<span class="cb"></span>
-
-		<main class="content">
-			<button id="audio_buttn" data-status="play" >STOP</button>
-			<audio id="audio_player" data-src="https://streamingp.shoutcast.com/ABC-Jazz?lang=en-US%2cen%3bq%3d0.9%2cru%3bq%3d0.8%2cpt%3bq%3d0.7%2chy%3bq%3d0.6%2cda%3bq%3d0.5%2ctr%3bq%3d0.4" style="display:none" src="https://streamingp.shoutcast.com/ABC-Jazz?lang=en-US%2cen%3bq%3d0.9%2cru%3bq%3d0.8%2cpt%3bq%3d0.7%2chy%3bq%3d0.6%2cda%3bq%3d0.5%2ctr%3bq%3d0.4" preload="preload" autoplay="autoplay" controls="none"></audio>
+		<main class="content">	
+			<div class="media_blocks_container"  data-type="<%- @page.media_type %>"  data-url="<% if @page.media_type==1 :%><% if @page.audio :%><%- @page.audio[@lang] || "" %><% end %><% end %><% if @page.media_type==2 or @page.media_type==3 :%><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].media_url || "" %><% end %><% end %><% end %>" data-id="<% if @page.media_type==2 or @page.media_type==3 :%><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].media_id || "" %><% end %><% end %><% end %>">	
 			
+				<h2 class="media_title"><% if @page.title :%><%- @page.title[@lang] || "" %><% end %></h2>
+					
+				<% if @page.media_type==1 :%>	
+					<div class="media_player_block_text">	
+						<div class="media_player_block_text_cont" id="trans_cont">
+							<% if @page.text :%><%- @page.text[@lang] || ""%><% end %>	
+						</div>		
+					</div>	
+				<% end %>	
+				
+				<% if @page.media_type==2 or @page.media_type==3 :%>	
+					<div class="media_player_block">				
+						<div>Listen to the audio <br />and watch the screen</div>
+					</div>	
+				<% end %>	
+				
+				
+				<div  class="progress_wrap">
+					<div  class="progressbar">
+						<div id="player_current_time"></div>
+						<div id="player_total_time"></div>
+						<div id="progress"></div>
+						<% if @page.media_type==1 :%><div  id="progress_drag"></div><% end %>
+					</div>
+				</div>
+				
+				<% if @page.media_type==1 :%>	
+					<div class="player_button playing" id="player_button"><img class="btn_pause" src="/css/images/pause.svg" alt="" title="" /><img class="btn_play" src="/css/images/play.svg" alt="" title="" /></div>
+				<% end %>	
+
+				<% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].content || "" %><% end %><% end %>
+		
+			</div>
 			<span class="cb"></span>
 		</main>
-
 		<span class="cb"></span>
 
 
 		<footer class="footer">
 			<div class="inner_footer_menu">
-				
-				
-				<%  opt=@options[0] %>
-				<% for optionn in @options : %>
-					<% if optionn.language_code==@lang :%>
-						<%  opt=optionn %>
-						<% break %>
-					<% end %>
-				<% end %>		
-				
 				<div class="inner_footer_menu_block selected">
 					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/exhibitions">
 						<img src="https://rosatom.loremipsumcorp.com/css/images/exhibits.svg" alt="" title="" />
