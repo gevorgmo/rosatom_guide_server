@@ -521,7 +521,7 @@ $(document).ready(function(){
 			if($('#prposter').attr('data-src')!="") _data['poster']=$('#prposter').attr('data-src');
 		}
 		
-		if($('#prslug')[0]) _data['slug']=($('#prslug').val()!="" ? $('#prslug').val() : (new Date().getTime()).toString());
+		if($('#prslug')[0]) _data['slug']=$('#prslug').val();
 		if($('#prord')[0])  _data['ord']=$('#prord').val();
 		if($('#prpublished')[0]) _data["published"]=$('#prpublished').data("DateTimePicker").date()._d.toUTCString();
 		

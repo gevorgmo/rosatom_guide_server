@@ -5,7 +5,7 @@ $(document).ready(function(){
 		if(_item_det.content){	
 			if(Object.keys(_item_det.content).length !== 0) {	
 				for (var key in _item_det.content) {
-					var _tempt_content=$('<div>'+_item_det.content[key]+'</div>');
+					var _tempt_content=$('<div>'+_item_det.content[key].content+'</div>');
 					if(_tempt_content.find('.content_row').length>0){
 						_tempt_content.find('.content_row').each(function(){
 							var _ed_etm=this;

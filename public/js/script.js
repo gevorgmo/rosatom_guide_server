@@ -9,7 +9,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 
-var _audio,_playstatus=false,_playButton,_progress,_progress_drag,_media_type,_trans_id=-1;
+var _audio,_playstatus=false,_playButton,_progress,_progress_drag,_media_type,_trans_id=-1,_time_code=0,_page_load_time=0;
 
 
 $(document).ready(function() {
@@ -33,7 +33,9 @@ $(document).ready(function() {
 		evt.preventDefault();	
 		$('.guide_blocks_container').show();	
 		$('#global_wrap').hide();
+		document.body.className="";
 		StartScan(function(_resp){	
+			document.body.className="blaskbg";
 			console.log(_resp);
 			var _media=_resp.replace('http://',"").replace('https://',"");
 			StopScan(); 
@@ -81,7 +83,7 @@ $(document).ready(function() {
 		return false;
 	});	
 	
-	
+	/*
 	$('body').on('click', '.main_map_block .map_path', function(evt) {
 		evt.preventDefault();	
 		$('.main_map_block').hide();
@@ -90,7 +92,7 @@ $(document).ready(function() {
 		$('.header_title_block').text($('.'+$(this).attr('data-type')).attr('data-title'));
 		return false;
 	});	
-
+*/
 	
 	$('body').on('click', '.map_back_btn', function(evt) {	
 		evt.preventDefault();
@@ -159,6 +161,10 @@ function GetContent(_url, _cb){
 	$.get(_url, function(data, status){
 		$('.loader_start').css({'visibility':'hidden','opacity':'0'});
 		$('#global_wrap').empty();
+		data=data.replaceAll(/"\/files\//gi, '"https://rosatom.loremipsumcorp.com/files/');
+		data=data.replaceAll(/"\/css\/images\//gi, '"https://rosatom.loremipsumcorp.com/css/images/');
+		
+		
 		$('#global_wrap').append(data);
 		
 		console.log(_url, '_url');
@@ -186,15 +192,11 @@ function GetContent(_url, _cb){
 			_media_type=$('.media_blocks_container').attr('data-type');
 			var _media_url=$('.media_blocks_container').attr('data-url');
 			var _media_id=$('.media_blocks_container').attr('data-id');
-			_playstatus=true;
-			_audio= new Audio();
-			_audio.src =_media_url;
-			_audio.addEventListener('timeupdate', updateProgressBar);
-			_audio.addEventListener('canplay', function(){
-				_audio.play();
-			});
+			
+			
 			_progress = document.getElementById('progress');
 			_progress.style.width = "0%";
+			
 			if(_media_type=="1"){
 				_progress_drag= document.getElementById('progress_drag');
 				_progress_drag.addEventListener("touchstart", dragstart, false)
@@ -202,7 +204,64 @@ function GetContent(_url, _cb){
 				_progress_drag.addEventListener("touchmove", drag)	
 				_playButton = document.getElementById('player_button');
 				_playButton.addEventListener('click', playAudio);	
+				
+				_audio= new Audio();
+				_audio.src =_media_url;
+				_audio.addEventListener('timeupdate', updateProgressBar);
+				_audio.addEventListener('canplay', function(){
+					if(_media_type=="1" && !_playstatus){
+						_playstatus=true;
+						_audio.play();	
+					} 
+				});
+				
 			}
+			if(_media_type=="2"){
+				$.ajax({
+					url:_media_url,
+					type: "GET",
+					dataType: "json",
+					success: function(__data){
+						if(__data.success){
+							if(__data.data){
+								if(__data.data.videos){
+									for(var _t=0;_t<__data.data.videos.length;_t++){
+										if(__data.data.videos[_t].id.toString()==_media_id){
+											_time_code=__data.data.videos[_t].timeCode;
+											_page_load_time=Date.now()/1000;
+											for(var _k=0;_k<__data.data.videos[_t].audios.length;_k++){
+												if(__data.data.videos[_t].audios[_k].lang.toLowerCase()==_lang){
+													
+															_audio= new Audio();
+															_audio.src =__data.data.videos[_t].audios[_k].audio;	
+															_audio.addEventListener('timeupdate', updateProgressBar);
+															_audio.addEventListener('canplay', function(){
+																if(_media_type=="2" && !_playstatus){
+																	var _duraton=_audio.duration;
+																	var _currtime=_time_code+(Date.now()/1000-_page_load_time);
+																	if(_currtime>=_duraton) _currtime=_currtime-_duraton;
+																	_audio.currentTime=_currtime;
+																	_playstatus=true;
+																	_audio.play();	
+																}
+															});
+													
+													break;
+												}	
+											}
+											break;
+										}
+									}
+								}	
+							}
+						}
+					},
+					error: function(error){
+						 console.log(error);
+					}
+				});
+			}
+			
 			if($('.media_player_block_text_cont')[0]){
 				var _match = $('.media_player_block_text_cont').text();
 				var _eachLine = _match.split('\n');
@@ -308,6 +367,8 @@ function filterEvents($filterBtn, $list, $block){
 //////////////////////////////////////////////////////////////////////////////////////////////
  function LanguageLoad(_l){
  	GetContent("https://rosatom.loremipsumcorp.com/explore/"+_l+"/home",function(){
+		if($('.guide_blocks_container')[0])$('.guide_blocks_container').remove();
+		
 		$('body').append('<div class="guide_blocks_container"><div class="header"><div class="header_top"><div class="custom_container"><div class="header_title_block">'+_trs_media_guide+'</div><div class="inner_logo_block"><img src="https://rosatom.loremipsumcorp.com/css/images/inner_logo.svg" alt="" title=""/></div></div></div></div>'+
 				'<div class="qr_cont">'+
 					'<div class="qr_border"></div>'+
@@ -341,16 +402,21 @@ function updateProgressBar() {
 	  const duration = _audio.duration;
 	  const progressPercent = (currentTime / duration) * 100;
 	  _progress.style.width = progressPercent+"%";
-	  _progress_drag.style.left = progressPercent+"%";
+	  if(_media_type=="1") _progress_drag.style.left = progressPercent+"%";
 	  
 	  
 	  document.getElementById('player_current_time').innerHTML=formatTime(currentTime);
-	  document.getElementById('player_total_time').innerHTML=formatTime(duration);
+	  document.getElementById('player_total_time').innerHTML=formatTime(duration || 0);
 	  
-	  if (currentTime >= duration) {
-			_playstatus=false;
-			_audio.pause();
-			if(_media_type=="1") _playButton.className="player_button paused";
+	  if (currentTime >= duration) {		
+			if(_media_type=="1") {
+				_playstatus=false;
+				_playButton.className="player_button paused";
+				_audio.pause();
+			} else 	if(_media_type=="2") {
+				_audio.currentTime=0;
+				_audio.play();
+			}
 	  }
 	  
 	 if($('.media_player_block_text_cont')[0]){	
@@ -374,7 +440,7 @@ function dragstart(ev) {
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function drag(ev) {
-	let x = (ev.touches[0].clientX-50)/((window.innerWidth-100)/100);
+	let x = (ev.touches[0].clientX-25)/((window.innerWidth-50)/100);
 	if(x>100) x=100;
 	if(x<0) x=0;
 	_progress_drag.style.left=x+"%"
@@ -396,6 +462,32 @@ function formatTime(_t){
 	_f=_f+":"+(_s>=10 ? _s : "0"+_s);
 	return _f;
 }
-
-
-
+/////////////////////////////////////////////////////////////////
+function StartScan(_cb){
+	window.QRScanner.prepare(function (err, status){
+		if (err) {
+			console.error(err);
+		}
+		if (status.authorized) {
+			window.QRScanner.useBackCamera(function(err, status){
+				window.QRScanner.useCamera(1, function(err, status){
+					window.QRScanner.scan(function (err, text){
+						  if(err){
+							console.log(err);
+							_cb(null);
+						  } else {
+							console.log(text);
+							_cb(text);
+						  }
+					});  
+					window.QRScanner.show();	  
+				});	  
+			});	
+		} else if (status.denied) {
+			window.QRScanner.openSettings();
+			_cb(null)
+		} else {
+			_cb(null)
+		}
+	});	
+}

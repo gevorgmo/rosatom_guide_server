@@ -29,9 +29,9 @@
 		<main class="content">
 			<div class="events_blocks_container">
 				<% if @pages.today.length>0 :%>
-					<img src="https://rosatom.loremipsumcorp.com<%- @pages.today[0].poster %>" alt="" title="" />
+					<% if @pages.today[0] :%><img src="https://rosatom.loremipsumcorp.com<%- @pages.today[0].poster || "" %>" alt="" title="" /><% end %>
 				<%  else :%>	
-					<img src="https://rosatom.loremipsumcorp.com<%- @pages.upcoming[0].poster %>" alt="" title="" />
+					<% if @pages.upcoming[0] :%><img src="https://rosatom.loremipsumcorp.com<%- @pages.upcoming[0].poster || "" %>" alt="" title="" /><% end %>
 				<% end %>	
 				
 				<div class="events_categories">
