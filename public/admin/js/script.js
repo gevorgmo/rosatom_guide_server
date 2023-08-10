@@ -341,7 +341,25 @@ $(document).ready(function(){
 	
 	
 ///////////////////////////ITEMS//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	if($('#itemslist')[0]){			
+		_table=$('#itemslist').DataTable({
+			"aoColumnDefs": [{ "bSortable": false, "aTargets" : [ "no-sort" ]}],
+			"lengthMenu": [[100, 200, 500, -1], [100, 200, 500, "All"]],
+			"dom": 'lrtip',
+			initComplete: function () {
+				$('#itemslist_length').append('<div class="row"><div class="col-sm-6"><div class="form-group searchdiv"><input type="text" class="form-control" id="filter_search" placeholder="Search ..."></div></div><div class="col-sm-4 pagelengthi"></div></div>');
+				$('div.dataTables_length label').appendTo('.pagelengthi');
+			}
+		});
 		
+		$('#filter_search').on( 'keyup', function () {
+			_table.search(this.value).draw();
+		});
+	}
+
+
+	
 	$('body').on('click', '.btn-deleteitem', function(event) {
 		event.preventDefault();		
 		var heading = _msg_del_conf;
@@ -356,7 +374,7 @@ $(document).ready(function(){
 				PostRec('/deleteitem',{id:_rid}, function(_err, __data){
 					$('.wait_overlay').css({'visibility':'hidden','opacity':'0'});
 					if(__data.status){
-							$('#'+_rid).remove();
+						_table.row($('#'+_rid)).remove().draw();	
 					} else{			
 						confirm('warning',_msg_warning, _msg_err_sort_save, _msg_close, '', function(){});
 					}

@@ -299,8 +299,8 @@ th.action {text-align:center;vertical-align:top!important; padding: 10px;}
 .trumbowyg-h3-dropdown-button ,
 .trumbowyg-h2-dropdown-button ,
 .trumbowyg-h1-dropdown-button {display:none!important}
-
-
+.sm_thumb{max-width:40px;height:auto}
+.uppercase{text-transform:uppercase}
 .info-box-number{font-size: 16px;line-height: 20px;}
 
 .skin-blue .sidebar-menu .treeview-menu>li.active>a{background-color: #2780cb;}

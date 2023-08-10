@@ -1,4 +1,69 @@
 <% extend "layout.ect" %>
 <section class="content-header"><h1><i class="fa fa-dashboard"></i> Dashboard</h1></section>
 
-  
+<section class="content">
+	<div class="row">
+		<div class="col-md-8">
+			<div class="box">
+				<div class="box-header with-border">
+					<h3 class="box-title">Most viewed content</h3>
+				</div>
+				<div class="box-body">
+					<div class="table-responsive">
+						<table class="table no-margin">
+							<thead>
+								<tr>
+									<th></th>
+									<th>Category</th>
+									<th>Title</th>
+									<th>Views</th>
+								</tr>
+							</thead>
+							<tbody>
+								<% for page in @pages : %>
+									<tr>
+										<td><% if page.poster :%><a href="/item/<%- page._id %>"><img src="<%- page.poster %>" class="sm_thumb" /></a><% end %></td>
+										<td class="uppercase"><%- page.category %></td>
+										<td class="uppercase"><% if page.title.ru :%><a href="/item/<%- page._id %>"><%- page.title.ru %></a><% end %></td>
+										<td><%- page.views %></td>
+									</tr>
+								<% end %>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+			<div class="box">
+				<div class="box-header with-border">
+					<h3 class="box-title">Language statistics</h3>
+				</div>
+				<div class="box-body">
+					<div class="table-responsive">
+						<table class="table no-margin">
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Views</th>
+									<th>Session length</th>
+								</tr>
+							</thead>
+							<tbody>
+								<% for option in @options : %>
+									<tr>	
+										<td class="uppercase"><a href="/options/<%- option._id %>"><%- option.language_title %></a></td>
+										<td><%- option.views %></td>
+										<td><%- ((option.sessions_time || 0)/(option.sessions_count || 1)).toFixed(2) %> seconds</td>
+									</tr>
+								<% end %>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			</div>	
+		</div>	
+	</div>	
+</section>

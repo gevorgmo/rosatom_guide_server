@@ -8,11 +8,11 @@ var mongoose       = require('mongoose')
   , fs         = require('fs')
   , fetch = require('node-fetch')
   , config = require('../config/config')
-  , client = require('./redis').client()
   , auth = require('../auth');
 
 
 
+var client = require('../redis').client();
 
 var _all_roles=["user","admin"];
 var _all_categories=["exhibition","event","service","media"];
@@ -187,7 +187,11 @@ exports.init = function (app) {
     });
 /////////////////////////////////////////////////////////////
 	app.get('/', isLoggedIn, function(req, res) {
-		return res.render("index", {user_status:_all_roles[req.user.role],  pagename:"dashboard"});
+		Option.find().sort({ord:1}).exec(function(err, _options){
+			Page.find({'category': {$nin : ["home", "map", "maps"]}}).sort({views:1}).limit(10).exec(function(err, _pages){
+				return res.render("index", {user_status:_all_roles[req.user.role], pages:_pages, options:_options, pagename:"dashboard"});
+			});	
+		});	
 	});
 /////////////////////////////////////////////////////////////
 	app.get('/users/:uid', isLoggedIn, function(req, res) {
