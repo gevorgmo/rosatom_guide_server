@@ -13,6 +13,7 @@
     "express": "^4.17.1",
     "express-session": "*",
     "express-validator": "*",
+    "fast-csv": "^2.5.0",
     "forever": "*",
     "method-override": "*",
     "moment": "*",
