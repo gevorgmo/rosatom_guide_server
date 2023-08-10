@@ -197,6 +197,25 @@ function GetContent(_url, _cb){
 			_progress = document.getElementById('progress');
 			_progress.style.width = "0%";
 			
+			
+			_audio= new Audio();
+			_audio.addEventListener('timeupdate', updateProgressBar);
+			
+			_audio.addEventListener('canplay', function(){
+				if(_media_type=="1" && !_playstatus){
+					_playstatus=true;
+					_audio.play();	
+				} else if(_media_type=="2" && !_playstatus){
+					var _duraton=_audio.duration;
+					var _currtime=_time_code+(Date.now()/1000-_page_load_time);
+					if(_currtime>=_duraton) _currtime=_currtime-_duraton;
+					_audio.currentTime=_currtime;
+					_playstatus=true;
+					_audio.play();	
+				}	
+			});
+			
+			
 			if(_media_type=="1"){
 				_progress_drag= document.getElementById('progress_drag');
 				_progress_drag.addEventListener("touchstart", dragstart, false)
@@ -204,18 +223,10 @@ function GetContent(_url, _cb){
 				_progress_drag.addEventListener("touchmove", drag)	
 				_playButton = document.getElementById('player_button');
 				_playButton.addEventListener('click', playAudio);	
-				
-				_audio= new Audio();
 				_audio.src =_media_url;
-				_audio.addEventListener('timeupdate', updateProgressBar);
-				_audio.addEventListener('canplay', function(){
-					if(_media_type=="1" && !_playstatus){
-						_playstatus=true;
-						_audio.play();	
-					} 
-				});
-				
 			}
+			
+			
 			if(_media_type=="2"){
 				$.ajax({
 					url:_media_url,
@@ -231,21 +242,7 @@ function GetContent(_url, _cb){
 											_page_load_time=Date.now()/1000;
 											for(var _k=0;_k<__data.data.videos[_t].audios.length;_k++){
 												if(__data.data.videos[_t].audios[_k].lang.toLowerCase()==_lang){
-													
-															_audio= new Audio();
-															_audio.src =__data.data.videos[_t].audios[_k].audio;	
-															_audio.addEventListener('timeupdate', updateProgressBar);
-															_audio.addEventListener('canplay', function(){
-																if(_media_type=="2" && !_playstatus){
-																	var _duraton=_audio.duration;
-																	var _currtime=_time_code+(Date.now()/1000-_page_load_time);
-																	if(_currtime>=_duraton) _currtime=_currtime-_duraton;
-																	_audio.currentTime=_currtime;
-																	_playstatus=true;
-																	_audio.play();	
-																}
-															});
-													
+													_audio.src =__data.data.videos[_t].audios[_k].audio;	
 													break;
 												}	
 											}
@@ -284,19 +281,6 @@ function GetContent(_url, _cb){
 		
 		setTimeout(function(){ window.scrollTo(0,0);},10);
 
-		/*const imageElement = document.getElementById("map_image_1");
-
-		imageElement.addEventListener('touchstart', (event) => {
-		console.log('touchstart', event);
-		});
-
-		imageElement.addEventListener('touchmove', (event) => {
-		console.log('touchmove', event);
-		});
-
-		imageElement.addEventListener('touchend', (event) => {
-		console.log('touchend', event);
-		});*/
 
 		if(_url.indexOf('/maps')>-1){
 
@@ -333,15 +317,6 @@ function GetContent(_url, _cb){
 				}
 			});
 
-			//check if scale is less than 1 and keep the previous ratio
-			// wrapper.addEventListener('touchend', function(event) {				
-			// 	if (event.touches.length > 1) {
-			// 		event.preventDefault();
-			// 		rf = dist(event) / d1 * rs;
-			// 		alert(rf+'%%%');
-			// 		//rf < 1 ? (timg.style.transform = "scale(1)", rs = 1) : rs = rf;
-			// 	}
-			// });
 		}
 		
 
@@ -470,7 +445,7 @@ function StartScan(_cb){
 		}
 		if (status.authorized) {
 			window.QRScanner.useBackCamera(function(err, status){
-				window.QRScanner.useCamera(1, function(err, status){
+				window.QRScanner.useCamera(0, function(err, status){
 					window.QRScanner.scan(function (err, text){
 						  if(err){
 							console.log(err);

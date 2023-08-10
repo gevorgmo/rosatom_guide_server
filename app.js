@@ -55,7 +55,6 @@ app.engine('.ect', ECT({ watch: true, root: __dirname + '/views' }).render);
 app.use(favicon(__dirname + '/public/favicon.png'));
 app.use(logger('dev'));
 app.use(methodOverride());
-//app.use(session({secret: 'dfdsgdsgdgaggghjgsdfj', resave: false, saveUninitialized: false }));
 app.use(session({secret: 'dfdsgdsgdgaggghjgsdfj',  saveUninitialized: true,  resave: false, store: new RedisStore({client:client})}));
 app.use(bodyParser.json({limit: '20mb'}));
 app.use(bodyParser.urlencoded({limit: '20mb', extended: true }));

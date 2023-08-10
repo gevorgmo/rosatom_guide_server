@@ -7,10 +7,8 @@ var mongoose       = require('mongoose')
   , passport  = require('passport')
   , fs         = require('fs')
   , fetch = require('node-fetch')
-  , uuid = require('node-uuid')
-  , nodemailer = require('nodemailer')
-  , _async 	= require('async')
   , config = require('../config/config')
+  , client = require('./redis').client()
   , auth = require('../auth');
 
 
@@ -43,6 +41,7 @@ exports.init = function (app) {
 	app.get('/test', function(req, res) {
 		return res.render('templates/test',{});
 	});
+	
 /////////////////////////////////////////////////////////////
 	app.get('/explore/:lang/:slug', function(req, res) {
 		res.setHeader('Access-Control-Allow-Origin', '*');
@@ -51,56 +50,60 @@ exports.init = function (app) {
 		var _categories={"exhibitions":"exhibition","events":"event","services":"service"};
 		var _all_item={"home":"home","exhibition":"exhibition","media":"media","event":"event","service":"service","maps":"maps"};
 		
-		Option.find().sort({ord:1}).exec(function(err, _options){	
-			if(_categories[_slug]){ 
-				var _quer={active:true, category:_categories[_slug]};
-				var _sort={ord:1};
-				if(_slug=="events"){
-					_sort={published:1};
-					_quer.published={$gte: new Date()};
-				}
-				Page.find(_quer).sort(_sort).exec(function(err, _pages){
-					if(err || !_pages) {
-						Page.findOne({active:true, slug:"home"}).exec(function(_err, __home){
-							return res.render('templates/home', {lang:_language, page:__home.toObject(), options:_options});
-						});
-					} else {
-						if(_slug=="events"){
-							_pages.today=[];
-							_pages.upcoming=[];
-							_pages.map(function(_i){
-								var _p=_i.toObject();
-								_p.time=moment(_p.published).format("HH:mm");
-								if(isToday(_p.published)){
-									_pages.today.push(_p);
-								} else {
-									_pages.upcoming.push(_p);
-								}
+		Option.find().sort({ord:1}).exec(function(err, _options){
+			Option.updateOne({language_code:_language}, {$inc:{"views":1}}, function(err, ___option) {
+				if(_categories[_slug]){ 
+					var _quer={active:true, category:_categories[_slug]};
+					var _sort={ord:1};
+					if(_slug=="events"){
+						_sort={published:1};
+						_quer.published={$gte: new Date()};
+					}
+					Page.find(_quer).sort(_sort).exec(function(err, _pages){
+						if(err || !_pages) {
+							Page.findOne({active:true, slug:"home"}).exec(function(_err, __home){
+								return res.render('templates/home', {lang:_language, page:__home.toObject(), options:_options});
 							});
-						}
-						return res.render('templates/'+_slug, {lang:_language, category:_slug, pages:_pages,  options:_options});	
-					}
-				});	
-			} else {
-				Page.findOne({active:true, slug:_slug}).exec(function(_err, __page){
-					if(_err || !__page) {
-						Page.findOne({active:true, slug:"home"}).exec(function(_err, __home){
-							return res.render('templates/home', {lang:_language, page:__home.toObject(), options:_options});
-						});	
-					} else {
-						var _p=__page.toObject();
-						if(_all_item[_p.category]){ 
-							if(_p.category=="event"){
-								_p.time=moment(_p.published).format("HH:mm");
-								_p.date=moment(_p.published).format("DD.MM.YY");
-							}
-							return res.render('templates/'+_p.category, {lang:_language, page:_p,   options:_options});
 						} else {
-							return res.render('templates/media', {lang:_language, page:__page.toObject(),   options:_options});
-						}						
-					}
-				});
-			}	
+							if(_slug=="events"){
+								_pages.today=[];
+								_pages.upcoming=[];
+								_pages.map(function(_i){
+									var _p=_i.toObject();
+									_p.time=moment(_p.published).format("HH:mm");
+									if(isToday(_p.published)){
+										_pages.today.push(_p);
+									} else {
+										_pages.upcoming.push(_p);
+									}
+								});
+							}
+							return res.render('templates/'+_slug, {lang:_language, category:_slug, pages:_pages,  options:_options});	
+						}
+					});	
+				} else {
+					Page.findOne({active:true, slug:_slug}).exec(function(_err, __page){
+						if(_err || !__page) {
+							Page.findOne({active:true, slug:"home"}).exec(function(_err, __home){
+								return res.render('templates/home', {lang:_language, page:__home.toObject(), options:_options});
+							});	
+						} else {
+							Page.updateOne({_id:__page._id}, {$inc:{"views":1}}, function(err, ___page) {
+								var _p=__page.toObject();
+								if(_all_item[_p.category]){ 
+									if(_p.category=="event"){
+										_p.time=moment(_p.published).format("HH:mm");
+										_p.date=moment(_p.published).format("DD.MM.YY");
+									}
+									return res.render('templates/'+_p.category, {lang:_language, page:_p,   options:_options});
+								} else {
+									return res.render('templates/media', {lang:_language, page:__page.toObject(),   options:_options});
+								}	
+							});	
+						}
+					});
+				}	
+			});			
 		});	
 	});
 //////////////////////////////////////////////////////////////////////////
@@ -124,6 +127,38 @@ exports.init = function (app) {
 			return res.status(200).send({"status":true, page:_itm});
 		});
     });
+//////////////////////////////////////////////////////////////////////////
+	app.post('/sessionupdate',  function(req, res){
+		res.setHeader('Access-Control-Allow-Origin', '*');
+		res.setHeader('Access-Control-Allow-Headers', 'X-Custom-Heade');
+		res.setHeader('Content-Type', 'text/html; charset=utf-8');
+		res.setHeader('content-type', 'text/javascript');
+		
+		if(req.body.uuid && req.body.lang){
+			var _language=escape(req.body.lang || "ru").trim().toLowerCase();
+			var _uuid=escape(req.body.uuid || "0").trim().toLowerCase();
+			var _time_now=Date.now()/1000;
+			
+			client.get(_uuid, function (err100, _time) {
+				if(_time){
+					_time=parseInt(_time);
+					client.set(_uuid,  _time_now.toString(), function (err100, __time) {
+						if((_time_now-_time)>10){
+							Option.updateOne({language_code:_language}, {$inc:{"sessions_count":1, "sessions_time":(_time_now-_time)}}, function(err, ___option) {
+								return res.status(200).send({"status":true, page:_itm});
+							});	
+						} else {
+							return res.status(200).send({"status":false});
+						}
+					});	
+				} else {
+					return res.status(200).send({"status":false});
+				}	
+			});	
+		} else {
+			return res.status(200).send({"status":false});
+		}		
+    });	
 //////////////////////////////////////////////////////////////////////
 	app.get('/logout', function(req, res) {
 		req.logout();
@@ -383,13 +418,14 @@ exports.init = function (app) {
 				if(_slugs){
 					if(_slugs.length>0) return res.status(200).send({"status":false});
 				}
+				_page.views=0;
 				Page.create(_page,  function(err3, __page) {
 					if (err3 || !__page) return res.status(200).send({"status":false});
 					return res.status(200).send({"status":true});
 				});
 			});
 		} else {
-			Page.update({_id:req.body.id},  {$set:_page}, {}, function(err, ___page) {
+			Page.updateOne({_id:req.body.id},  {$set:_page}, {}, function(err, ___page) {
 				if (err){ console.log(err); }
 				return res.status(200).send({"status":true});
 			});
@@ -418,6 +454,9 @@ exports.init = function (app) {
 		};
 
 		if(req.body.id=="new"){
+			_option.views=0;
+			_option.sessions_count=0;
+			_option.sessions_time=0;
 			Option.create(_option,  function(err3, __option) {
 				if (err3 || !__option) return res.status(200).send({"status":false});
 				return res.status(200).send({"status":true});

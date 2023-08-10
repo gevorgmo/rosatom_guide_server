@@ -14,6 +14,18 @@ var OptionSchema = new Schema({
         type: Number,
         default: 0
     },
+	views: {
+        type: Number,
+        default: 0
+    },
+	sessions_count: {
+        type: Number,
+        default: 0
+    },
+	sessions_time: {
+        type: Number,
+        default: 0
+    },
 	translations: {},
     created: {type: Date, default: Date.now}
 });

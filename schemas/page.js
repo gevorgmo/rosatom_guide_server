@@ -32,6 +32,10 @@ var PageSchema = new Schema({
 	audio:{},
 	video:{},
 	text:{},
+	views: {
+        type: Number,
+        default: 0
+    },
 	published: {type: Date, default: Date.now},
 	created: {type: Date, default: Date.now}
 });
