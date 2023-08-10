@@ -6,8 +6,6 @@ var mongoose       = require('mongoose')
   , moment = require('moment')
   , passport  = require('passport')
   , fs         = require('fs')
-  , csv = require("fast-csv")
-  , _async = require('async')
   , fetch = require('node-fetch')
   , config = require('../config/config')
   , QRCode = require('qrcode')
@@ -39,25 +37,6 @@ exports.init = function (app) {
 			return res.status(200);
 		});
 	});
-
-/////////////////////////////////////////////////////////////
-	app.get('/convertqrlist', function(req, res) {
-		var _elems=[];
-		var stream = fs.createReadStream('./files/list.csv');
-		csv.fromStream(stream, {delimiter :','}).on("data", function(data){
-			_elems.push(data);
-		}).on("end", function(){
-			console.log(_elems[0][0]);
-			_async.eachSeries(_elems, function(_elem, _cb) {
-				QRCode.toFile("./files/"+_elem[0]+".svg",_elem[0], {type:"svg"},function (err) {
-					return _cb(null);
-				})
-			}, function(err) {
-				return res.render('templates/test',{});
-			});	
-		});
-	});
-	
 */
 /////////////////////////////////////////////////////////////
 	app.get('/test', function(req, res) {
