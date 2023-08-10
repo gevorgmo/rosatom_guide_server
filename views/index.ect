@@ -48,6 +48,7 @@
 									<th>Name</th>
 									<th>Views</th>
 									<th>Session length</th>
+									<th>QR scans in session</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -56,6 +57,7 @@
 										<td class="uppercase"><a href="/options/<%- option._id %>"><%- option.language_title %></a></td>
 										<td><%- option.views %></td>
 										<td><%- ((option.sessions_time || 0)/(option.sessions_count || 1)).toFixed(2) %> seconds</td>
+										<td><%- ((option.qr_count || 0)/(option.sessions_count || 1)).toFixed(2) %></td>
 									</tr>
 								<% end %>
 							</tbody>

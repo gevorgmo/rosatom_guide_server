@@ -26,6 +26,10 @@ var OptionSchema = new Schema({
         type: Number,
         default: 0
     },
+	qr_count: {
+        type: Number,
+        default: 0
+    },
 	translations: {},
     created: {type: Date, default: Date.now}
 });

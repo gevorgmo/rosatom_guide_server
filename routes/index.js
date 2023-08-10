@@ -97,7 +97,13 @@ exports.init = function (app) {
 									}
 									return res.render('templates/'+_p.category, {lang:_language, page:_p,   options:_options});
 								} else {
-									return res.render('templates/media', {lang:_language, page:__page.toObject(),   options:_options});
+									var _uuid=escape(req.query.uuid || "test").trim();
+									client.hgetall("dev:"+_uuid, function (err, _device) {
+										var _dev=(_device || {time:(Date.now()/1000).toString(), qr:"0"});
+										client.multi().hmset("dev:"+_uuid, "time", _dev.time, "qr", (parseInt(_dev.qr)+1).toString()).expire("dev:"+_uuid, 10000).exec(function(err10,ret){
+											return res.render('templates/media', {lang:_language, page:__page.toObject(),   options:_options});
+										});
+									});	
 								}	
 							});	
 						}
@@ -139,12 +145,12 @@ exports.init = function (app) {
 			var _uuid=escape(req.body.uuid || "0").trim().toLowerCase();
 			var _time_now=Date.now()/1000;
 			
-			client.get(_uuid, function (err100, _time) {
-				if(_time){
-					_time=parseInt(_time);
-					client.set(_uuid,  _time_now.toString(), function (err100, __time) {
+			client.hgetall("dev:"+_uuid, function (err, _device) {
+				if(_device){
+					var _time=parseInt(_device.time);
+					client.multi().hmset("dev:"+_uuid, "time", _time_now.toString(), "qr", "0").expire("dev:"+_uuid, 10000).exec(function(err10,ret){
 						if((_time_now-_time)>10){
-							Option.updateOne({language_code:_language}, {$inc:{"sessions_count":1, "sessions_time":(_time_now-_time)}}, function(err, ___option) {
+							Option.updateOne({language_code:_language}, {$inc:{"sessions_count":1, "qr_count":parseInt(_device.qr),"sessions_time":(_time_now-_time)}}, function(err, ___option) {
 								return res.status(200).send({"status":true, page:_itm});
 							});	
 						} else {
@@ -188,7 +194,7 @@ exports.init = function (app) {
 /////////////////////////////////////////////////////////////
 	app.get('/', isLoggedIn, function(req, res) {
 		Option.find().sort({ord:1}).exec(function(err, _options){
-			Page.find({'category': {$nin : ["home", "map", "maps"]}}).sort({views:1}).limit(10).exec(function(err, _pages){
+			Page.find({'category': {$nin : ["home", "map", "maps"]}}).sort({views:-1}).limit(10).exec(function(err, _pages){
 				return res.render("index", {user_status:_all_roles[req.user.role], pages:_pages, options:_options, pagename:"dashboard"});
 			});	
 		});	

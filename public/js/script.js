@@ -41,7 +41,7 @@ $(document).ready(function() {
 			StopScan(); 
 			$('.guide_blocks_container').hide();	
 			$('#global_wrap').show();	
-			GetContent("https://rosatom.loremipsumcorp.com/explore/"+_lang+"/"+_media,function(){});
+			GetContent("https://rosatom.loremipsumcorp.com/explore/"+_lang+"/"+_media+"?uuid="+(_uuid || "test"),function(){});
 		}); 
 		return false;
 	});	
