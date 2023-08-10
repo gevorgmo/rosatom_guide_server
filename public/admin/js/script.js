@@ -526,6 +526,17 @@ $(document).ready(function(){
 	});
 	
 	
+	$('body').on('click','.btn-qrgenerate',function(event){	
+		if($('#prslug').val().trim().length>0){
+			location.href="/qrgenerate?slug="+$('#prslug').val();
+		} else {
+			alert("Please enter the QR code for generating.");
+		}		
+	});
+	
+	
+	
+	
 	$('body').on('click', '.btn-saveitem', function(evt) {
 		evt.preventDefault();
 		var _this=$(this);

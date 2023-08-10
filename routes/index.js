@@ -8,6 +8,7 @@ var mongoose       = require('mongoose')
   , fs         = require('fs')
   , fetch = require('node-fetch')
   , config = require('../config/config')
+  , QRCode = require('qrcode')
   , auth = require('../auth');
 
 
@@ -41,7 +42,6 @@ exports.init = function (app) {
 	app.get('/test', function(req, res) {
 		return res.render('templates/test',{});
 	});
-	
 /////////////////////////////////////////////////////////////
 	app.get('/explore/:lang/:slug', function(req, res) {
 		res.setHeader('Access-Control-Allow-Origin', '*');
@@ -278,6 +278,18 @@ exports.init = function (app) {
 					return res.render("item", {user_status:_all_roles[req.user.role],  pagename:_category, item:{slug:"", _id:"new"}, options:_options});
 				}
 			});	
+		} else {
+			return res.redirect('/');
+		}
+	});
+/////////////////////////////////////////////////////////////
+	app.get('/qrgenerate', isLoggedIn, function(req, res) {
+		if(req.query.slug){
+			QRCode.toString(req.query.slug, {type:"svg"},function (err, svg) {
+				res.setHeader('Content-disposition', 'attachment; filename=qr.svg');
+				res.set('Content-Type', 'image/svg');
+				return res.status(200).send(svg);
+			})
 		} else {
 			return res.redirect('/');
 		}

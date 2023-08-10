@@ -171,7 +171,7 @@ html {
 .items-list-delet-group{margin-left:20px;}
 .product_options_cell{font-size:0;line-height:0;}
 .p_option{font-size:14px;margin-right:15px}
-.input-group{width:100%}
+
 .input-group .form-control, .input-group-addon, .input-group-btn {  display: table-cell;}
 .input-group .form-control {position: relative; z-index: 2;  float: left; width: 100%;margin-bottom: 0;}
 .slug-input-group{padding-right: 0;border-right:0;text-align:right}
