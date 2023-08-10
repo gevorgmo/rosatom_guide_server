@@ -38,6 +38,9 @@ body {
 body.map_page, body.events_page, body.services_page{
 	background-color: #fff !important; 
 }
+body.mediaaa_page{
+	background-color: #000 !important; 
+}
 label{
 	font-weight: 400;
 	width: inherit;
@@ -1255,7 +1258,7 @@ footer{background:#000}
 #progress_drag{width:18px;height:18px;position:absolute;background:#fff;border-radius:20px;top:-7px;margin-left:-9px;z-index:10;}
 
 
-body.blaskbg{background:#000!important}
+
 
 @media only screen and (orientation : landscape) {
 	.mobile_rotate{visibility:visible;opacity:1;}

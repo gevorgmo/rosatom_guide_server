@@ -151,7 +151,7 @@ exports.init = function (app) {
 					client.multi().hmset("dev:"+_uuid, "time", _time_now.toString(), "qr", "0").expire("dev:"+_uuid, 10000).exec(function(err10,ret){
 						if((_time_now-_time)>10){
 							Option.updateOne({language_code:_language}, {$inc:{"sessions_count":1, "qr_count":parseInt(_device.qr),"sessions_time":(_time_now-_time)}}, function(err, ___option) {
-								return res.status(200).send({"status":true, page:_itm});
+								return res.status(200).send({"status":true});
 							});	
 						} else {
 							return res.status(200).send({"status":false});

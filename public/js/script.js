@@ -9,7 +9,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 
-var _audio,_playstatus=false,_playButton,_progress,_progress_drag,_media_type,_trans_id=-1,_time_code=0,_page_load_time=0;
+var _audio,_playstatus=false,_playButton,_progress,_progress_drag,_media_type,_trans_id=-1,_time_code=0,_page_load_time=0,_current_status=0;
 
 
 $(document).ready(function() {
@@ -145,7 +145,22 @@ $(document).ready(function() {
 		return false;
 	});	
 	
-
+	
+	setInterval(function(){
+		if(typeof _status_changes!="undefined"){
+			if(_current_status!=_status_changes){
+				if(_status_changes==2){
+					GetPost("/sessionupdate", {lang:_lang, uuid:_uuid}, function(__data){
+						if(__data){
+							if(__data.status) _current_status=_status_changes;
+						}
+					});	
+				}
+			}
+		}
+	}, 5000);
+	  
+	
 });
 
 
@@ -167,9 +182,9 @@ function GetContent(_url, _cb){
 		
 		$('#global_wrap').append(data);
 		
-		console.log(_url, '_url');
+		console.log(_url);
 		
-		$('body').removeClass('media_page').removeClass('events_page').removeClass('map_page').removeClass('services_page');
+		$('body').removeClass('media_page').removeClass('events_page').removeClass('map_page').removeClass('services_page').removeClass('mediaaa_page');
 		
 		if(_url.indexOf('/maps')>-1){
 			if(!$('body').hasClass('map_page')) $('body').addClass('map_page');
@@ -179,6 +194,8 @@ function GetContent(_url, _cb){
 			if(!$('body').hasClass('events_page')) $('body').addClass('events_page');
 		} else if(data.indexOf('services_page')>-1 || data.indexOf('services_iner_page')>-1){
 			if(!$('body').hasClass('services_page')) $('body').addClass('services_page');
+		} else if($('.media_blocks_container')[0]){
+			if(!$('body').hasClass('mediaaa_page')) $('body').addClass('mediaaa_page');	
 		}
 
 		if($('.inner_block h2 span').length){
@@ -189,6 +206,7 @@ function GetContent(_url, _cb){
 		
 
 		if($('.media_blocks_container')[0]){
+		
 			_media_type=$('.media_blocks_container').attr('data-type');
 			var _media_url=$('.media_blocks_container').attr('data-url');
 			var _media_id=$('.media_blocks_container').attr('data-id');
@@ -228,11 +246,8 @@ function GetContent(_url, _cb){
 			
 			
 			if(_media_type=="2"){
-				$.ajax({
-					url:_media_url,
-					type: "GET",
-					dataType: "json",
-					success: function(__data){
+				GetReq(_media_url, function(__data){
+					if(__data){
 						if(__data.success){
 							if(__data.data){
 								if(__data.data.videos){
@@ -252,10 +267,7 @@ function GetContent(_url, _cb){
 								}	
 							}
 						}
-					},
-					error: function(error){
-						 console.log(error);
-					}
+					}	
 				});
 			}
 			
@@ -437,6 +449,42 @@ function formatTime(_t){
 	_f=_f+":"+(_s>=10 ? _s : "0"+_s);
 	return _f;
 }
+/////////////////////////////////////////////////////////////////
+function GetReq(_url, _cb){
+	$.ajax({
+		url:_url,
+		type: "GET",
+		dataType: "json",
+		success: function(__data){
+			_cb(__data);
+		},
+		error: function(error){
+			 console.log(error);
+			 _cb(null);
+		}
+	});			
+}
+/////////////////////////////////////////////////////////////////
+function PostReq(_url, _data, _cb){
+	$.ajax({
+		url:_url,
+		type: "POST",
+		dataType: "json",
+		data:_data,
+		success: function(__data){
+			_cb(__data);
+		},
+		error: function(error){
+			 console.log(error);
+			 _cb(null);
+		}
+	});			
+}
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
 function StartScan(_cb){
 	window.QRScanner.prepare(function (err, status){
