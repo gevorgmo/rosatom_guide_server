@@ -35,8 +35,8 @@
 				<% end %>	
 				
 				<div class="events_categories">
-					<span class="selected" data-type="today"><% if opt.translations :%><%- opt.translations.today || "" %><% end %></span>
-					<span data-type="upcoming"><% if opt.translations :%><%- opt.translations.upcoming || "" %><% end %></span> 
+					<div class="events_itm selected" data-type="today"><div class="events_itm_txt"><% if opt.translations :%><%- opt.translations.today || "" %><% end %></div></div>
+					<div class="events_itm" data-type="upcoming"><div class="events_itm_txt"><% if opt.translations :%><%- opt.translations.upcoming || "" %><% end %></div></div> 
 				</div>
 
 				<div class="events_select">
@@ -95,13 +95,13 @@
 			<div class="inner_footer_menu">
 				<div class="inner_footer_menu_block">
 					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/exhibitions">
-						<img src="css/images/exhibits_black.svg" alt="" title="" />
+						<img src="https://rosatom.loremipsumcorp.com/css/images/exhibits_black.svg" alt="" title="" />
 						<span><% if opt.translations :%><%- opt.translations.exibitions || "" %><% end %></span>
 					</a>
 				</div>
 				<div class="inner_footer_menu_block selected">
 					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/events">
-						<img src="css/images/events_black.svg" alt="" title="" />
+						<img src="https://rosatom.loremipsumcorp.com/css/images/events_black.svg" alt="" title="" />
 						<span><% if opt.translations :%><%- opt.translations.events || "" %><% end %></span>
 					</a>
 				</div>
@@ -112,13 +112,13 @@
 				</div>
 				<div class="inner_footer_menu_block">
 					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/services">
-						<img src="css/images/services_black.svg" alt="" title="" />
+						<img src="https://rosatom.loremipsumcorp.com/css/images/services_black.svg" alt="" title="" />
 						<span><% if opt.translations :%><%- opt.translations.services || "" %><% end %></span>
 					</a>
 				</div>
 				<div class="inner_footer_menu_block">
 					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/maps">
-						<img src="css/images/maps_black.svg" alt="" title="" />
+						<img src="https://rosatom.loremipsumcorp.com/css/images/maps_black.svg" alt="" title="" />
 						<span><% if opt.translations :%><%- opt.translations.maps || "" %><% end %></span>
 					</a>
 				</div>

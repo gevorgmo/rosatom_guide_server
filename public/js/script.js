@@ -41,7 +41,7 @@ $(document).ready(function() {
 			StopScan(); 
 			$('.guide_blocks_container').hide();	
 			$('#global_wrap').show();	
-			GetContent("https://rosatom.loremipsumcorp.com/explore/"+_lang+"/"+_media+"?uuid="+(_uuid || "test"),function(){});
+			GetContent("https://rosatom.loremipsumcorp.com/explore/"+_lang+"/"+_media,function(){});
 		}); 
 		return false;
 	});	
@@ -110,18 +110,18 @@ $(document).ready(function() {
 	});	
 	 
 		
-	$('body').on('click', '.serv_categories span', function(evt) {
+	$('body').on('click', '.serv_categories_itm', function(evt) {
 		evt.preventDefault();	
-		$('.serv_categories span').removeClass('selected');
+		$('.serv_categories_itm').removeClass('selected');
 		$(this).addClass('selected');
 		$('.serv_container > div').hide();
 		$('.serv_container > div[data-type="'+$(this).attr('data-type')+'"]').show();
 		return false;
 	});	
 	
-	$('body').on('click', '.events_categories span', function(evt) {
+	$('body').on('click', '.events_itm', function(evt) {
 		evt.preventDefault();	
-		$('.events_categories span').removeClass('selected');
+		$('.events_itm').removeClass('selected');
 		$(this).addClass('selected');
 		$('.events_container > div').hide();
 		$('.events_container > div[data-type="'+$(this).attr('data-type')+'"]').show();
@@ -131,8 +131,14 @@ $(document).ready(function() {
 	
 	$('body').on('click', '.events_select .events_select_cont .selected', function(evt) {
 		evt.preventDefault();	
-		$('.events_select').toggleClass('opened');
-		$('.events_select .arrow').toggleClass('opened');
+		if($('.events_select').hasClass('opened')) {
+			$('.events_select').removeClass('opened');
+			$('.events_select .arrow').removeClass('opened');
+		} else {
+			$('.events_select').addClass('opened');
+			$('.events_select .arrow').addClass('opened');
+		}
+		
 		return false;
 	});	
 	
@@ -140,26 +146,16 @@ $(document).ready(function() {
 	$('body').on('click', '.events_select li', function(evt) {
 		evt.preventDefault();
 		$('.events_select').removeClass('opened');
+		$('.events_select .arrow').removeClass('opened');
 		$('.events_select_cont > div span').text($(this).text());
 		filterEvents($(evt.currentTarget), $('.events_container'), '.event_block');
 		return false;
 	});	
 	
 	
-	setInterval(function(){
-		if(typeof _status_changes!="undefined"){
-			if(_current_status!=_status_changes){
-				if(_status_changes==2){
-					GetPost("/sessionupdate", {lang:_lang, uuid:_uuid}, function(__data){
-						if(__data){
-							if(__data.status) _current_status=_status_changes;
-						}
-					});	
-				}
-			}
-		}
-	}, 5000);
-	  
+
+	 
+	PostReq("https://rosatom.loremipsumcorp.com/sessionupdate", {uuid:(typeof _uuid!="undefined" ? _uuid : "test")}, function(__data){});	
 	
 });
 
@@ -173,7 +169,7 @@ function GetContent(_url, _cb){
 		_audio=null;
 	}
 	
-	$.get(_url, function(data, status){
+	$.get(_url+"?uuid="+(typeof _uuid!="undefined" ? _uuid : "test"), function(data, status){
 		$('.loader_start').css({'visibility':'hidden','opacity':'0'});
 		$('#global_wrap').empty();
 		data=data.replaceAll(/"\/files\//gi, '"https://rosatom.loremipsumcorp.com/files/');
@@ -205,11 +201,11 @@ function GetContent(_url, _cb){
 		}
 		
 
-		if($('.media_blocks_container')[0]){
+		if($('#media_content_data')[0]){
 		
-			_media_type=$('.media_blocks_container').attr('data-type');
-			var _media_url=$('.media_blocks_container').attr('data-url');
-			var _media_id=$('.media_blocks_container').attr('data-id');
+			_media_type=$('#media_content_data').attr('data-type');
+			var _media_url=$('#media_content_data').attr('data-url');
+			var _media_id=$('#media_content_data').attr('data-id');
 			
 			
 			_progress = document.getElementById('progress');
@@ -486,6 +482,7 @@ function PostReq(_url, _data, _cb){
 /////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
+/*
 function StartScan(_cb){
 	window.QRScanner.prepare(function (err, status){
 		if (err) {
@@ -514,3 +511,5 @@ function StartScan(_cb){
 		}
 	});	
 }
+*/
+

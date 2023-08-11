@@ -49,66 +49,70 @@ exports.init = function (app) {
 		var _slug=escape(req.params.slug || "home").trim().toLowerCase();
 		var _categories={"exhibitions":"exhibition","events":"event","services":"service"};
 		var _all_item={"home":"home","exhibition":"exhibition","media":"media","event":"event","service":"service","maps":"maps"};
+		var _uuid=escape(req.query.uuid || "test").trim();
+		var _interaction=Date.now()/1000;
 		
 		Option.find().sort({ord:1}).exec(function(err, _options){
 			Option.updateOne({language_code:_language}, {$inc:{"views":1}}, function(err, ___option) {
-				if(_categories[_slug]){ 
-					var _quer={active:true, category:_categories[_slug]};
-					var _sort={ord:1};
-					if(_slug=="events"){
-						_sort={published:1};
-						_quer.published={$gte: new Date()};
-					}
-					Page.find(_quer).sort(_sort).exec(function(err, _pages){
-						if(err || !_pages) {
-							Page.findOne({active:true, slug:"home"}).exec(function(_err, __home){
-								return res.render('templates/home', {lang:_language, page:__home.toObject(), options:_options});
-							});
-						} else {
+				client.hgetall("dev:"+_uuid, function (err, _device) {
+					var _dev=(_device || {time:(Date.now()/1000).toString(), qr:"0"});
+					client.multi().hmset("dev:"+_uuid, "interaction", _interaction.toString(), "time", _dev.time, "qr", _dev.qr).exec(function(err10,ret){
+					
+						if(_categories[_slug]){ 
+							var _quer={active:true, category:_categories[_slug]};
+							var _sort={ord:1};
 							if(_slug=="events"){
-								_pages.today=[];
-								_pages.upcoming=[];
-								_pages.map(function(_i){
-									var _p=_i.toObject();
-									_p.time=moment(_p.published).format("HH:mm");
-									if(isToday(_p.published)){
-										_pages.today.push(_p);
-									} else {
-										_pages.upcoming.push(_p);
-									}
-								});
+								_sort={published:1};
+								_quer.published={$gte: new Date()};
 							}
-							return res.render('templates/'+_slug, {lang:_language, category:_slug, pages:_pages,  options:_options});	
-						}
-					});	
-				} else {
-					Page.findOne({active:true, slug:_slug}).exec(function(_err, __page){
-						if(_err || !__page) {
-							Page.findOne({active:true, slug:"home"}).exec(function(_err, __home){
-								return res.render('templates/home', {lang:_language, page:__home.toObject(), options:_options});
+							Page.find(_quer).sort(_sort).exec(function(err, _pages){
+								if(err || !_pages) {
+									Page.findOne({active:true, slug:"home"}).exec(function(_err, __home){
+										return res.render('templates/home', {lang:_language, page:__home.toObject(), options:_options});
+									});
+								} else {
+									if(_slug=="events"){
+										_pages.today=[];
+										_pages.upcoming=[];
+										_pages.map(function(_i){
+											var _p=_i.toObject();
+											_p.time=moment(_p.published).format("HH:mm");
+											if(isToday(_p.published)){
+												_pages.today.push(_p);
+											} else {
+												_pages.upcoming.push(_p);
+											}
+										});
+									}
+									return res.render('templates/'+_slug, {lang:_language, category:_slug, pages:_pages,  options:_options});	
+								}
 							});	
 						} else {
-							Page.updateOne({_id:__page._id}, {$inc:{"views":1}}, function(err, ___page) {
-								var _p=__page.toObject();
-								if(_all_item[_p.category]){ 
-									if(_p.category=="event"){
-										_p.time=moment(_p.published).format("HH:mm");
-										_p.date=moment(_p.published).format("DD.MM.YY");
-									}
-									return res.render('templates/'+_p.category, {lang:_language, page:_p,   options:_options});
-								} else {
-									var _uuid=escape(req.query.uuid || "test").trim();
-									client.hgetall("dev:"+_uuid, function (err, _device) {
-										var _dev=(_device || {time:(Date.now()/1000).toString(), qr:"0"});
-										client.multi().hmset("dev:"+_uuid, "time", _dev.time, "qr", (parseInt(_dev.qr)+1).toString()).expire("dev:"+_uuid, 10000).exec(function(err10,ret){
-											return res.render('templates/media', {lang:_language, page:__page.toObject(),   options:_options});
-										});
+							Page.findOne({active:true, slug:_slug}).exec(function(_err, __page){
+								if(_err || !__page) {
+									Page.findOne({active:true, slug:"home"}).exec(function(_err, __home){
+										return res.render('templates/home', {lang:_language, page:__home.toObject(), options:_options});
 									});	
-								}	
-							});	
+								} else {
+									Page.updateOne({_id:__page._id}, {$inc:{"views":1}}, function(err, ___page) {
+										var _p=__page.toObject();
+										if(_all_item[_p.category]){ 
+											if(_p.category=="event"){
+												_p.time=moment(_p.published).format("HH:mm");
+												_p.date=moment(_p.published).format("DD.MM.YY");
+											}
+											return res.render('templates/'+_p.category, {lang:_language, page:_p,   options:_options});
+										} else {	
+											client.multi().hmset("dev:"+_uuid, "interaction", _interaction.toString(), "time", _dev.time, "qr", (parseInt(_dev.qr)+1).toString()).exec(function(err10,ret){
+												return res.render('templates/media', {lang:_language, page:__page.toObject(),   options:_options});
+											});
+										}	
+									});	
+								}
+							});
 						}
-					});
-				}	
+					});		
+				});		
 			});			
 		});	
 	});
@@ -140,25 +144,26 @@ exports.init = function (app) {
 		res.setHeader('Content-Type', 'text/html; charset=utf-8');
 		res.setHeader('content-type', 'text/javascript');
 		
-		if(req.body.uuid && req.body.lang){
-			var _language=escape(req.body.lang || "ru").trim().toLowerCase();
+		if(req.body.uuid){
 			var _uuid=escape(req.body.uuid || "0").trim().toLowerCase();
 			var _time_now=Date.now()/1000;
-			
 			client.hgetall("dev:"+_uuid, function (err, _device) {
 				if(_device){
+					var _interaction=parseInt(_device.interaction);
 					var _time=parseInt(_device.time);
-					client.multi().hmset("dev:"+_uuid, "time", _time_now.toString(), "qr", "0").expire("dev:"+_uuid, 10000).exec(function(err10,ret){
-						if((_time_now-_time)>10){
-							Option.updateOne({language_code:_language}, {$inc:{"sessions_count":1, "qr_count":parseInt(_device.qr),"sessions_time":(_time_now-_time)}}, function(err, ___option) {
+					if((_time_now-_interaction)>1200){
+						Option.updateOne({language_code:"ru"}, {$inc:{"sessions_count":1, "qr_count":parseInt(_device.qr),"sessions_time":(_interaction-_time)}}, function(err, ___option) {
+							client.multi().hmset("dev:"+_uuid, "interaction", _time_now.toString(), "time", _time_now.toString(), "qr", "0").exec(function(err10,ret){
 								return res.status(200).send({"status":true});
 							});	
-						} else {
-							return res.status(200).send({"status":false});
-						}
-					});	
+						});	
+					} else {
+						return res.status(200).send({"status":false});
+					}
 				} else {
-					return res.status(200).send({"status":false});
+					client.multi().hmset("dev:"+_uuid, "interaction", _time_now.toString(), "time", _time_now.toString(), "qr", "0").exec(function(err10,ret){
+						return res.status(200).send({"status":false});
+					});	
 				}	
 			});	
 		} else {
