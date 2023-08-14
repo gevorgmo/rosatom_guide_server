@@ -403,6 +403,7 @@ $(document).ready(function(){
 					$(_this).html("<i class='fa fa-toggle-off'></i>off");
 					$(_this).attr('data-status', 0);
 				}
+				_table.draw();
 			}
 		});	
 		return false;

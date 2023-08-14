@@ -49,7 +49,14 @@
 											
 						</div>
 					</div>
-					<div class="serv_categories_itm" data-type="open"><div class="serv_categories_itm_txt"><% if opt.translations :%><%- opt.translations.hours || "" %><% end %></div></div> 
+					
+					<% if @page.content :%>
+						<% if @page.content.monday :%>
+							<% if @page.content.monday!="" :%>
+								<div class="serv_categories_itm" data-type="open"><div class="serv_categories_itm_txt"><% if opt.translations :%><%- opt.translations.hours || "" %><% end %></div></div> 
+							<% end %>	
+						<% end %>
+					<% end %>
 				</div>
 
 

@@ -35,8 +35,12 @@
 				<% end %>	
 				
 				<div class="events_categories">
-					<div class="events_itm selected" data-type="today"><div class="events_itm_txt"><% if opt.translations :%><%- opt.translations.today || "" %><% end %></div></div>
-					<div class="events_itm" data-type="upcoming"><div class="events_itm_txt"><% if opt.translations :%><%- opt.translations.upcoming || "" %><% end %></div></div> 
+					<% if @pages.today.length>0 :%>
+						<div class="events_itm selected" data-type="today"><div class="events_itm_txt"><% if opt.translations :%><%- opt.translations.today || "" %><% end %></div></div>
+						<div class="events_itm" data-type="upcoming"><div class="events_itm_txt"><% if opt.translations :%><%- opt.translations.upcoming || "" %><% end %></div></div> 
+					<%  else :%>	
+						<div class="events_itm selected" data-type="upcoming"><div class="events_itm_txt"><% if opt.translations :%><%- opt.translations.upcoming || "" %><% end %></div></div> 
+					<% end %>	
 				</div>
 
 				<div class="events_select">
@@ -53,23 +57,25 @@
 
 				
 				<div class="events_container">
-					<div data-type="today">
-						<% for page in @pages.today : %>
-							<div class="event_block" data-type="<% if page.content :%><%- page.content.place || "" %><% end %>">
-								<div class="event_location">
-									<span class="event_time"><%- page.time %></span>
-									<span class="event_place"><% if opt.translations :%><% if page.content :%><% if page.content.place :%><%- opt.translations[page.content.place] || "" %><% end %><% end %><% end %></span>
-								</div>	
-								<div class="event_info">
-									<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/<%- page.slug %>"><% if page.poster :%><img src="https://rosatom.loremipsumcorp.com<%- page.poster %>" alt="" title="" /><% end %></a>
-									<h2><% if page.title :%><% if page.title[@lang] :%><%- page.title[@lang] %><% end %><% end %></h2>
-									<span><% if page.text :%><% if page.text[@lang] :%><%- page.text[@lang] %><% end %><% end %></span>
+					<% if @pages.today.length>0 :%>
+						<div data-type="today">
+							<% for page in @pages.today : %>
+								<div class="event_block" data-type="<% if page.content :%><%- page.content.place || "" %><% end %>">
+									<div class="event_location">
+										<span class="event_time"><%- page.time %></span>
+										<span class="event_place"><% if opt.translations :%><% if page.content :%><% if page.content.place :%><%- opt.translations[page.content.place] || "" %><% end %><% end %><% end %></span>
+									</div>	
+									<div class="event_info">
+										<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/<%- page.slug %>"><% if page.poster :%><img src="https://rosatom.loremipsumcorp.com<%- page.poster %>" alt="" title="" /><% end %></a>
+										<h2><% if page.title :%><% if page.title[@lang] :%><%- page.title[@lang] %><% end %><% end %></h2>
+										<span><% if page.text :%><% if page.text[@lang] :%><%- page.text[@lang] %><% end %><% end %></span>
+									</div>
 								</div>
-							</div>
-						<% end %>
-					</div>
-
-					<div data-type="upcoming">
+							<% end %>
+						</div>
+					<% end %>	
+					
+					<div data-type="upcoming" style="<%- if @pages.today.length==0  then "display:block" %>">
 						<% for page in @pages.upcoming : %>
 							<div class="event_block" data-type="<% if page.content :%><%- page.content.place || "" %><% end %>">
 								<div class="event_location">
@@ -84,6 +90,7 @@
 							</div>
 						<% end %>
 					</div>
+					
 				</div>
 			</div>
 			<span class="cb"></span>

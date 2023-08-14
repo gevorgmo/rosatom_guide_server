@@ -47,8 +47,9 @@
 									<label>Media Type</label>
 									<select class="form-control" id="prmedia_type" style="width: 100%;">
 										<option value="1" <% if @item.media_type :%><% if @item.media_type==1 :%>selected<% end %><% end %>>Static content</option>
-										<option value="2" <% if @item.media_type :%><% if @item.media_type==2 :%>selected<% end %><% end %>>Loop video with audiao</option>
-										<option value="3" <% if @item.media_type :%><% if @item.media_type==3 :%>selected<% end %><% end %>>Startap video with audiao</option>
+										<option value="2" <% if @item.media_type :%><% if @item.media_type==2 :%>selected<% end %><% end %>>Loop video with audio</option>
+										<option value="3" <% if @item.media_type :%><% if @item.media_type==3 :%>selected<% end %><% end %>>Startup video with audio</option>
+										<option value="4" <% if @item.media_type :%><% if @item.media_type==4 :%>selected<% end %><% end %>>URL radio</option>
 									</select>
 								</div>	
 							</div>
@@ -190,7 +191,7 @@
 													<div class="selected_media_itm praudio" id="praudio<%- option.language_code %>" style="<%- if !finded then "display:none" %>;background-image:url(/admin/img/audio.png);" data-src="<%- if finded then @item.audio[option.language_code] else "" %>" data-type="audio"  data-lang="<%- option.language_code %>"><a class="media_itm_link btn btn-warning btn-flat"  href="<%- if finded then @item.audio[option.language_code] %>" target="_blank" title=""><i class="fa  fa-eye"></i></a><button type="button" class="btn-selectedmediaremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button></div>
 												</div>
 												
-												<div class="form-group mediatyp mediatyp2 mediatyp3" <% if @item.media_type :%><% if @item.media_type!=2 and @item.media_type!=3 :%>style="display:none"<% end %><% end %>>	
+												<div class="form-group mediatyp mediatyp2 mediatyp3 mediatyp4" <% if @item.media_type :%><% if @item.media_type!=2 and @item.media_type!=3 :%>style="display:none"<% end %><% end %>>	
 													<label>Media URL</label>
 													<input type="text" class="form-control prtxt" data-id="media_url" placeholder="Enter URL" data-lang="<%- option.language_code %>" value="<% if @item.content :%><% if @item.content[option.language_code] :%><%- @item.content[option.language_code].media_url || "" %><% end %><% end %>">
 												</div>	
@@ -227,6 +228,7 @@
 										<% end %>
 									</div>
 									
+									<% if @pagename!="service" :%>
 										<div class="row">
 											<div class="col-md-12 col-ms-12">
 												<div class="form-group">
@@ -240,7 +242,7 @@
 												</div>
 											</div>
 										</div>
-									
+									<% end %>
 									
 								</div>
 							</div>

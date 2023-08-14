@@ -12,7 +12,7 @@
 			<%  aud=true %>
 	<% end %>
 <% end %>
-<% if @page.media_type==2 or @page.media_type==3 :%>
+<% if @page.media_type==2 or @page.media_type==3  or @page.media_type==4 :%>
 	<% if @page.content :%>
 		<% if @page.content[@lang] :%>
 			<% if @page.content[@lang].media_url :%>
@@ -46,7 +46,7 @@
 				<h2 class="media_title"><% if @page.title :%><%- @page.title[@lang] || "" %><% end %></h2>
 					
 				<% if aud :%>
-						<div id="media_content_data" data-type="<%- @page.media_type %>"  data-url="<% if @page.media_type==1 :%><% if @page.audio :%><%- "https://rosatom.loremipsumcorp.com"+(@page.audio[@lang] || "") %><% end %><% end %><% if @page.media_type==2 or @page.media_type==3 :%><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].media_url || "" %><% end %><% end %><% end %>" data-id="<% if @page.media_type==2 or @page.media_type==3 :%><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].media_id || "" %><% end %><% end %><% end %>"></div>				
+						<div id="media_content_data" data-type="<%- @page.media_type %>"  data-url="<% if @page.media_type==1 :%><% if @page.audio :%><%- "https://rosatom.loremipsumcorp.com"+(@page.audio[@lang] || "") %><% end %><% end %><% if @page.media_type==2 or @page.media_type==3 or @page.media_type==4  :%><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].media_url || "" %><% end %><% end %><% end %>" data-id="<% if @page.media_type==2 or @page.media_type==3 :%><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].media_id || "" %><% end %><% end %><% end %>"></div>				
 						<% if @page.media_type==1 :%>	
 							<div class="media_player_block_text">	
 								<div class="media_player_block_text_cont" id="trans_cont">
@@ -60,14 +60,18 @@
 								<div>Listen to the audio <br />and watch the screen</div>
 							</div>	
 						<% end %>	
-						<div  class="progress_wrap">
-							<div  class="progressbar">
-								<div id="player_current_time"></div>
-								<div id="player_total_time"></div>
-								<div id="progress"></div>
-								<% if @page.media_type==1 :%><div  id="progress_drag"></div><% end %>
-							</div>
-						</div>	
+						
+						<% if @page.media_type!=4 :%>	
+							<div  class="progress_wrap">
+								<div  class="progressbar">
+									<div id="player_current_time"></div>
+									<div id="player_total_time"></div>
+									<div id="progress"></div>
+									<% if @page.media_type==1 :%><div  id="progress_drag"></div><% end %>
+								</div>
+							</div>	
+						<% end %>	
+						
 						<% if @page.media_type==1 :%>	
 							<div class="player_button playing" id="player_button"><img class="btn_pause" src="/css/images/pause.svg" alt="" title="" /><img class="btn_play" src="/css/images/play.svg" alt="" title="" /></div>
 						<% end %>	
