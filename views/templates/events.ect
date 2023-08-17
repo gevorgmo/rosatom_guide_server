@@ -42,16 +42,17 @@
 						<div class="events_itm selected" data-type="upcoming"><div class="events_itm_txt"><% if opt.translations :%><%- opt.translations.upcoming || "" %><% end %></div></div> 
 					<% end %>	
 				</div>
-
+ 
 				<div class="events_select">
 					<div class="events_select_cont">
 						<div class="prshold selected" data-type="filt_all"><span><% if opt.translations :%><%- opt.translations.all_events || "" %><% end %></span><i class="arrow down"></i></div>
 						<ul>
 							<li class="filt_itmm" id="filt_all"><% if opt.translations :%><%- opt.translations.all_events || "" %><% end %></li>
-							<li class="filt_itmm"  id="filt_lobby"><% if opt.translations :%><%- opt.translations.lobby || "" %><% end %></li>
-							<li class="filt_itmm"  id="filt_hall"><% if opt.translations :%><%- opt.translations.hall || "" %><% end %></li>
-							<li class="filt_itmm"  id="filt_laboratory"><% if opt.translations :%><%- opt.translations.laboratory || "" %><% end %></li>
-							<li class="filt_itmm"  id="filt_atomarium"><% if opt.translations :%><%- opt.translations.atomarium || "" %><% end %></li>
+							<% if @pages.filters.length>0 :%>
+								<% for fill,o in @pages.filters : %>
+									<li class="filt_itmm"  id="filt_<%- o %>"><%- fill %></li>
+								<% end %>
+							<% end %>		
 						</ul>
 					</div>
 				</div>
@@ -61,7 +62,7 @@
 					<% if @pages.today.length>0 :%>
 						<div data-type="today">
 							<% for page in @pages.today : %>
-								<div class="event_block" data-type="filt_<% if page.content :%><%- page.content.place || "" %><% end %>">
+								<div class="event_block" data-type="<% if page.content :%><% if page.content[@lang] :%><%- page.content[@lang].type || "" %><% end %><% end %>">
 									<div class="event_location">
 										<span class="event_time"><%- page.time %></span>
 										<span class="event_typ"><% if page.content :%><% if page.content[@lang] :%><%- page.content[@lang].type || "" %><% end %><% end %></span>
@@ -79,7 +80,7 @@
 					
 					<div data-type="upcoming" style="<%- if @pages.today.length==0  then "display:block" %>">
 						<% for page in @pages.upcoming : %>
-							<div class="event_block" data-type="filt_<% if page.content :%><%- page.content.place || "" %><% end %>">
+							<div class="event_block" data-type="<% if page.content :%><% if page.content[@lang] :%><%- page.content[@lang].type || "" %><% end %><% end %>">
 								<div class="event_location">
 									<span class="event_time"><%- page.time %></span>
 									<span class="event_date"><%- page.date %></span>	
@@ -137,6 +138,8 @@
 			<span class="cb"></span>
 		</footer>
 
-
+<script>
+	var _events_filters_list=<%- JSON.stringify @pages.filters %>;
+</script>
 
 

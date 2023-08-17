@@ -34,18 +34,20 @@ $(document).ready(function() {
 	
 	$('body').on('click', '.qr_button', function(evt) {
 		evt.preventDefault();	
-		$('.guide_blocks_container').show();	
-		$('#global_wrap').hide();
-		_tmp_class=document.body.className;
-		document.body.className="scanning";
-		StartScan(function(_resp){	
-			console.log(_resp);
-			var _media=_resp.replace('http://',"").replace('https://',"");
-			StopScan(); 
-			$('.guide_blocks_container').hide();	
-			$('#global_wrap').show();	
-			GetContent("https://rosatom.loremipsumcorp.com/explore/"+_lang+"/"+_media,function(){});
-		}); 
+		if(document.body.className!="scanning"){  
+			$('.guide_blocks_container').show();	
+			$('#global_wrap').hide();
+			_tmp_class=document.body.className;
+			document.body.className="scanning";
+			StartScan(function(_resp){	
+				console.log(_resp);
+				var _media=_resp.replace('http://',"").replace('https://',"");
+				StopScan(); 
+				$('.guide_blocks_container').hide();	
+				$('#global_wrap').show();	
+				GetContent("https://rosatom.loremipsumcorp.com/explore/"+_lang+"/"+_media,function(){});
+			}); 
+		}
 		return false;
 	});	
 	
@@ -249,6 +251,8 @@ function GetContent(_url, _cb){
 					_audio.currentTime=_currtime;
 					_playstatus=true;
 					_audio.play();	
+					console.log(Date.now());
+					console.log(Date.now()/1000-_page_load_time);
 				}	
 			});
 			
@@ -276,7 +280,8 @@ function GetContent(_url, _cb){
 											_page_load_time=Date.now()/1000;
 											for(var _k=0;_k<__data.data.videos[_t].audios.length;_k++){
 												if(__data.data.videos[_t].audios[_k].lang.toLowerCase()==_lang){
-													_audio.src =__data.data.videos[_t].audios[_k].audio;	
+													_audio.src =__data.data.videos[_t].audios[_k].audio;
+													console.log(Date.now());
 													break;
 												}	
 											}
@@ -364,7 +369,8 @@ function filterEvents(_typ){
 			$('.event_block').removeClass('filtered');
 		} else {
 			$('.event_block').each(function(){
-				if($(this).attr('data-type')!=_typ) {
+				var _ind="filt_"+_events_filters_list.indexOf($(this).attr('data-type'));
+				if(_ind!=_typ) {
 					if(!$(this).hasClass('filtered')) $(this).addClass('filtered');
 				} else {
 					$(this).removeClass('filtered');

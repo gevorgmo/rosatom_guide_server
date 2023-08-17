@@ -162,13 +162,17 @@
 											</div>
 										</div>
 										
-										<% if @pagename=="exhibition"  ||  @pagename=="event":%>
+										
+										<% if @pagename=="event":%>
 											<div class="col-md-4 col-ms-4">	
 												<div class="form-group">	
 													<label>Event Type</label>
 													<input type="text" class="form-control prtxt" data-id="type" placeholder="Enter Text" data-lang="<%- option.language_code %>" value="<% if @item.content :%><% if @item.content[option.language_code] :%><%- @item.content[option.language_code].type || "" %><% end %><% end %>">
 												</div>	
-											</div>	
+											</div>					
+										<% end %>
+										
+										<% if @pagename=="exhibition"  ||  @pagename=="event":%>
 											<div class="col-md-4 col-ms-4">	
 												<div class="form-group">	
 													<label>Additional information</label>

@@ -74,14 +74,27 @@ exports.init = function (app) {
 									if(_slug=="events"){
 										_pages.today=[];
 										_pages.upcoming=[];
+										_pages.filters=[];
 										_pages.map(function(_i){
 											var _p=_i.toObject();
 											_p.time=moment(_p.published).format("HH:mm");
 											_p.date=moment(_p.published).format("DD.MM.YY");
+											
+											if (_p.content){
+												if (_p.content[_language]){
+													if (_p.content[_language].type){
+														if (_p.content[_language].type!=""){
+															if(_pages.filters.indexOf(_p.content[_language].type)==-1) _pages.filters.push(_p.content[_language].type);
+														}	
+													}
+												}
+											}
+													
 											if(isToday(_p.published)){
-												_pages.today.push(_p);
+												//_pages.today.push(_p);
 											} else {
 												_pages.upcoming.push(_p);
+												_pages.today.push(_p);
 											}
 										});
 									}
