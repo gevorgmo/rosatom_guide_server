@@ -173,7 +173,6 @@ $(document).ready(function(){
 			_itm.attr('data-src', _src);
 			_itm.css('background-image','url('+(_type=="image" ? _src : _file_typs[_type])+')');
 			_itm.find('.media_itm_link').attr('href', _src);
-			if(_type!="image") _itm.find('.media_itm_link').removeClass('lightbox');
 			_itm.parent().find('.media_btn').hide();
 			_itm.show();
 		}
@@ -207,6 +206,19 @@ $(document).ready(function(){
 			axis: "y"
 		});
 	}
+	
+	
+	
+	$("body").on('click', '.media_itm_link', function(event) {
+		if($(this).hasClass('previewlink')){
+			event.preventDefault();
+			$('#preview_body').html('<div class="preview_element_'+$(this).attr('data-template')+'" style="background-image:url('+$(this).attr('href')+')"></div>');
+			if($(this).attr('data-template')=="exhibition" || $(this).attr('data-template')=="event" || $(this).attr('data-template')=="service") $('#preview_body').append('<div class="preview_element_exhibition_event_service" style="background-image:url('+$(this).attr('href')+')"></div>');
+			
+			$('#image_previewer').modal('show'); 
+			return false;
+		}
+	});
 	
 ///////////////////////////USERS//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -451,7 +463,7 @@ $(document).ready(function(){
 						'<div class="form-group">'+
 							'<label>Photo</label><br>'+
 							'<button type="button" class="media_btn btn btn-info btn-flat" ><i class="fa fa-plus"></i> Select Media</button>'+
-							'<div class="selected_media_itm prphoto" id="prphoto'+_ll+(new Date()).getTime()+'" style="display:none;background-image:url(/admin/img/image_icon.jpg);" data-src="" data-type="image"  data-lang="'+_ll+'"><a class="media_itm_link btn btn-warning btn-flat"  href="" target="_blank" title=""><i class="fa  fa-eye"></i></a><button type="button" class="btn-selectedmediaremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button></div>'+
+							'<div class="selected_media_itm prphoto" id="prphoto'+_ll+(new Date()).getTime()+'" style="display:none;background-image:url(/admin/img/image_icon.jpg);" data-src="" data-type="image"  data-lang="'+_ll+'"><a class="media_itm_link btn btn-warning btn-flat previewlink" data-template="speaker" href="" target="_blank" title=""><i class="fa  fa-eye"></i></a><button type="button" class="btn-selectedmediaremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button></div>'+
 						'</div>'+
 					'</div>'+
 					'<div class="col-md-4 col-ms-4">'+

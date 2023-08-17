@@ -48,11 +48,16 @@
 				<% if aud :%>
 						<div id="media_content_data" data-type="<%- @page.media_type %>"  data-url="<% if @page.media_type==1 :%><% if @page.audio :%><%- "https://rosatom.loremipsumcorp.com"+(@page.audio[@lang] || "") %><% end %><% end %><% if @page.media_type==2 or @page.media_type==3 or @page.media_type==4  :%><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].media_url || "" %><% end %><% end %><% end %>" data-id="<% if @page.media_type==2 or @page.media_type==3 :%><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].media_id || "" %><% end %><% end %><% end %>"></div>				
 						<% if @page.media_type==1 :%>	
-							<div class="media_player_block_text">	
-								<div class="media_player_block_text_cont" id="trans_cont">
-									<% if @page.text :%><%- @page.text[@lang] || ""%><% end %>	
-								</div>		
-							</div>	
+							<% if @page.text :%>
+								<% if @page.text[@lang] :%>
+									<div class="media_player_block_text">
+										<div class="show_trnascript_button" ><% if opt.translations :%><%- opt.translations.transcript || "" %><% end %></div>
+										<div class="media_player_block_text_cont" id="trans_cont">
+											<%- @page.text[@lang] || ""%>
+										</div>		
+									</div>
+								<% end %>	
+							<% end %>	
 						<% end %>	
 						
 						<% if @page.media_type==2 or @page.media_type==3 :%>	

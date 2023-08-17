@@ -31,7 +31,7 @@
 			<div class="events_blocks_container">
 			
 
-				<% if @page.poster :%><img src="https://rosatom.loremipsumcorp.com<%- @page.poster %>" alt="" title="" /><% end %>	
+				<% if @page.poster :%><div class="events_blocks_container_img" style="background-image:url(https://rosatom.loremipsumcorp.com<%- @page.poster %>)"></div><% end %>	
 				<div class="event_container">	
 					<h2><% if @page.title :%><%- @page.title[@lang] || "" %><% end %></h2>
 					
@@ -39,7 +39,8 @@
 						<span><%- @page.time %></span> 
 						<span><%- @page.date %></span> 
 						<span><% if opt.translations :%><% if @page.content :%><% if @page.content.place :%><%- opt.translations[@page.content.place] || "" %><% end %><% end %><% end %></span> 
-						<span><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].floor || "" %><% end %><% end %></span>
+						<span><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].type || "" %><% end %><% end %></span>
+						<span><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].floor || "" %><% end %><% end %></span>				
 					</div>
 					<% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].content || "" %><% end %><% end %>		
 				</div>
@@ -52,7 +53,7 @@
 								<div class="speakers_container">
 									<% for speaker in @page.content[@lang].speakers : %>
 										<div class="speaker_block">
-											<% if speaker.photo :%><img src="https://rosatom.loremipsumcorp.com<%- speaker.photo %>" alt="" title="" /><% end %>
+											<% if speaker.photo :%><div class="speaker_block_img" style="background-image:url(https://rosatom.loremipsumcorp.com<%- speaker.photo %>)"></div><% end %>
 											<div class="speaker_info">
 												<h3><%- speaker.name %></h3>
 												<span><%- speaker.info %></span>

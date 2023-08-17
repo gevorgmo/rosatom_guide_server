@@ -16,7 +16,7 @@
 					<div class="box-body">
 						<div class="form-group" style="text-align: center;">
 							<button type="button" class="media_btn btn btn-info btn-flat" style="<%- if @item.poster then "display:none" %>"><i class="fa fa-image"></i> Select Media</button>
-							<div class="selected_media_itm"  style="<%- if @item.poster then "background-image:url("+ @item.poster+")" else "display:none" %>"  data-src="<%- @item.poster || "/admin/img/temp.png" %>"  data-type="image"  id="prposter"><a class="media_itm_link lightbox btn btn-warning btn-flat" id="k0" href="<%- @item.poster || "/admin/img/temp.png" %>" target="_blank" title=""><i class="fa  fa-eye"></i></a><button type="button" class="btn-selectedmediaremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button></div>
+							<div class="selected_media_itm"  style="<%- if @item.poster then "background-image:url("+ @item.poster+")" else "display:none" %>"  data-src="<%- @item.poster || "/admin/img/temp.png" %>"  data-type="image"  id="prposter"><a class="media_itm_link btn btn-warning btn-flat previewlink" data-template="<%- @pagename || "page" %>" id="k0" href="<%- @item.poster || "/admin/img/temp.png" %>" target="_blank" title=""><i class="fa  fa-eye"></i></a><button type="button" class="btn-selectedmediaremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button></div>
 						</div>	
 					</div>
 				</div>	
@@ -158,17 +158,23 @@
 										<div class="col-md-4 col-ms-4">	
 											<div class="form-group">
 												<label>Title</label>
-												<input type="text" class="form-control  prtitle"  placeholder="Enter title"  data-lang="<%- option.language_code %>" value="<% if @item.title :%><%- @item.title[option.language_code] || "" %><% end %>">
+												<input type="text" class="form-control  prtitle"  placeholder="Enter Text"  data-lang="<%- option.language_code %>" value="<% if @item.title :%><%- @item.title[option.language_code] || "" %><% end %>">
 											</div>
 										</div>
 										
 										<% if @pagename=="exhibition"  ||  @pagename=="event":%>
 											<div class="col-md-4 col-ms-4">	
 												<div class="form-group">	
-													<label>Floor</label>
-													<input type="text" class="form-control prtxt" data-id="floor" placeholder="Enter Floor" data-lang="<%- option.language_code %>" value="<% if @item.content :%><% if @item.content[option.language_code] :%><%- @item.content[option.language_code].floor || "" %><% end %><% end %>">
+													<label>Event Type</label>
+													<input type="text" class="form-control prtxt" data-id="type" placeholder="Enter Text" data-lang="<%- option.language_code %>" value="<% if @item.content :%><% if @item.content[option.language_code] :%><%- @item.content[option.language_code].type || "" %><% end %><% end %>">
 												</div>	
-											</div>
+											</div>	
+											<div class="col-md-4 col-ms-4">	
+												<div class="form-group">	
+													<label>Additional information</label>
+													<input type="text" class="form-control prtxt" data-id="floor" placeholder="Enter Text" data-lang="<%- option.language_code %>" value="<% if @item.content :%><% if @item.content[option.language_code] :%><%- @item.content[option.language_code].floor || "" %><% end %><% end %>">
+												</div>	
+											</div>		
 										<% end %>
 
 
@@ -233,7 +239,7 @@
 											<div class="col-md-12 col-ms-12">
 												<div class="form-group">
 													<% if @pagename=="media" :%>
-														<label>Transcription</label>
+														<label>Transcript</label>
 													<% end %>
 													<% if @pagename=="exhibition" or @pagename=="event" :%>
 														<label>Short description</label>
@@ -263,14 +269,14 @@
 															<div class="col-md-4 col-ms-4">	
 																<div class="form-group">
 																	<label>Name</label>
-																	<input type="text" class="form-control  prname"  placeholder="Enter title"  data-lang="<%- option.language_code %>" value="<%- (speaker.name || "") %>">
+																	<input type="text" class="form-control  prname"  placeholder="Enter Text"  data-lang="<%- option.language_code %>" value="<%- (speaker.name || "") %>">
 																</div>
 															</div>
 															<div class="col-md-3 col-ms-3">	
 																<div class="form-group">
 																	<label>Photo</label><br>
 																	<button type="button" class="media_btn btn btn-info btn-flat" style="<%- if speaker.photo then "display:none" %>"><i class="fa fa-plus"></i> Select Media</button>
-																	<div class="selected_media_itm prphoto" id="prphoto<%- option.language_code %><%- o %>" style="<%- if !speaker.photo then "display:none" %>;background-image:url(<%- (speaker.photo || "/admin/img/image_icon.jpg") %>);" data-src="<%- (speaker.photo || "") %>" data-type="image"  data-lang="<%- option.language_code %>"><a class="media_itm_link btn btn-warning btn-flat"  href="<%- (speaker.photo || "") %>" target="_blank" title=""><i class="fa  fa-eye"></i></a><button type="button" class="btn-selectedmediaremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button></div>
+																	<div class="selected_media_itm prphoto" id="prphoto<%- option.language_code %><%- o %>" style="<%- if !speaker.photo then "display:none" %>;background-image:url(<%- (speaker.photo || "/admin/img/image_icon.jpg") %>);" data-src="<%- (speaker.photo || "") %>" data-type="image"  data-lang="<%- option.language_code %>"><a class="media_itm_link btn btn-warning btn-flat previewlink" data-template="speaker" href="<%- (speaker.photo || "") %>" target="_blank" title=""><i class="fa  fa-eye"></i></a><button type="button" class="btn-selectedmediaremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button></div>
 																</div>
 															</div>
 															<div class="col-md-4 col-ms-4">
@@ -308,7 +314,7 @@
 															<button type="button"  class="btn  btn-danger btn-deletemenusection pull-right"><i class="fa fa-trash"></i>Delete section</button>
 															<div class="form-group">
 																<label>Section name</label>
-																<input type="text" class="form-control  prsection"  placeholder="Enter title"  value="<%- menu.section || "" %>">
+																<input type="text" class="form-control  prsection"  placeholder="Enter Text"  value="<%- menu.section || "" %>">
 															</div>
 															
 															<div class="all_menuitems">
@@ -318,7 +324,7 @@
 																				<div class="col-md-4 col-ms-4">	
 																					<div class="form-group">
 																						<label>Name</label>
-																						<input type="text" class="form-control  prname"  placeholder="Enter title" value="<%- iit.name || "" %>">
+																						<input type="text" class="form-control  prname"  placeholder="Enter Text" value="<%- iit.name || "" %>">
 																					</div>
 																				</div>
 																				<div class="col-md-4 col-ms-4">
@@ -330,7 +336,7 @@
 																				<div class="col-md-3 col-ms-3">	
 																					<div class="form-group">
 																						<label>Price</label>
-																						<input type="text" class="form-control  prprice"  placeholder="Enter title"   value="<%- iit.price || "" %>">
+																						<input type="text" class="form-control  prprice"  placeholder="Enter Text"   value="<%- iit.price || "" %>">
 																					</div>
 																				</div>
 																				<div class="col-md-1 col-ms-1">	
@@ -426,7 +432,8 @@
 							</div>
 						</div>
 					</div>	
-					<div class="col-md-9 col-ms-6">		
+					
+					<div class="col-md-9 col-ms-6" style="display:none">		
 						<div class="form-group editor_img1">
 							<label>Image caption</label>
 							<input type="text" class="form-control" id="prcaption1" placeholder="Enter image caption" value="">
@@ -448,6 +455,22 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="image_previewer">
+    <div class="modal-dialog">
+        <div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Preview</h4>
+			</div>
+			<div class="modal-body" id="preview_body">
+				
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-info" data-dismiss="modal" aria-hidden="true">Close</button>
+			</div>
+		</div>
+    </div>
+</div>
 
 
 

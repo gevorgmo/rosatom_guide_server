@@ -28,7 +28,7 @@
 
 		<main class="content">
 			<div class="exhibition_blocks_container">
-				<% if @page.poster :%><img src="https://rosatom.loremipsumcorp.com<%- @page.poster %>" alt="" title="" /><% end %>
+				<% if @page.poster :%><div  class="exhibition_blocks_container_img" style="background-image:url(https://rosatom.loremipsumcorp.com<%- @page.poster %>)"></div><% end %>
 				<div class="inner_block">
 					<h2><span></span><% if @page.title :%><%- @page.title[@lang] || "" %><% end %></h2>
 					<h3><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].floor || "" %><% end %><% end %></h3>

@@ -20,10 +20,13 @@ $(document).ready(function() {
 	$('body').on('click', 'a', function(evt) {
 		evt.preventDefault();
 		$('.loader_start').css({'visibility':'visible','opacity':'1'});
-		$('.guide_blocks_container').hide();	
-		$('#global_wrap').show();
-		StopScan(); 	
-		GetContent($(this).attr('href'),function(){});
+		var _link=$(this).attr('href');
+		setTimeout(function(){
+			$('.guide_blocks_container').hide();	
+			$('#global_wrap').show();	
+			StopScan(); 	
+			GetContent(_link,function(){});
+		},500);
 		return false;
 	});	
 	
@@ -52,10 +55,17 @@ $(document).ready(function() {
 		$('.guide_blocks_container').hide();	
 		$('#global_wrap').show();
 		if(document.body.className=="scanning") document.body.className=_tmp_class;
-
 		StopScan(); 
 		return false;
-	});	
+	});
+
+
+	$('body').on('click', '.show_trnascript_button', function(evt) {
+		evt.preventDefault();	
+		$(this).hide();	
+		$('.media_player_block_text_cont').addClass('show');
+		return false;
+	});
 	
 	
 	$('body').on('click', '.lang_cont', function(evt) {
@@ -104,9 +114,11 @@ $(document).ready(function() {
 			$('.header_title_block').text($('.header_title_block').attr('data-title'));
 		} else {
 			$('.loader_start').css({'visibility':'visible','opacity':'1'});
-			$('.guide_blocks_container').hide();	
-			$('#global_wrap').show(); 	
-			GetContent($('.map_back_btn').attr('data-link'),function(){});
+			setTimeout(function(){
+				$('.guide_blocks_container').hide();	
+				$('#global_wrap').show(); 	
+				GetContent($('.map_back_btn').attr('data-link'),function(){});
+			},500);	
 		}
 		return false;
 	});	
@@ -139,6 +151,9 @@ $(document).ready(function() {
 		} else {
 			$('.events_select').addClass('opened');
 			$('.events_select .arrow').addClass('opened');
+			$('.filt_itmm').show();
+			$('.prshold').attr('data-type');
+			$('#'+$('.prshold').attr('data-type')).hide();
 		}
 		
 		return false;
@@ -150,7 +165,8 @@ $(document).ready(function() {
 		$('.events_select').removeClass('opened');
 		$('.events_select .arrow').removeClass('opened');
 		$('.events_select_cont > div span').text($(this).text());
-		filterEvents($(evt.currentTarget), $('.events_container'), '.event_block');
+		$('.prshold').attr('data-type',$(this).attr('id'));
+		filterEvents($(this).attr('id'));
 		return false;
 	});	
 	
@@ -318,7 +334,7 @@ function GetContent(_url, _cb){
 				if (event.touches.length > 1) {
 				event.preventDefault();
 				d1 = dist(event);				
-				}filterEvents
+				}
 			});
 			wrapper.addEventListener('touchmove', function(event) {
 				if (event.touches.length > 1) {
@@ -343,20 +359,18 @@ function GetContent(_url, _cb){
 	});
 }
 //////////////////////////////////////////////////////////////////////////////////////////////
-function filterEvents($filterBtn, $list, $block){
-		let $filterType = $filterBtn.attr('data-type');
-		if($filterType === 'all') {
-			$list.children().removeClass('filtered');
+function filterEvents(_typ){
+		if(_typ == 'filt_all') {
+			$('.event_block').removeClass('filtered');
 		} else {
-			$list.find($block).each((i,listItem) => {
-				let $eventType = $(listItem).attr('data-type').split(',');
-				if($eventType.some((item) => $filterType === item.trim())) {
-					$(listItem).removeClass('filtered')
+			$('.event_block').each(function(){
+				if($(this).attr('data-type')!=_typ) {
+					if(!$(this).hasClass('filtered')) $(this).addClass('filtered');
 				} else {
-					$(listItem).addClass('filtered')
+					$(this).removeClass('filtered');
 				}
-			})
-		};
+			});
+		}
 }
 //////////////////////////////////////////////////////////////////////////////////////////////
  function LanguageLoad(_l){

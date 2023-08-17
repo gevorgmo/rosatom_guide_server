@@ -77,6 +77,7 @@ exports.init = function (app) {
 										_pages.map(function(_i){
 											var _p=_i.toObject();
 											_p.time=moment(_p.published).format("HH:mm");
+											_p.date=moment(_p.published).format("DD.MM.YY");
 											if(isToday(_p.published)){
 												_pages.today.push(_p);
 											} else {
@@ -232,7 +233,7 @@ exports.init = function (app) {
 			if(err || !_pages) return res.render("index", {user_status:_all_roles[req.user.role],  pagename:"dashboard"});		
 			if(req.params.categoryname=="event"){
 				_pages.map(function(_i){
-					_i.time=moment(_i.published).format("DD.MM.YY HH:mm");
+					_i.time=moment(_i.published).format("YY.MM.DD HH:mm");
 				});	
 			}
 			
