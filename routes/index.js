@@ -584,17 +584,17 @@ exports.init = function (app) {
 	});
 //////////////////////////////////////////////////////////////////////////////////////
 	app.post('/sendemail', function(req, res) {
-		res.setHeader('Access-Control-Allow-Origin', '*');
-		res.setHeader('Access-Control-Allow-Headers', 'X-Custom-Heade');
-		res.setHeader('Content-Type', 'text/html; charset=utf-8');
-		res.setHeader('content-type', 'text/javascript');
 		if(req.body.name !== undefined && req.body.email !== undefined) {
 			var _email=escape(req.body.email || "").trim().toLowerCase();
 			var _name=req.body.name || "";
 			if(_email.match(/[\d\w\-\_\.]+@[\d\w\-\_\.]+\.[\w]{2,4}/i)){
 				var _msg="TEST";
-				SendEmail_to_address(_email, _msg, function(){
-					return res.status(200).send({"status":true});	
+				SendEmail_to_address(_email, _msg, function(_err){
+					res.setHeader('Access-Control-Allow-Origin', '*');
+					res.setHeader('Access-Control-Allow-Headers', 'X-Custom-Heade');
+					res.setHeader('Content-Type', 'text/html; charset=utf-8');
+					res.setHeader('content-type', 'text/javascript');
+					return res.status(200).send({"status":(_err ? false : true)});	
 				});	
 			}else {
 				return res.status(404).send({"status":false});	
@@ -651,24 +651,39 @@ function isToday(date) {
 }
 ////////////////////////////////////////////////////
 function SendEmail_to_address(_email, _msg, _cb){
-	var _dat={
-			"token":"Ijnsudyhfb76t4ib76gg45iunUb89bsdfuy87y",
-			"email":_email,
-			"subject":"CERTIFICATE",
-			"app": "ROSATOM",
-			"msg":_msg
-	};
-	fetch( 'https://li-apps.com/email_notifications.php', {
-        method: 'post',
-        body:  JSON.stringify(_dat),
-        headers: { 'Content-Type': 'application/json'},
-    })
-	 .then(res => res.text())
-	.then((text) => {
-		return _cb(null); 
-    }).catch(err => {
-		console.log(err.message);
-		return _cb("Please try again later!");  
-	});
+	var _dat="api_key=6digaixudniiw4enjosthachxzpoa5u1193nu9pe&format=json&title=rosatom";	
+	PostData('https://api.unisender.com/en/api/createList', _dat, function(_res1){
+		if(_res1) {
+			if(_res1.result) {
+				_dat="api_key=6digaixudniiw4enjosthachxzpoa5u1193nu9pe&format=json&email="+_email+"&sender_name=RosAtom&sender_email=gevorg.manukyan@loremipsumcorp.com&subject=RosAtom&body="+_msg+"&list_id="+_res1.result.id;
+				PostData('https://api.unisender.com/en/api/sendEmail', _dat, function(_res2){
+				 _dat="api_key=6digaixudniiw4enjosthachxzpoa5u1193nu9pe&format=json&list_id="+_res1.result.id;	
+					PostData('https://api.unisender.com/en/api/deleteList', _dat, function(_res3){
+						_cb(null);
+					})	
+				})
+			} else {
+				_cb("Please try again later!");
+			}		
+		} else {
+			_cb("Please try again later!");
+		}	
+	})
 }
 /////////////////////////////////////////////////////////////////
+
+function PostData(_url,_dat,_cb){
+	fetch(_url+'?'+_dat, {
+        method: 'get'
+    }).then(response => response.json()).then((json) => {
+		console.log(json);
+		 try {	
+			_cb(json);
+		} catch (er) {
+			_cb(null);
+		}
+	}).catch(err => {
+		console.log(err);
+		_cb(null);  
+	});
+}
