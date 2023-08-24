@@ -106,7 +106,17 @@ $(document).ready(function() {
 		$('.header_title_block').text($('.'+$(this).attr('data-type')).attr('data-title'));
 		return false;
 	});	
-*/
+	*/
+
+	
+	
+	
+	$('body').on('click', '.main_map_img', function(evt) {
+		evt.preventDefault();	
+		$('.map_text').hide();
+		if(!$('.map_blocks_container').hasClass('zoomin')) $('.map_blocks_container').addClass('zoomin');
+		return false;
+	});	
 	
 	$('body').on('click', '.map_back_btn', function(evt) {	
 		evt.preventDefault();
@@ -114,6 +124,9 @@ $(document).ready(function() {
 			$('.main_map_block').show();
 			$('.map_inner').hide();
 			$('.header_title_block').text($('.header_title_block').attr('data-title'));
+		} else if($('.map_blocks_container').hasClass('zoomin')){	
+			$('.map_text').show();
+			$('.map_blocks_container').removeClass('zoomin');
 		} else {
 			$('.loader_start').css({'visibility':'visible','opacity':'1'});
 			setTimeout(function(){
@@ -204,6 +217,15 @@ function GetContent(_url, _cb){
 		
 		if(_url.indexOf('/maps')>-1){
 			if(!$('body').hasClass('map_page')) $('body').addClass('map_page');
+			
+			document.getElementById('main_map_img').addEventListener("touchmove", function mapdrag(ev) {	
+				if($('.map_blocks_container').hasClass('zoomin')){
+					 var pageX = (window.innerWidth-(ev.touches[0].clientX+100))/((window.innerWidth-200)/100);
+					 var pageY = (ev.touches[0].clientY-75)/((window.innerHeight-140) / 100);
+					 $('.main_map_img').css({"background-position": pageX+"%  "+pageY+"%"});
+				 }
+			});
+			
 		} else if(data.indexOf('media_iner_page')>-1){
 			if(!$('body').hasClass('media_page')) $('body').addClass('media_page');
 		} else if(data.indexOf('evnet_page')>-1 || data.indexOf('evnet_iner_page')>-1){
@@ -259,9 +281,9 @@ function GetContent(_url, _cb){
 			
 			if(_media_type=="1"){
 				_progress_drag= document.getElementById('progress_drag');
-				_progress_drag.addEventListener("touchstart", dragstart, false)
-				_progress_drag.addEventListener("touchend", dragend, false)
-				_progress_drag.addEventListener("touchmove", drag)	
+				_progress_drag.addEventListener("touchstart", dragstart, false);
+				_progress_drag.addEventListener("touchend", dragend, false);
+				_progress_drag.addEventListener("touchmove", drag);	
 				_playButton = document.getElementById('player_button');
 				_playButton.addEventListener('click', playAudio);	
 				_audio.src =_media_url;
@@ -512,7 +534,6 @@ function PostReq(_url, _data, _cb){
 function BroadCastHandl(data,info){
 	alert(data);
 }
-/////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////

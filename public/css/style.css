@@ -1,10 +1,10 @@
 
 @font-face {
   font-family: 'JournalSansNewRegular';
-  src: url('https://rosatom.loremipsumcorp.com/css/fonts/JournalSansNewRegular/JournalSansNewRegular.eot?#iefix') format('embedded-opentype'),  
-  url('https://rosatom.loremipsumcorp.com/css/fonts/JournalSansNewRegular/JournalSansNewRegular.woff') format('woff'), 
-  url('https://rosatom.loremipsumcorp.com/css/fonts/JournalSansNewRegular/JournalSansNewRegular.woff2') format('woff2'), 
-  url('https://rosatom.loremipsumcorp.com/css/fonts/JournalSansNewRegular/JournalSansNewRegular.ttf')  format('truetype');
+  src: url('https://rosatom.loremipsumcorp.com/css/fonts/JournalSansNewRegular/JournalSansNewRegular.eot??v=2#iefix') format('embedded-opentype'),  
+  url('https://rosatom.loremipsumcorp.com/css/fonts/JournalSansNewRegular/JournalSansNewRegular.woff?v=2') format('woff'), 
+  url('https://rosatom.loremipsumcorp.com/css/fonts/JournalSansNewRegular/JournalSansNewRegular.woff2?v=2') format('woff2'), 
+  url('https://rosatom.loremipsumcorp.com/css/fonts/JournalSansNewRegular/JournalSansNewRegular.ttf?v=2')  format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -619,7 +619,6 @@ img	{
 
 .map_blocks_container {
 	padding:150px 0px;
-
 	display: flex;
     align-items: center;
 }
@@ -633,9 +632,18 @@ img	{
 	background-repeat: no-repeat;
     background-size: contain;
     background-position: 50% 0;
+	padding-bottom: 150%;
 }
 
-.map_path{position:relative;padding-bottom:20%;}
+
+.map_blocks_container.zoomin{padding: 75px 0px 0 0;}
+.map_blocks_container.zoomin .main_map_img{padding-bottom: 188%;background-size: cover;background-position: 50% 50%;transition: all .2s  ease-out;-webkit-transition: all .2s ease-out; }
+.map_blocks_container.zoomin .main_map_block{padding: 0;}
+
+
+
+
+.map_path{position:relative;padding-bottom:20%;display:none}
 .map_path:first-child{padding-bottom:29%}
 .map_path:nth-child(2){padding-bottom:21%}
 
