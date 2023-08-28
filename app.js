@@ -84,14 +84,14 @@ if ('development' == app.get('env')) {
 if (!fs.existsSync('./public/tmp')) {
     fs.mkdirSync('./public/tmp');
 }
-
+/*
 app.use(function(req, res, next){
     res.setHeader("Access-Control-Allow-Origin", "*");
 	res.setHeader("Content-Security-Policy", "default-src 'self';");
 	res.header("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, Accept");
    next();
 });
-
+*/
  
 
 

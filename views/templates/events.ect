@@ -69,9 +69,9 @@
 									</div>	
 									<div class="event_info">
 										<% if page.poster :%><a class="event_block_img" style="background-image:url(https://rosatom.loremipsumcorp.com<%- page.poster %>)" href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/<%- page.slug %>"></a><% end %>
-										<h2><% if page.title :%><% if page.title[@lang] :%><%- page.title[@lang] %><% end %><% end %></h2>
+										<h2><a  href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/<%- page.slug %>"><% if page.title :%><% if page.title[@lang] :%><%- page.title[@lang] %><% end %><% end %></a></h2>
 										<span class="event_place"><% if opt.translations :%><% if page.content :%><% if page.content.place :%><%- opt.translations[page.content.place] || "" %><% end %><% end %><% end %></span>
-										<span class="event_short"><% if page.text :%><% if page.text[@lang] :%><%- page.text[@lang] %><% end %><% end %></span>
+										<a  href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/<%- page.slug %>" class="event_short"><% if page.text :%><% if page.text[@lang] :%><%- page.text[@lang] %><% end %><% end %></a>
 									</div>
 								</div>
 							<% end %>
@@ -88,9 +88,9 @@
 								</div>	
 								<div class="event_info">
 									<% if page.poster :%><a class="event_block_img" style="background-image:url(https://rosatom.loremipsumcorp.com<%- page.poster %>)" href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/<%- page.slug %>"></a><% end %>
-									<h2><% if page.title :%><% if page.title[@lang] :%><%- page.title[@lang] %><% end %><% end %></h2>
+									<h2><a  href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/<%- page.slug %>"><% if page.title :%><% if page.title[@lang] :%><%- page.title[@lang] %><% end %><% end %></a></h2>
 									<span class="event_place"><% if opt.translations :%><% if page.content :%><% if page.content.place :%><%- opt.translations[page.content.place] || "" %><% end %><% end %><% end %></span>
-									<span class="event_short"><% if page.text :%><% if page.text[@lang] :%><%- page.text[@lang] %><% end %><% end %></span>
+									<a  href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/<%- page.slug %>" class="event_short"><% if page.text :%><% if page.text[@lang] :%><%- page.text[@lang] %><% end %><% end %></a>
 								</div>
 							</div>
 						<% end %>
