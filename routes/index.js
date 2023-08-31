@@ -511,7 +511,7 @@ exports.init = function (app) {
 	});
 //////////////////////////////////////////////////////////////////////////////////////
 	app.post('/saveuser', isLoggedIn, function(req, res) {
-		if(req.body.id !== undefined && req.body.username !== undefined && req.body.role !== undefined) {
+		if(req.body.id !== undefined && req.body.username !== undefined && req.user.role==1) {
 			var _username=escape(req.body.username || "").trim().toLowerCase();
 			var _fullname=req.body.fullname || "";
 			var _id=req.body.id || "";

@@ -32,16 +32,18 @@
 			
 
 				<% if @page.poster :%><div class="events_blocks_container_img" style="background-image:url(https://rosatom.loremipsumcorp.com<%- @page.poster %>)"></div><% end %>	
-				<div class="event_container">	
-					<h2><% if @page.title :%><%- @page.title[@lang] || "" %><% end %></h2>
-					
-					<div class="event_info">
-						<span><%- @page.time %></span> 
-						<span><%- @page.date %></span> 
-						<span><% if opt.translations :%><% if @page.content :%><% if @page.content.place :%><%- opt.translations[@page.content.place] || "" %><% end %><% end %><% end %></span> 
-						<span><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].type || "" %><% end %><% end %></span>
-						<span><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].floor || "" %><% end %><% end %></span>				
+				<div class="event_container">
+					<div class="inner_block_title">
+						<h2><% if @page.title :%><%- @page.title[@lang] || "" %><% end %></h2>
+						<div class="event_info">
+							<span><%- @page.time %></span> 
+							<span><%- @page.date %></span> 
+							<span><% if opt.translations :%><% if @page.content :%><% if @page.content.place :%><%- opt.translations[@page.content.place] || "" %><% end %><% end %><% end %></span> 
+							<span><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].type || "" %><% end %><% end %></span>
+							<span><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].floor || "" %><% end %><% end %></span>				
+						</div>
 					</div>
+					
 					<% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].content || "" %><% end %><% end %>		
 				</div>
 				

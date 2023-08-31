@@ -30,8 +30,10 @@
 			<div class="exhibition_blocks_container">
 				<% if @page.poster :%><div  class="exhibition_blocks_container_img" style="background-image:url(https://rosatom.loremipsumcorp.com<%- @page.poster %>)"></div><% end %>
 				<div class="inner_block">
-					<h2><span></span><% if @page.title :%><%- @page.title[@lang] || "" %><% end %></h2>
-					<h3><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].floor || "" %><% end %><% end %></h3>
+					<div class="inner_block_title">
+						<h2><span></span><% if @page.title :%><%- @page.title[@lang] || "" %><% end %></h2>
+						<h3><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].floor || "" %><% end %><% end %></h3>
+					</div>	
 					<% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].content || "" %><% end %><% end %>
 				</div>
 			</div>

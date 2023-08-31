@@ -14,7 +14,7 @@ var _msg_items="items";
 var _msg_action="Action"; 
 var _msg_clone_conf="Please confirm that You wish to copy the item.";
 var _msg_err_uploading="There was an error when uploading file.";
-var _msg_err_file_format="Bad file format.";
+var _msg_err_file_format="Incorrect File Format.";
 var _msg_err_saving="There was an error when saving.";
 var _msg_err_loading="There was an error when loading.";
 var _msg_succ="Success";
@@ -642,7 +642,7 @@ $(document).ready(function(){
 							var _iit=$('<div class="content_row" data-type="'+_ind+'"></div>');
 							if(_ind==0){
 								_iit.addClass('content_single_image');
-								_iit.append('<div class="img_wrpr"><img src="'+$(this).find('.edit_img').attr('data-src')+'" alt=""  /></div>');
+								_iit.append('<img src="'+$(this).find('.edit_img').attr('data-src')+'" alt=""  />');
 								if($(this).find('.edit_img_caption').html().length>0) _iit.append('<div class="content_caption">'+$(this).find('.edit_img_caption').html()+'</div>');
 							} else if(_ind==1){
 								_iit.addClass('content_single_text');
