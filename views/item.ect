@@ -84,6 +84,25 @@
 								</div>	
 							</div>
 						<% end %>
+						
+						<% if @pagename=="exhibition"  or @pagename=="media":%>
+							<div class="col-md-4 col-ms-4">	
+								<div class="form-group">	
+									<label>Floor</label>
+									<select class="form-control" id="prfloor" style="width: 100%;">
+										<option value="4" <% if @item.content :%><% if @item.content.floor :%><% if @item.content.floor=="4" :%>selected<% end %><% end %><% end %>>4</option>
+										<option value="3" <% if @item.content :%><% if @item.content.floor :%><% if @item.content.floor=="3" :%>selected<% end %><% end %><% end %>>3</option>
+										<option value="2" <% if @item.content :%><% if @item.content.floor :%><% if @item.content.floor=="2" :%>selected<% end %><% end %><% end %>>2</option>
+										<option value="1" <% if @item.content :%><% if @item.content.floor :%><% if @item.content.floor=="1" :%>selected<% end %><% end %><% end %>>1</option>
+										<option value="-1" <% if @item.content :%><% if @item.content.floor :%><% if @item.content.floor=="-1" :%>selected<% end %><% end %><% end %>>-1</option>
+										<option value="-2" <% if @item.content :%><% if @item.content.floor :%><% if @item.content.floor=="-2" :%>selected<% end %><% end %><% end %>>-2</option>
+										<option value="-3" <% if @item.content :%><% if @item.content.floor :%><% if @item.content.floor=="-3" :%>selected<% end %><% end %><% end %>>-3</option>										
+									</select>	
+								</div>	
+							</div>		
+						<% end %>	
+						
+						
 						<% if  @pagename=="service":%>
 							<div class="col-md-8 col-ms-8">	
 								<label>Open hours</label>
@@ -172,7 +191,9 @@
 											</div>					
 										<% end %>
 										
-										<% if @pagename=="exhibition"  ||  @pagename=="event":%>
+
+										
+										<% if @pagename=="event":%>
 											<div class="col-md-4 col-ms-4">	
 												<div class="form-group">	
 													<label>Additional information</label>
@@ -180,7 +201,6 @@
 												</div>	
 											</div>		
 										<% end %>
-
 
 											
 										<% if @pagename=="media" :%>

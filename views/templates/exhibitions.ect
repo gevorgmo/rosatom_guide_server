@@ -32,7 +32,7 @@
 					<div class="inner_block">
 						<h2><span></span><% if page.title :%><% if page.title[@lang] :%><%- page.title[@lang] %><% end %><% end %></h2>
 						<% if page.poster :%><a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/<%- page.slug %>" class="inner_block_img" style="background-image:url(https://rosatom.loremipsumcorp.com<%- page.poster %>)"></a><% end %>
-						<h3><a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/<%- page.slug %>"><% if page.content :%><% if page.content[@lang] :%><%- page.content[@lang].floor || "" %><% end %><% end %></a></h3>
+						<h3><a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/<%- page.slug %>"><% if page.content :%><% if page.content.floor :%><%- page.content.floor+" "+opt.translations.floor %><% end %><% end %></a></h3>
 						<div class="inner_block_short_desc"><a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/<%- page.slug %>"><% if page.text :%><% if page.text[@lang] :%><%- page.text[@lang] %><% end %><% end %></a></div>
 					</div>
 				<% end %>

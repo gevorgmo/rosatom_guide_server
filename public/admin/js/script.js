@@ -597,6 +597,9 @@ $(document).ready(function(){
 			_data['content']['place']=$('#prplace').val();
 		}
 		
+		if($('#prfloor')[0]){
+			_data['content']['floor']=$('#prfloor').val();
+		}
 		
 		if($('#prmonday')[0]){
 			_data['content']['monday']=$('#prmonday').val();

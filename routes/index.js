@@ -305,7 +305,7 @@ exports.init = function (app) {
 	app.get('/qrgenerate', isLoggedIn, function(req, res) {
 		if(req.query.slug){
 			QRCode.toString(req.query.slug, {type:"svg"},function (err, svg) {
-				res.setHeader('Content-disposition', 'attachment; filename=qr.svg');
+				res.setHeader('Content-disposition', 'attachment; filename='+req.query.slug+'.svg');
 				res.set('Content-Type', 'image/svg');
 				return res.status(200).send(svg);
 			})

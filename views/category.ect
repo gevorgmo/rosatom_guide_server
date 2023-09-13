@@ -23,6 +23,9 @@
 							<th>Order</th>
 						<% end %>	
 						<th>Title</th>
+						<% if @pagename=="media" or @pagename=="exhibition" :%>
+							<th>Chapter</th>
+						<% end %>	
 						<th>Views</th>
 						<th>Status</th>	
 						<th class="no-sort"></th>
@@ -39,6 +42,9 @@
 								<td><%- page.ord %></td>
 							<% end %>
 							<td><% if page.title.ru :%><a href="/item/<%- page._id %>"><%- page.title.ru %></a><% end %></td>
+							<% if @pagename=="media" or @pagename=="exhibition" :%>
+								<td><% if page.content :%><%- page.content.floor || "" %><% end %></td>
+							<% end %>	
 							<td><%- page.views %></td>
 							<td>
 								<% if page.active :%>

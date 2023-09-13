@@ -32,7 +32,7 @@
 				<div class="inner_block">
 					<div class="inner_block_title">
 						<h2><span></span><% if @page.title :%><%- @page.title[@lang] || "" %><% end %></h2>
-						<h3><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].floor || "" %><% end %><% end %></h3>
+						<h3><% if @page.content :%><% if @page.content.floor :%><%- @page.content.floor+" "+opt.translations.floor %><% end %><% end %></h3>
 					</div>	
 					<% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].content || "" %><% end %><% end %>
 				</div>

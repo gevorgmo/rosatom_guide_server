@@ -6,7 +6,7 @@ var fs         = require('fs')
 
 
 var _elems=[];
-var stream = fs.createReadStream('list.csv');
+var stream = fs.createReadStream('qr_list.csv');
 csv.fromStream(stream, {delimiter :','}).on("data", function(data){
 	_elems.push(data);
 }).on("end", function(){

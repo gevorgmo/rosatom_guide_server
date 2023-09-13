@@ -107,6 +107,7 @@ table {
 h1, h2, h3, h4, h5, h6 {
 	font-weight: 400;
 	font-size:12px;
+	text-transform:uppercase;
 }
 * { 
 	outline: none !important;
@@ -261,7 +262,7 @@ img	{
 }
 .custom_container {
 	max-width: 1810px;
-	padding: 0 38px 0 38px;
+	padding: 0 19px 0;
 	position: relative;
 	margin: 0 auto;
 }
