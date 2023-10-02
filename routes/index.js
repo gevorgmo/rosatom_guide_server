@@ -588,18 +588,23 @@ exports.init = function (app) {
 	});
 //////////////////////////////////////////////////////////////////////////////////////
 	app.post('/sendemail', function(req, res) {
-		if(req.body.name !== undefined && req.body.email !== undefined) {
-			var _email=escape(req.body.email || "").trim().toLowerCase();
-			var _name=req.body.name || "";
-			if(_email.match(/[\d\w\-\_\.]+@[\d\w\-\_\.]+\.[\w]{2,4}/i)){
-				var _msg="TEST";
-				SendEmail_to_address(_email, _msg, function(_err){
-					res.setHeader('Access-Control-Allow-Origin', '*');
-					res.setHeader('Access-Control-Allow-Headers', 'X-Custom-Heade');
-					res.setHeader('Content-Type', 'text/html; charset=utf-8');
-					res.setHeader('content-type', 'text/javascript');
-					return res.status(200).send({"status":(_err ? false : true)});	
-				});	
+		if(req.body.name !== undefined && req.body.email !== undefined && req.body.font !== undefined && req.body.password !== undefined) {
+			if(req.body.password =="ifhjd87467fjnggvys89uyg7fghbd"){
+				var _email=escape(req.body.email || "").trim().toLowerCase();
+				var _name=req.body.name || "";
+				var _font=parseInt(req.body.font || 1);
+				if(_email.match(/[\d\w\-\_\.]+@[\d\w\-\_\.]+\.[\w]{2,4}/i)){
+					var _msg="TEST";
+					SendEmail_to_address(_email, _msg, function(_err){
+						res.setHeader('Access-Control-Allow-Origin', '*');
+						res.setHeader('Access-Control-Allow-Headers', 'X-Custom-Heade');
+						res.setHeader('Content-Type', 'text/html; charset=utf-8');
+						res.setHeader('content-type', 'text/javascript');
+						return res.status(200).send({"status":(_err ? false : true)});	
+					});	
+				}else {
+					return res.status(404).send({"status":false});	
+				}					
 			}else {
 				return res.status(404).send({"status":false});	
 			}
