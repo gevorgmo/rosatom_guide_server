@@ -615,6 +615,15 @@ exports.init = function (app) {
 		}
 	});
 	
+/////////////////////////////////////////////////////////////
+	app.get('/pdfgenerate', function(req, res) {
+		GeneratePDF("en",  "Gevorg Manukyan", function(){
+			return res.render('templates/test',{});
+		});
+	});
+	
+	
+	
 
 };
 /////////////////////////////////////////////////////////////////////////////
@@ -727,19 +736,48 @@ function GetData(_url,_dat,_cb){
 }
 /////////////////////////////////////////////////////////////////
 
-function GeneratePDF(_lang, _font, _name, _cb){
+function GeneratePDF(_lang,  _name, _cb){
 	var fonts = {
-		s1: {normal: './signe/s1.ttf'},
-		s2: {normal: './signe/s2.ttf'},
-		s3: {normal: './signe/s3.ttf'},
-		s4: {normal: './signe/s4.ttf'},
-		s5: {normal: './signe/s5.ttf'},
-		s6: {normal: './signe/s6.ttf'}
+		c1: {normal: './signe/c1.ttf'},
+		c2: {normal: './signe/c2.ttf'}
+		//s1: {normal: './signe/s1.ttf'},
+		//s2: {normal: './signe/s2.ttf'},
+		//s3: {normal: './signe/s3.ttf'},
+		//s4: {normal: './signe/s4.ttf'},
+		//s5: {normal: './signe/s5.ttf'},
+		//s6: {normal: './signe/s6.ttf'}
 	};
 
 	var PdfPrinter = require('pdfmake');
 	var printer = new PdfPrinter(fonts);
-
+	var _texts={
+		"ru":{
+			p1:"Настоящим удостоверяется,",
+			p2:"что ",
+			p3:"присоединился к Договоры",
+			p4:"о запрещении испытаний", 
+			p5:"ядерного оружия в атмосфере,",
+			p6:"в космическом пространстве",
+			p7:"и под водой.",
+			p8:"",
+			p9:"Выражаем Вам нашу искреннюю",
+			p10:"признательность.",
+		},
+		"en":{		
+			p1:"This is to certify",
+			p2:"that ",
+			p3:" has joined the Treaty on the Prohibition",
+			p4:"of Nuclear Weapons Testing",
+			p5:"in the Atmosphere, in Outer Space,",
+			p6:"and Under Water.",
+			p7:"",
+			p8:"Please accept",
+			p9:"our sincere gratitude.",
+			p10:""
+		}
+	}
+	
+	
 	var docDefinition = {
 		 pageMargins: [ 0, 10, 0, 10 ],
 		background: function (page) {
@@ -753,20 +791,110 @@ function GeneratePDF(_lang, _font, _name, _cb){
 		},
 		content: [
 			{
-				text: _name,
-				font:'s'+_font,
+				text: _texts[_lang].p1,
+				font:'c1',
 				alignment:'center',
-				fontSize: 40,
-				color:'#2045A5',
+				fontSize: 27,
+				color:'#000000',
 				width: 600,
-				height: 300,
-				absolutePosition: { x: 0, y: 600 }	
+				height: 32,
+				absolutePosition: { x: 0, y: 314 }	
+			},
+			{
+				text: _texts[_lang].p2+_name,
+				font:'c1',
+				alignment:'center',
+				fontSize: 27,
+				color:'#000000',
+				width: 600,
+				height: 32,
+				absolutePosition: { x: 0, y: 346 }	
+			},
+			{
+				text: _texts[_lang].p3,
+				font:'c1',
+				alignment:'center',
+				fontSize: 27,
+				color:'#000000',
+				width: 600,
+				height: 32,
+				absolutePosition: { x: 0, y: 378 }	
+			},
+			{
+				text: _texts[_lang].p4,
+				font:'c1',
+				alignment:'center',
+				fontSize: 27,
+				color:'#000000',
+				width: 600,
+				height: 32,
+				absolutePosition: { x: 0, y: 409 }	
+			},
+			{
+				text: _texts[_lang].p5,
+				font:'c1',
+				alignment:'center',
+				fontSize: 27,
+				color:'#000000',
+				width: 600,
+				height: 32,
+				absolutePosition: { x: 0, y: 441 }	
+			},
+			{
+				text: _texts[_lang].p6,
+				font:'c1',
+				alignment:'center',
+				fontSize: 27,
+				color:'#000000',
+				width: 600,
+				height: 32,
+				absolutePosition: { x: 0, y: 472 }	
+			},
+			{
+				text: _texts[_lang].p7,
+				font:'c1',
+				alignment:'center',
+				fontSize: 27,
+				color:'#000000',
+				width: 600,
+				height: 32,
+				absolutePosition: { x: 0, y: 504 }	
+			},
+			{
+				text: _texts[_lang].p8,
+				font:'c2',
+				alignment:'center',
+				fontSize: 27,
+				color:'#000000',
+				width: 600,
+				height: 32,
+				absolutePosition: { x: 0, y: 535 }	
+			},
+			{
+				text: _texts[_lang].p9,
+				font:'c2',
+				alignment:'center',
+				fontSize: 27,
+				color:'#000000',
+				width: 600,
+				height: 32,
+				absolutePosition: { x: 0, y: 567 }	
+			},
+			{
+				text: _texts[_lang].p10,
+				font:'c2',
+				alignment:'center',
+				fontSize: 27,
+				color:'#000000',
+				width: 600,
+				height: 32,
+				absolutePosition: { x: 0, y: 602 }	
 			},
 		]
 	};
 	var _filename=(new Date()).getTime().toString();
 	var pdfDoc = printer.createPdfKitDocument(docDefinition);
-	//pdfDoc.pipe(fs.createWriteStream('./signe/'+_filename+'.pdf'));
+	pdfDoc.pipe(fs.createWriteStream('./signe/'+_filename+'.pdf'));
 	pdfDoc.end();
 	_cb(pdfDoc);
 }
