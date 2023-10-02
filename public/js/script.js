@@ -196,6 +196,7 @@ function GetContent(_url, _cb){
 		document.body.className="";
 		
 		if(_url.indexOf('/maps')>-1){
+			//Socket_SendEvent({status:"ok"});
 			if(!$('body').hasClass('map_page')) $('body').addClass('map_page');
 			zoom_init();
 		} else if(data.indexOf('media_iner_page')>-1){
@@ -594,3 +595,59 @@ function gotozoom(){
 function pointerup_handler(){
 	_zooming=false;
 }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*
+var _connectionStatus=false;
+var uws;
+
+const socketMessageListener = (event) => {
+	new Response(event.data).arrayBuffer().then(buffer=> {
+		let json = JSON.parse(String.fromCharCode.apply(null, new Uint8Array(buffer)));
+		if(json.status){
+			if(json.status=="eventresp"){
+				Socket_onMyEventGet(json.data);
+			} else if(json.status=="roomevent"){
+				Socket_onRoomEventsGet(json.data);
+			} 	
+		} 
+	})
+   
+};
+
+const socketOpenListener = (event) => {
+	console.log('connected');
+	_connectionStatus=true;
+};
+
+const socketCloseListener = (event) => {
+   if (uws) {
+		console.log('disconnected');
+		_connectionStatus=false;
+   }
+   uws = new WebSocket('wss://rosatom.loremipsumcorp.com/socket/');
+   uws.binaryType = "arraybuffer"; 
+   uws.addEventListener('open', socketOpenListener);
+   uws.addEventListener('message', socketMessageListener);
+   uws.addEventListener('close', socketCloseListener);
+};
+
+function Socket_onRoomEventsGet(_data){
+	alert(JSON.stringify(_data));
+}
+
+function Socket_onMyEventGet(_data){
+	alert(JSON.stringify(_data));
+}
+
+function Socket_SendEvent(_data){
+	if(_connectionStatus) uws.send(JSON.stringify({"status":"event", "data":_data}));
+}
+
+socketCloseListener();
+*/

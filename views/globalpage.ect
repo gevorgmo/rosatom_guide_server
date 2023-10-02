@@ -47,13 +47,7 @@
 														"><i class="fa fa-plus"></i> Select Media</button>
 														<div class="selected_media_itm primage1" id="primage1<%- option.language_code %>" style="<%- if finded then "background-image:url("+@item.content[option.language_code].image1+")" else "display:none" %>" data-src="<%- if finded then @item.content[option.language_code].image1 else "" %>" data-type="image"  data-lang="<%- option.language_code %>"><a class="media_itm_link  btn btn-warning btn-flat previewlink"  data-template="home" href="<%- if finded then @item.content[option.language_code].image1 %>" target="_blank" title=""><i class="fa  fa-eye"></i></a><button type="button" class="btn-selectedmediaremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button></div>								
 													</div>
-												</div>
-												<div class="col-md-4 col-ms-4">
-													<div class="form-group">
-														<label>Exhibitions Color</label>
-														<input type="text" class="form-control  prtxt" data-id="color1"  placeholder="Enter title"  data-lang="<%- option.language_code %>" value="<% if @item.content :%><% if @item.content[option.language_code] :%><%- @item.content[option.language_code].color1 || "" %><% end %><% end %>">
-													</div>
-												</div>
+												</div> 
 											</div>	
 											
 											<div class="row">
@@ -78,12 +72,6 @@
 															<% end %>	
 														"><i class="fa fa-plus"></i> Select Media</button>
 														<div class="selected_media_itm primage2" id="primage2<%- option.language_code %>" style="<%- if finded then "background-image:url("+@item.content[option.language_code].image2+")" else "display:none" %>" data-src="<%- if finded then @item.content[option.language_code].image2 else "" %>" data-type="image"  data-lang="<%- option.language_code %>"><a class="media_itm_link  btn btn-warning btn-flat previewlink"  data-template="home" href="<%- if finded then @item.content[option.language_code].image2 %>" target="_blank" title=""><i class="fa  fa-eye"></i></a><button type="button" class="btn-selectedmediaremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button></div>								
-													</div>
-												</div>
-												<div class="col-md-4 col-ms-4">
-													<div class="form-group">
-														<label>Events Color</label>
-														<input type="text" class="form-control  prtxt" data-id="color2"  placeholder="Enter title"  data-lang="<%- option.language_code %>" value="<% if @item.content :%><% if @item.content[option.language_code] :%><%- @item.content[option.language_code].color2 || "" %><% end %><% end %>">
 													</div>
 												</div>
 											</div>	
@@ -112,12 +100,6 @@
 														<div class="selected_media_itm primage3" id="primage3<%- option.language_code %>" style="<%- if finded then "background-image:url("+@item.content[option.language_code].image3+")" else "display:none" %>" data-src="<%- if finded then @item.content[option.language_code].image3 else "" %>" data-type="image"  data-lang="<%- option.language_code %>"><a class="media_itm_link  btn btn-warning btn-flat previewlink"  data-template="home"  href="<%- if finded then @item.content[option.language_code].image3 %>" target="_blank" title=""><i class="fa  fa-eye"></i></a><button type="button" class="btn-selectedmediaremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button></div>								
 													</div>
 												</div>
-												<div class="col-md-4 col-ms-4">
-													<div class="form-group">
-														<label>Services Color</label>
-														<input type="text" class="form-control  prtxt" data-id="color3"  placeholder="Enter title"  data-lang="<%- option.language_code %>" value="<% if @item.content :%><% if @item.content[option.language_code] :%><%- @item.content[option.language_code].color3 || "" %><% end %><% end %>">
-													</div>
-												</div>
 											</div>		
 												
 											<div class="row">
@@ -142,12 +124,6 @@
 															<% end %>	
 														"><i class="fa fa-plus"></i> Select Media</button>
 														<div class="selected_media_itm primage4" id="primage4<%- option.language_code %>" style="<%- if finded then "background-image:url("+@item.content[option.language_code].image4+")" else "display:none" %>" data-src="<%- if finded then @item.content[option.language_code].image4 else "" %>" data-type="image"  data-lang="<%- option.language_code %>"><a class="media_itm_link  btn btn-warning btn-flat previewlink" data-template="home"   href="<%- if finded then @item.content[option.language_code].image4 %>" target="_blank" title=""><i class="fa  fa-eye"></i></a><button type="button" class="btn-selectedmediaremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button></div>								
-													</div>
-												</div>
-												<div class="col-md-4 col-ms-4">
-													<div class="form-group">
-														<label>Maps Color</label>
-														<input type="text" class="form-control  prtxt" data-id="color4"  placeholder="Enter title"  data-lang="<%- option.language_code %>" value="<% if @item.content :%><% if @item.content[option.language_code] :%><%- @item.content[option.language_code].color4 || "" %><% end %><% end %>">
 													</div>
 												</div>
 											</div>		

@@ -1,7 +1,16 @@
-module.exports = [{
-    script: 'app.js',
-    name: 'atlasv',
-    exec_mode: 'cluster',
-    instances: 'max',
-	autorestart: true
-}]
+module.exports = {
+  apps : [
+	  {
+		name   : "socket_server",
+		script : "./socket_server.js",
+		instances: "max",
+		exec_mode: "cluster",
+		autorestart: true
+	  },
+	  {
+		name   : "app",
+		script : "./app.js",
+		autorestart: true
+	  }
+  ]
+}

@@ -379,6 +379,10 @@ exports.init = function (app) {
 				ftyp='video';
 			}else if (/\.mp3$/i.test(images.originalname) || images.mimetype == 'audio/mp3'){
 				ftyp='audio';
+			}else if (/\.m4a$/i.test(images.originalname) || images.mimetype == 'audio/m4a'){
+				ftyp='audio';	
+			}else if (/\.aac$/i.test(images.originalname) || images.mimetype == 'audio/aac'){
+				ftyp='audio';			
 			}else{
 				msg = 'Invalid format.';
 			}

@@ -170,13 +170,13 @@
 
 							<div class="box box-primary">
 								<div class="box-header">
-									<h3 class="box-title">Media Content</h3>
+									<h3 class="box-title">Content</h3>
 								</div>
 								<div class="box-body">
 									<div class="row">
 										<div class="col-md-4 col-ms-4">	
 											<div class="form-group">
-												<label>Title</label>
+												<label>Title <%- if option.language_code=="ru" and (@pagename=="event" or @pagename=="exhibition") then "(required)"%></label>
 												<input type="text" class="form-control  prtitle"  placeholder="Enter Text"  data-lang="<%- option.language_code %>" value="<% if @item.title :%><%- @item.title[option.language_code] || "" %><% end %>">
 											</div>
 										</div>
@@ -185,7 +185,7 @@
 										<% if @pagename=="event":%>
 											<div class="col-md-4 col-ms-4">	
 												<div class="form-group">	
-													<label>Event Type</label>
+													<label>Event Type <%- if option.language_code=="ru" then "(required)"%></label>
 													<input type="text" class="form-control prtxt" data-id="type" placeholder="Enter Text" data-lang="<%- option.language_code %>" value="<% if @item.content :%><% if @item.content[option.language_code] :%><%- @item.content[option.language_code].type || "" %><% end %><% end %>">
 												</div>	
 											</div>					
@@ -266,7 +266,7 @@
 														<label>Transcript</label>
 													<% end %>
 													<% if @pagename=="exhibition" or @pagename=="event" :%>
-														<label>Short description</label>
+														<label>Short description <%- if option.language_code=="ru" then "(required)"%></label>
 													<% end %>
 													<textarea  class="form-control htmlcont_small prtranscript"  data-lang="<%- option.language_code %>"  cols="20"  ><% if @item.text :%><% if @item.text[option.language_code] :%><%- @item.text[option.language_code] %><% end %><% end %></textarea>
 												</div>
