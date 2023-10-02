@@ -588,19 +588,21 @@ exports.init = function (app) {
 	});
 //////////////////////////////////////////////////////////////////////////////////////
 	app.post('/sendemail', function(req, res) {
-		if(req.body.name !== undefined && req.body.email !== undefined && req.body.font !== undefined && req.body.password !== undefined) {
+		if(req.body.lang !== undefined && req.body.name !== undefined && req.body.email !== undefined && req.body.font !== undefined && req.body.password !== undefined) {
 			if(req.body.password =="ifhjd87467fjnggvys89uyg7fghbd"){
 				var _email=escape(req.body.email || "").trim().toLowerCase();
+				var _lang=req.body.lang || "ru";
 				var _name=req.body.name || "";
 				var _font=parseInt(req.body.font || 1);
 				if(_email.match(/[\d\w\-\_\.]+@[\d\w\-\_\.]+\.[\w]{2,4}/i)){
-					var _msg="TEST";
-					SendEmail_to_address(_email, _msg, function(_err){
-						res.setHeader('Access-Control-Allow-Origin', '*');
-						res.setHeader('Access-Control-Allow-Headers', 'X-Custom-Heade');
-						res.setHeader('Content-Type', 'text/html; charset=utf-8');
-						res.setHeader('content-type', 'text/javascript');
-						return res.status(200).send({"status":(_err ? false : true)});	
+					GeneratePDF(_lang, _font, _name, function(_file){
+						SendEmail_to_address(_email, _file, function(_err){
+							res.setHeader('Access-Control-Allow-Origin', '*');
+							res.setHeader('Access-Control-Allow-Headers', 'X-Custom-Heade');
+							res.setHeader('Content-Type', 'text/html; charset=utf-8');
+							res.setHeader('content-type', 'text/javascript');
+							return res.status(200).send({"status":(_err ? false : true)});								
+						});	
 					});	
 				}else {
 					return res.status(404).send({"status":false});	
@@ -613,7 +615,6 @@ exports.init = function (app) {
 		}
 	});
 	
-
 
 };
 /////////////////////////////////////////////////////////////////////////////
@@ -659,18 +660,29 @@ function isToday(date) {
   return false;
 }
 ////////////////////////////////////////////////////
-function SendEmail_to_address(_email, _msg, _cb){
+function SendEmail_to_address(_email, _filename, _cb){
 	var _dat="api_key=6digaixudniiw4enjosthachxzpoa5u1193nu9pe&format=json&title=rosatom";	
-	PostData('https://api.unisender.com/en/api/createList', _dat, function(_res1){
+	GetData('https://api.unisender.com/en/api/createList', _dat, function(_res1){
 		if(_res1) {
 			if(_res1.result) {
-				_dat="api_key=6digaixudniiw4enjosthachxzpoa5u1193nu9pe&format=json&email="+_email+"&sender_name=RosAtom&sender_email=gevorg.manukyan@loremipsumcorp.com&subject=RosAtom&body="+_msg+"&list_id="+_res1.result.id;
-				PostData('https://api.unisender.com/en/api/sendEmail', _dat, function(_res2){
+				var _datt={
+					"api_key":"6digaixudniiw4enjosthachxzpoa5u1193nu9pe",
+					"format":"json",
+					"email":_email,
+					"sender_name":"RosAtom",
+					"sender_email":"gevorg.manukyan@loremipsumcorp.com",
+					"subject":"RosAtom",
+					"body":"Certificate",
+					"list_id":_res1.result.id,
+					"attachments":[{"filename":"certificate.pdf","content":_filename}]
+				};
+			//	_dat="api_key&=6digaixudniiw4enjosthachxzpoa5u1193nu9pe&format=json&email="+_email+"&sender_name=RosAtom&sender_email=gevorg.manukyan@loremipsumcorp.com&subject=RosAtom&body=Certificate&list_id="+res1.result.id+"&attachments[certificate.pdf]="+_filename;	
+				PostData('https://api.unisender.com/en/api/sendEmail', _datt, function(_res2){
 				 _dat="api_key=6digaixudniiw4enjosthachxzpoa5u1193nu9pe&format=json&list_id="+_res1.result.id;	
-					PostData('https://api.unisender.com/en/api/deleteList', _dat, function(_res3){
+					GetData('https://api.unisender.com/en/api/deleteList', _dat, function(_res3){
 						_cb(null);
 					})	
-				})
+				})	
 			} else {
 				_cb("Please try again later!");
 			}		
@@ -680,8 +692,25 @@ function SendEmail_to_address(_email, _msg, _cb){
 	})
 }
 /////////////////////////////////////////////////////////////////
-
 function PostData(_url,_dat,_cb){
+	fetch(_url, {
+		headers: { 'Content-Type': 'application/json'},
+        method: 'post',
+		body:JSON.stringify(_dat)
+    }).then(response => response.json()).then((json) => {
+		console.log(json);
+		 try {	
+			_cb(json);
+		} catch (er) {
+			_cb(null);
+		}
+	}).catch(err => {
+		console.log(err);
+		_cb(null);  
+	});
+}
+/////////////////////////////////////////////////////////////////
+function GetData(_url,_dat,_cb){
 	fetch(_url+'?'+_dat, {
         method: 'get'
     }).then(response => response.json()).then((json) => {
@@ -696,3 +725,57 @@ function PostData(_url,_dat,_cb){
 		_cb(null);  
 	});
 }
+/////////////////////////////////////////////////////////////////
+
+function GeneratePDF(_lang, _font, _name, _cb){
+	var fonts = {
+		s1: {normal: './signe/s1.ttf'},
+		s2: {normal: './signe/s2.ttf'},
+		s3: {normal: './signe/s3.ttf'},
+		s4: {normal: './signe/s4.ttf'},
+		s5: {normal: './signe/s5.ttf'},
+		s6: {normal: './signe/s6.ttf'}
+	};
+
+	var PdfPrinter = require('pdfmake');
+	var printer = new PdfPrinter(fonts);
+
+	var docDefinition = {
+		 pageMargins: [ 0, 10, 0, 10 ],
+		background: function (page) {
+			return [
+				{
+					image: './signe/'+_lang+'.png',
+					width: 600,
+					height: 848,
+				}
+			];
+		},
+		content: [
+			{
+				text: _name,
+				font:'s'+_font,
+				alignment:'center',
+				fontSize: 40,
+				color:'#2045A5',
+				width: 600,
+				height: 300,
+				absolutePosition: { x: 0, y: 600 }	
+			},
+		]
+	};
+	var _filename=(new Date()).getTime().toString();
+	var pdfDoc = printer.createPdfKitDocument(docDefinition);
+	//pdfDoc.pipe(fs.createWriteStream('./signe/'+_filename+'.pdf'));
+	pdfDoc.end();
+	_cb(pdfDoc);
+}
+
+
+
+
+
+
+
+
+
