@@ -5,7 +5,20 @@
 <section class="content-header p-category"><h1><%- if all_category_titles[@pagename] then all_category_titles[@pagename] else "" %></h1></section>
 
 <section class="content-header">
+
 	<a href="/item/new?category=<%- @pagename %>" class="btn btn-primary"><i class="fa fa-plus"></i>Create new</a>
+
+	<% if @pagename=="media" :%>
+		<div style="display:none">	
+			<select class="form-control" id="prexibitions" style="width: 100%;">
+				<option value="">All Exhibitions</option>
+				<% for exhibit in @exhibitions : %>
+					<option value="<%- exhibit._id %>"><% if exhibit.title :%><%- exhibit.title["ru"] || "" %><% end %></option>
+				<% end %>	
+			</select>
+		</div>	
+	<% end %>	
+
 </section>
 
 
@@ -23,6 +36,9 @@
 							<th>Order</th>
 						<% end %>	
 						<th>Title</th>
+						<% if @pagename=="media" :%>
+							<th>Exhibition</th>
+						<% end %>
 						<% if @pagename=="media" or @pagename=="exhibition" :%>
 							<th>Chapter</th>
 						<% end %>	
@@ -42,6 +58,9 @@
 								<td><%- page.ord %></td>
 							<% end %>
 							<td><% if page.title.ru :%><a href="/item/<%- page._id %>"><%- page.title.ru %></a><% end %></td>
+							<% if @pagename=="media"  :%>
+								<td><% if page.related :%><span style="display:none"><%- page.related._id %></span><% if page.related.title :%><%- page.related.title["ru"] || "" %><% end %><% end %></td>
+							<% end %>
 							<% if @pagename=="media" or @pagename=="exhibition" :%>
 								<td><% if page.content :%><%- page.content.floor || "" %><% end %></td>
 							<% end %>	

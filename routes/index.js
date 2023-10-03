@@ -9,6 +9,7 @@ var mongoose       = require('mongoose')
   , fetch = require('node-fetch')
   , config = require('../config/config')
   , QRCode = require('qrcode')
+  , ObjectId = require('mongodb').ObjectID
   , auth = require('../auth');
 
 
@@ -22,7 +23,7 @@ var _all_global_pages=["home","exhibitions","events","services","maps"];
 exports.init = function (app) {
 
 //////////////////////////////////////////////////////////////////////////
-/*
+	/*
 	app.get('/createuser', function(req, res) {
 		var __user= {
 			fullname:"Administrator",
@@ -241,16 +242,21 @@ exports.init = function (app) {
 /////////////////////////////////////////////////////////////
 	app.get('/category/:categoryname', isLoggedIn, function(req, res) {
 		var _sort={ord:1};
-		if(req.params.categoryname=="event") _sort={published:1}
-		Page.find({category:req.params.categoryname}).sort(_sort).exec(function(err, _pages){
+		if(req.params.categoryname=="event") _sort={published:1};
+		Page.find({category:req.params.categoryname}).populate('related').sort(_sort).exec(function(err, _pages){
 			if(err || !_pages) return res.render("index", {user_status:_all_roles[req.user.role],  pagename:"dashboard"});		
 			if(req.params.categoryname=="event"){
 				_pages.map(function(_i){
 					_i.time=moment(_i.published).format("YY.MM.DD HH:mm");
 				});	
 			}
-			
-			return res.render("category", {user_status:_all_roles[req.user.role],  pagename:req.params.categoryname, pages:_pages});
+			if(req.params.categoryname=="media"){
+				Page.find({category:"exhibition"}).sort(_sort).exec(function(err, _exhibitions){
+					return res.render("category", {user_status:_all_roles[req.user.role],  pagename:req.params.categoryname, pages:_pages, exhibitions:_exhibitions});
+				});
+			} else {
+				return res.render("category", {user_status:_all_roles[req.user.role],  pagename:req.params.categoryname, pages:_pages});
+			}			
 		});
 	});
 /////////////////////////////////////////////////////////////
@@ -286,7 +292,13 @@ exports.init = function (app) {
 					Page.findById(req.params.itemid).exec(function(err, _page){
 						if(err || !_page) return res.render("index", {user_status:_all_roles[req.user.role],  pagename:"dashboard"});					
 						if(_all_categories.indexOf(_page.category)!=-1){
-							return res.render("item", {user_status:_all_roles[req.user.role],  pagename:_page.category, item:_page.toObject(), options:_options});
+							if(_page.category=="media"){
+								Page.find({category:"exhibition"}).sort({ord:1}).exec(function(err, _exhibitions){
+									return res.render("item", {user_status:_all_roles[req.user.role],  pagename:_page.category, item:_page.toObject(), options:_options, exhibitions:_exhibitions});
+								})
+							} else {
+								return res.render("item", {user_status:_all_roles[req.user.role],  pagename:_page.category, item:_page.toObject(), options:_options});
+							}							
 						} else {
 							return res.render("globalpage", {user_status:_all_roles[req.user.role],  pagename:_page.category, item:_page.toObject(), options:_options});
 						}
@@ -294,7 +306,13 @@ exports.init = function (app) {
 				} else {
 					var _category=req.query.category || "page";
 					if(_all_categories.indexOf(_category)==-1 && _all_global_pages.indexOf(_category)==-1) _category="page";
-					return res.render("item", {user_status:_all_roles[req.user.role],  pagename:_category, item:{slug:"", _id:"new"}, options:_options});
+					if(_category=="media"){
+						Page.find({category:"exhibition"}).sort({ord:1}).exec(function(err, _exhibitions){
+							return res.render("item", {user_status:_all_roles[req.user.role],  pagename:_category, item:{slug:"", _id:"new"}, options:_options, exhibitions:_exhibitions});
+						})	
+					} else {
+						return res.render("item", {user_status:_all_roles[req.user.role],  pagename:_category, item:{slug:"", _id:"new"}, options:_options});
+					}		
 				}
 			});	
 		} else {
@@ -455,7 +473,8 @@ exports.init = function (app) {
 			published:(req.body.published || new Date())	
 		};
 		_page.slug=GenerateSlug(req.body.slug || new Date().getTime());
-
+		
+		if(req.body.related) _page.related=ObjectId(req.body.related);
 		 
 		if(req.body.id=="new"){
 			Page.find({slug: _page.slug}, function (err1, _slugs) {
@@ -617,9 +636,9 @@ exports.init = function (app) {
 	
 /////////////////////////////////////////////////////////////
 	app.get('/pdfgenerate', function(req, res) {
-		GeneratePDF("en",  "Gevorg Manukyan", function(){
+		//GeneratePDF("en",  "Gevorg Manukyan", function(){
 			return res.render('templates/test',{});
-		});
+		//});
 	});
 	
 	
@@ -740,12 +759,6 @@ function GeneratePDF(_lang,  _name, _cb){
 	var fonts = {
 		c1: {normal: './signe/c1.ttf'},
 		c2: {normal: './signe/c2.ttf'}
-		//s1: {normal: './signe/s1.ttf'},
-		//s2: {normal: './signe/s2.ttf'},
-		//s3: {normal: './signe/s3.ttf'},
-		//s4: {normal: './signe/s4.ttf'},
-		//s5: {normal: './signe/s5.ttf'},
-		//s6: {normal: './signe/s6.ttf'}
 	};
 
 	var PdfPrinter = require('pdfmake');

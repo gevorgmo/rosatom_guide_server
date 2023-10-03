@@ -360,12 +360,17 @@ $(document).ready(function(){
 			"lengthMenu": [[100, 200, 500, -1], [100, 200, 500, "All"]],
 			"dom": 'lrtip',
 			initComplete: function () {
-				$('#itemslist_length').append('<div class="row"><div class="col-sm-6"><div class="form-group searchdiv"><input type="text" class="form-control" id="filter_search" placeholder="Search ..."></div></div><div class="col-sm-4 pagelengthi"></div></div>');
+				$('#itemslist_length').append('<div class="row"><div class="col-sm-4"><div class="form-group searchdiv"><input type="text" class="form-control" id="filter_search" placeholder="Search ..."></div></div>'+($('#prexibitions')[0] ? '<div class="col-sm-4" id="exibitionfilter"></div>' : '')+'<div class="col-sm-4 pagelengthi"></div></div>');
 				$('div.dataTables_length label').appendTo('.pagelengthi');
+				$('#exibitionfilter').append($('#prexibitions'));
 			}
 		});
 		
-		$('#filter_search').on( 'keyup', function () {
+		$('#filter_search').on('keyup', function () {
+			_table.search(this.value).draw();
+		});
+		
+		$('#prexibitions').on('change', function () {
 			_table.search(this.value).draw();
 		});
 	}
@@ -568,6 +573,8 @@ $(document).ready(function(){
 		if($('#prslug')[0]) _data['slug']=$('#prslug').val();
 		if($('#prord')[0])  _data['ord']=$('#prord').val();
 		if($('#prpublished')[0]) _data["published"]=$('#prpublished').data("DateTimePicker").date()._d.toUTCString();
+		if($('#prrelated')[0]) _data['related']=$('#prrelated').val();
+		
 		
 		_data['title']={};
 		_data['audio']={};
@@ -625,7 +632,7 @@ $(document).ready(function(){
 		if($('.prtranscript')[0]){
 			$('.prtranscript').each(function(){
 				_data['text'][$(this).attr('data-lang')]=$(this).val();
-				if($(this).attr('data-lang')=="ru" && $('#prcategory').val()=="event" && $(this).val().trim()==""){
+				if($(this).attr('data-lang')=="ru" && ($('#prcategory').val()=="event" || $('#prcategory').val()=="media") && $(this).val().trim()==""){
 					noerror=false;
 				}
 			});

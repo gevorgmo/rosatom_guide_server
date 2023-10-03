@@ -32,7 +32,7 @@
 				<div class="box-body">
 					<div class="row">										
 						<% if @pagename=="media" :%>
-							<div class="col-md-4 col-ms-4">		
+							<div class="col-md-3 col-ms-3">		
 								<label style="margin: 0 0 0 10px;">QR code</label>
 								<div class="input-group margin" style="margin-top:5px;">
 									<input type="text" class="form-control" id="prslug" placeholder="Enter code" value="<%- @item.slug || "" %>">
@@ -53,9 +53,22 @@
 									</select>
 								</div>	
 							</div>
+							
+							<div class="col-md-3 col-ms-3">	
+								<div class="form-group">	
+									<label>Exhibition</label>
+									<select class="form-control" id="prrelated" style="width: 100%;">
+										<option value="">Not Specified</option>
+										<% for exhibit in @exhibitions : %>
+											<option value="<%- exhibit._id %>"  <% if @item.related :%><% if @item.related.toString()==exhibit._id.toString() :%>selected<% end %><% end %>><% if exhibit.title :%><%- exhibit.title["ru"] || "" %><% end %></option>
+										<% end %>	
+									</select>
+								</div>	
+							</div>
+							
 						<% end %>
 						<% if @pagename!="event" && @pagename!="media"  :%>
-							<div class="col-md-4 col-ms-4">	
+							<div class="col-md-3 col-ms-3">	
 								<div class="form-group">
 									<label>Sorting order</label>
 									<input type="number" class="form-control" id="prord" placeholder="Enter number" value="<%- @item.ord || 1 %>">
@@ -86,7 +99,7 @@
 						<% end %>
 						
 						<% if @pagename=="exhibition"  or @pagename=="media":%>
-							<div class="col-md-4 col-ms-4">	
+							<div class="col-md-3 col-ms-3">	
 								<div class="form-group">	
 									<label>Floor</label>
 									<select class="form-control" id="prfloor" style="width: 100%;">
@@ -263,7 +276,7 @@
 											<div class="col-md-12 col-ms-12">
 												<div class="form-group">
 													<% if @pagename=="media" :%>
-														<label>Transcript</label>
+														<label>Transcript <%- if option.language_code=="ru" then "(required)"%></label>
 													<% end %>
 													<% if @pagename=="exhibition" or @pagename=="event" :%>
 														<label>Short description <%- if option.language_code=="ru" then "(required)"%></label>

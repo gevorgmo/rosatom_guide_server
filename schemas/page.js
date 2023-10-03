@@ -7,6 +7,10 @@ var PageSchema = new Schema({
         type: Boolean,
         default: true
     },
+    related: {
+        type: ObjectId,
+        ref: 'Page'
+    },	
 	slug: {
         type: String,
         trim: true
