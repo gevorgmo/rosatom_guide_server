@@ -18,15 +18,13 @@ $(document).ready(function() {
 		evt.preventDefault();
 		$('.loader_start').css({'visibility':'visible','opacity':'1'});
 		var _link=$(this).attr('href');
-		//setTimeout(function(){
-			$('.guide_blocks_container').hide();	
-			$('#global_wrap').show();	
-			if(document.body.className=="scanning") {
-				document.body.className=_tmp_class;
-				StopScan(); 
-			} 	
-			GetContent(_link,function(){});
-		//},400);
+		$('.guide_blocks_container').hide();	
+		$('#global_wrap').show();	
+		if(document.body.className=="scanning") {
+			document.body.className=_tmp_class;
+			StopScan(); 
+		} 	
+		GetContent(_link,function(){});
 		return false;
 	});	
 	
@@ -99,25 +97,7 @@ $(document).ready(function() {
 		return false;
 	});	
 	
-	
-	/*
-	$('body').on('click', '.map_back_btn', function(evt) {	
-		evt.preventDefault();
-		if($('.map_inner').is(':visible')){
-			$('.main_map_block').show();
-			$('.map_inner').hide();
-			$('.header_title_block').text($('.header_title_block').attr('data-title'));
-		} else {
-			$('.loader_start').css({'visibility':'visible','opacity':'1'});
-			setTimeout(function(){
-				$('.guide_blocks_container').hide();	
-				$('#global_wrap').show(); 	
-				GetContent($('.map_back_btn').attr('data-link'),function(){});
-			},500);	
-		}
-		return false;
-	});	
-	 */
+
 		
 	$('body').on('click', '.serv_categories_itm', function(evt) {
 		evt.preventDefault();	
@@ -175,7 +155,7 @@ $(document).ready(function() {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 function GetContent(_url, _cb){
-	if(_playstatus){
+	if(_playstatus || _audio){
 		_audio.pause();
 		_audio.src="";
 		_playstatus=false;
@@ -218,8 +198,7 @@ function GetContent(_url, _cb){
 		}
 		
 
-		if($('#media_content_data')[0]){
-		
+		if($('#media_content_data')[0]){		
 			_media_type=$('#media_content_data').attr('data-type');
 			var _media_url=$('#media_content_data').attr('data-url');
 			var _media_id=$('#media_content_data').attr('data-id');
@@ -236,10 +215,10 @@ function GetContent(_url, _cb){
 			}
 			
 			_audio.addEventListener('canplay', function(){
-				if((_media_type=="1" || _media_type=="4" ) && !_playstatus){
+				if((_media_type=="1" || _media_type=="4" ) && !_playstatus && _audio.src!=""){
 					_playstatus=true;
 					_audio.play();	
-				} else if(_media_type=="2" && !_playstatus){
+				} else if(_media_type=="2" && !_playstatus && _audio.src!=""){
 					var _duraton=_audio.duration;
 					var _currtime=_time_code+(Date.now()/1000-_page_load_time);
 					if(_currtime>=_duraton) _currtime=_currtime-_duraton;
@@ -303,7 +282,7 @@ function GetContent(_url, _cb){
 					_trans_id=-1;
 					for(var i = 0, l = _eachLine.length; i < l; i++) {
 						if(_eachLine[i].trim().length>0) {
-							$('.media_player_block_text_cont').append('<div class="trans_item" id="trans_item'+_id+'">'+_eachLine[i].trim()+'</div>');
+							$('.media_player_block_text_cont').append('<div class="trans_item active" id="trans_item'+_id+'">'+_eachLine[i].trim()+'</div>');
 							_id++;
 						}
 					}
@@ -313,23 +292,16 @@ function GetContent(_url, _cb){
 		
 		
 		
-		
 		setTimeout(function(){ window.scrollTo(0,0);},10);
 
 
 		if(_url.indexOf('/maps')>-1){
-
-			//set the elements
 			var wrapper = document.getElementById("map_image_1_wrapper");
 			var timg = document.getElementById("map_image_1") , rs = 1;
-
-			//to retrive the pinch e
 			function dist(a) {
 				var zw = a.touches[0].pageX - a.touches[1].pageX, zh = a.touches[0].pageY - a.touches[1].pageY;
 				return Math.sqrt(zw * zw + zh * zh);
 			}
-
-			//attach the events
 			wrapper.addEventListener('touchstart', function(event) {
 				if (event.touches.length > 1) {
 				event.preventDefault();
@@ -339,8 +311,6 @@ function GetContent(_url, _cb){
 			wrapper.addEventListener('touchmove', function(event) {
 				if (event.touches.length > 1) {
 					event.preventDefault();
-
-					//get the ratio
 					rf = dist(event) / d1 * rs;
 					if(rf>1){
 						timg.style.transform = "scale(" + rf + ")";
@@ -351,9 +321,7 @@ function GetContent(_url, _cb){
 					}
 				}
 			});
-
 		}
-		
 
 		_cb();		
 	});
@@ -427,7 +395,7 @@ function updateProgressBar() {
 				_audio.play();
 			}
 	  }
-	  
+	  /*
 	 if($('.media_player_block_text_cont')[0]){	
 		var _o=Math.floor(currentTime/10);
 		if(_trans_id!=_o){
@@ -440,6 +408,7 @@ function updateProgressBar() {
 			}
 		}
 	 } 
+	 */
   
   }
 }

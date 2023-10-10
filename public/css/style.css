@@ -911,6 +911,7 @@ footer{background:#000}
 .event_time{
 	color: #56C02B;
 	font-size: 1.8rem;
+	line-height: 1.8rem;
 	display: block;
 	padding-bottom: 6px;
 }
@@ -930,7 +931,7 @@ footer{background:#000}
 .event_typ{
 	color: #000000;
 	font-size: 1rem;
-	line-height: 1.4rem;
+	line-height: 1rem;
 	display: block;
 }
 

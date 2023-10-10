@@ -59,7 +59,7 @@ $(document).ready(function(){
 				if(xhr.status == 200) {
 					var _data=JSON.parse(date.target.response);
 					if(_data.url){
-						$('#media_list').prepend('<div class="media_itm  mitm_'+_data.type+'" data-id="'+_data.id+'" data-src="'+_data.url+'" data-type="'+_data.type+'" style="background-image:url('+(_data.type=="image" ? _data.url : _file_typs[_data.type])+')"><a class="media_itm_link '+(_data.type=="image" ? "lightbox" : "")+' btn btn-warning btn-flat" id="i'+$('.media_itm').length+'" href="'+_data.url+'" target="_blank"  title="'+_data.filename+'"><i class="fa  fa-eye"></i></a><button type="button" class="btn-fileremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button></div>');
+						$('#media_list').prepend('<div class="media_itm  mitm_'+_data.type+'" data-id="'+_data.id+'" data-src="'+_data.url+'" data-type="'+_data.type+'" style="background-image:url('+(_data.type=="image" ? _data.url : _file_typs[_data.type])+')"><a class="media_itm_link '+(_data.type=="image" ? "lightbox" : "")+' btn btn-warning btn-flat" id="i'+$('.media_itm').length+'" href="'+_data.url+'" target="_blank"  title="'+_data.filename+'"><i class="fa  fa-eye"></i></a><button type="button" class="btn-fileremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button><div>'+_data.filename+'</div></div>');
 					}else{
 						confirm('warning',_msg_warning,_data, _msg_close, '', function(){});
 					}				
@@ -851,7 +851,7 @@ function LoadMediaLibrary(){
 		$(".media_wait").hide();
 		if(__data.files){
 			__data.files.map(function(_i){
-				$('#media_list').append('<div class="media_itm   mitm_'+_i.type+'" data-id="'+_i._id+'" data-src="'+_i.url+'"  data-type="'+_i.type+'"  style="background-image:url('+(_i.type=="image" ? _i.url : _file_typs[_i.type])+')"><a class="media_itm_link '+(_i.type=="image" ? "lightbox" : "")+' btn btn-warning btn-flat" href="'+_i.url+'" id="i'+$('.media_itm').length+'"  target="_blank" title="'+_i.filename+'"><i class="fa  fa-eye"></i></a><button type="button" class="btn-fileremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button></div>');
+				$('#media_list').append('<div class="media_itm   mitm_'+_i.type+'" data-id="'+_i._id+'" data-src="'+_i.url+'"  data-type="'+_i.type+'"  style="background-image:url('+(_i.type=="image" ? _i.url : _file_typs[_i.type])+')"><a class="media_itm_link '+(_i.type=="image" ? "lightbox" : "")+' btn btn-warning btn-flat" href="'+_i.url+'" id="i'+$('.media_itm').length+'"  target="_blank" title="'+_i.filename+'"><i class="fa  fa-eye"></i></a><button type="button" class="btn-fileremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button><div>'+_i.filename+'</div></div>');
 			});
 			if(__data.files.length<20) $(".load_more_media").hide();
 			if(!$('.media_itm.selected')[0]) $('#media_set').hide();
