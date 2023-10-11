@@ -3,7 +3,7 @@
 				<div class="custom_container">
 					<div class="logo_block">
 						<div class="logo_block_t">
-							<img src="https://rosatom.loremipsumcorp.com/css/images/logo.svg" alt="" title=""/>
+							<img src="<%- @server_address %>/css/images/logo.svg" alt="" title=""/>
 						</div>
 					</div>
 					<div class="lang_block">
@@ -21,26 +21,26 @@
 		<main class="content">
 			<div class="home_blocks_container">
 				<div class="home_block">
-					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/exhibitions">
-						<div style="background-image: url('<% if @page.content :%><% if @page.content[@lang] :%><%- "https://rosatom.loremipsumcorp.com"+(@page.content[@lang].image1 || "") %><% end %><% end %>');" class="home_block_img"></div>
+					<a href="<%- @server_address %>/explore/<%- @lang %>/exhibitions">
+						<div style="background-image: url('<% if @page.content :%><% if @page.content[@lang] :%><%-  @server_address%><%-(@page.content[@lang].image1 || "") %><% end %><% end %>');" class="home_block_img"></div>
 						<span><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].title1 || "" %><% end %><% end %></span>
 					</a>
 				</div>
 				<div class="home_block">
-					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/events">
-						<div style="background-image: url('<% if @page.content :%><% if @page.content[@lang] :%><%- "https://rosatom.loremipsumcorp.com"+(@page.content[@lang].image2 || "") %><% end %><% end %>');" class="home_block_img"></div>
+					<a href="<%- @server_address %>/explore/<%- @lang %>/events">
+						<div style="background-image: url('<% if @page.content :%><% if @page.content[@lang] :%><%- @server_address %><%-(@page.content[@lang].image2 || "") %><% end %><% end %>');" class="home_block_img"></div>
 						<span><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].title2 || "" %><% end %><% end %></span>
 					</a>
 				</div>
 				<div class="home_block">
-					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/services">
-						<div style="background-image: url('<% if @page.content :%><% if @page.content[@lang] :%><%- "https://rosatom.loremipsumcorp.com"+(@page.content[@lang].image3 || "") %><% end %><% end %>');" class="home_block_img"></div>
+					<a href="<%- @server_address %>/explore/<%- @lang %>/services">
+						<div style="background-image: url('<% if @page.content :%><% if @page.content[@lang] :%><%- @server_address %><%-(@page.content[@lang].image3 || "") %><% end %><% end %>');" class="home_block_img"></div>
 						<span><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].title3 || "" %><% end %><% end %></span>
 					</a>
 				</div>
 				<div class="home_block">
-					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/maps">
-						<div style="background-image: url('<% if @page.content :%><% if @page.content[@lang] :%><%- "https://rosatom.loremipsumcorp.com"+(@page.content[@lang].image4 || "") %><% end %><% end %>');" class="home_block_img"></div>
+					<a href="<%- @server_address %>/explore/<%- @lang %>/maps">
+						<div style="background-image: url('<% if @page.content :%><% if @page.content[@lang] :%><%-  @server_address %><%-(@page.content[@lang].image4 || "") %><% end %><% end %>');" class="home_block_img"></div>
 						<span><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].title4 || "" %><% end %><% end %></span>
 					</a>
 				</div>
@@ -54,7 +54,7 @@
 		<footer class="footer">
 			<div class="footer_menu">
 				<div class="qr_button">
-					<img src="https://rosatom.loremipsumcorp.com/css/images/qr.svg" alt="" title="" />
+					<img src="<%- @server_address %>/css/images/qr.svg" alt="" title="" />
 				</div>
 			</div>			
 			<span class="cb"></span>

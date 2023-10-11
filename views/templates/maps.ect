@@ -11,14 +11,14 @@
 			<div class="header_top">
 				<div class="custom_container">
 					<div class="back_page">
-						<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/home">
-							<img src="https://rosatom.loremipsumcorp.com/css/images/back_arrow_black.svg" alt="" title="" />
+						<a href="<%- @server_address %>/explore/<%- @lang %>/home">
+							<img src="<%- @server_address %>/css/images/back_arrow_black.svg" alt="" title="" />
 						</a>	
 					</div>				
 					<div class="header_title_block" data-title="<% if opt.translations :%><%- opt.translations.maps || "" %><% end %>"><% if opt.translations :%><%- opt.translations.maps || "" %><% end %></div>
 					<div class="inner_logo_block">
-						<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/home">
-							<img src="https://rosatom.loremipsumcorp.com/css/images/mark_black.svg" alt="" title=""/>
+						<a href="<%- @server_address %>/explore/<%- @lang %>/home">
+							<img src="<%- @server_address %>/css/images/mark_black.svg" alt="" title=""/>
 						</a>
 					</div>
 				</div>
@@ -31,35 +31,35 @@
 			<div class="map_blocks_container">
 			
 				<div class="main_map_block" >
-					<div id="main_map_img" class="main_map_img" style="background-image:url(https://rosatom.loremipsumcorp.com<% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].image0 || "" %><% end %><% end %>)"></div>
+					<div id="main_map_img" class="main_map_img" style="background-image:url(<%- @server_address %><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].image0 || "" %><% end %><% end %>)"></div>
 				</div>
 				
 				<div style="width:100%; overflow:auto;" class="map_inner level4" id="map_image_1_wrapper" data-title="<% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].title1 || "" %><% end %><% end %>">
-					<img id="map_image_1" src="https://rosatom.loremipsumcorp.com<% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].image1 || "" %><% end %><% end %>" alt="" title="" />
+					<img id="map_image_1" src="<%- @server_address %><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].image1 || "" %><% end %><% end %>" alt="" title="" />
 				</div>
 				
 				<div class="map_inner level3" data-title="<% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].title2 || "" %><% end %><% end %>">
-					<img src="https://rosatom.loremipsumcorp.com<% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].image2 || "" %><% end %><% end %>" alt="" title="" />
+					<img src="<%- @server_address %><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].image2 || "" %><% end %><% end %>" alt="" title="" />
 				</div>
 				
 				<div class="map_inner  level2" data-title="<% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].title3 || "" %><% end %><% end %>">
-					<img src="https://rosatom.loremipsumcorp.com<% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].image3 || "" %><% end %><% end %>" alt="" title="" />
+					<img src="<%- @server_address %><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].image3 || "" %><% end %><% end %>" alt="" title="" />
 				</div>
 				
 				<div class="map_inner  level1" data-title="<% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].title4 || "" %><% end %><% end %>">
-					<img src="https://rosatom.loremipsumcorp.com<% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].image4 || "" %><% end %><% end %>" alt="" title="" />
+					<img src="<%- @server_address %><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].image4 || "" %><% end %><% end %>" alt="" title="" />
 				</div>
 				
 				<div class="map_inner  levelm1" data-title="<% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].title5 || "" %><% end %><% end %>">
-					<img src="https://rosatom.loremipsumcorp.com<% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].image5 || "" %><% end %><% end %>" alt="" title="" />
+					<img src="<%- @server_address %><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].image5 || "" %><% end %><% end %>" alt="" title="" />
 				</div>
 				
 				<div class="map_inner  levelm2" data-title="<% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].title6 || "" %><% end %><% end %>">
-					<img src="https://rosatom.loremipsumcorp.com<% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].image6 || "" %><% end %><% end %>" alt="" title="" />
+					<img src="<%- @server_address %><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].image6 || "" %><% end %><% end %>" alt="" title="" />
 				</div>
 				
 				<div class="map_inner  levelm3" data-title="<% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].title7 || "" %><% end %><% end %>">
-					<img src="https://rosatom.loremipsumcorp.com<% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].image7 || "" %><% end %><% end %>" alt="" title="" />
+					<img src="<%- @server_address %><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].image7 || "" %><% end %><% end %>" alt="" title="" />
 				</div>
 
 			</div>
@@ -71,31 +71,31 @@
 		<footer class="footer">
 			<div class="inner_footer_menu">		
 				<div class="inner_footer_menu_block">
-					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/exhibitions">
-						<img src="https://rosatom.loremipsumcorp.com/css/images/exhibits_black.svg" alt="" title="" />
+					<a href="<%- @server_address %>/explore/<%- @lang %>/exhibitions">
+						<img src="<%- @server_address %>/css/images/exhibits_black.svg" alt="" title="" />
 						<span><% if opt.translations :%><%- opt.translations.exibitions || "" %><% end %></span>
 					</a>
 				</div>
 				<div class="inner_footer_menu_block">
-					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/events">
-						<img src="https://rosatom.loremipsumcorp.com/css/images/events_black.svg" alt="" title="" />
+					<a href="<%- @server_address %>/explore/<%- @lang %>/events">
+						<img src="<%- @server_address %>/css/images/events_black.svg" alt="" title="" />
 						<span><% if opt.translations :%><%- opt.translations.events || "" %><% end %></span>
 					</a>
 				</div>
 				<div class="inner_footer_menu_block">
 					<div class="qr_button">
-						<img src="https://rosatom.loremipsumcorp.com/css/images/qr_black.svg" alt="" title="" />
+						<img src="<%- @server_address %>/css/images/qr_black.svg" alt="" title="" />
 					</div>
 				</div>
 				<div class="inner_footer_menu_block">
-					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/services">
-						<img src="https://rosatom.loremipsumcorp.com/css/images/services_black.svg" alt="" title="" />
+					<a href="<%- @server_address %>/explore/<%- @lang %>/services">
+						<img src="<%- @server_address %>/css/images/services_black.svg" alt="" title="" />
 						<span><% if opt.translations :%><%- opt.translations.services || "" %><% end %></span>
 					</a>
 				</div>
 				<div class="inner_footer_menu_block selected">
-					<a href="https://rosatom.loremipsumcorp.com/explore/<%- @lang %>/maps">
-						<img src="https://rosatom.loremipsumcorp.com/css/images/maps_black.svg" alt="" title="" />
+					<a href="<%- @server_address %>/explore/<%- @lang %>/maps">
+						<img src="<%- @server_address %>/css/images/maps_black.svg" alt="" title="" />
 						<span><% if opt.translations :%><%- opt.translations.maps || "" %><% end %></span>
 					</a>
 				</div>

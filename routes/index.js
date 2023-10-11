@@ -41,7 +41,7 @@ exports.init = function (app) {
 */
 /////////////////////////////////////////////////////////////
 	app.get('/test', function(req, res) {
-		return res.render('templates/test',{});
+		return res.render('templates/test',{server_address:config.server_address});
 	});
 /////////////////////////////////////////////////////////////
 	app.get('/explore/:lang/:slug', function(req, res) {
@@ -69,7 +69,7 @@ exports.init = function (app) {
 							Page.find(_quer).sort(_sort).exec(function(err, _pages){
 								if(err || !_pages) {
 									Page.findOne({active:true, slug:"home"}).exec(function(_err, __home){
-										return res.render('templates/home', {lang:_language, page:__home.toObject(), options:_options});
+										return res.render('templates/home', {lang:_language, page:__home.toObject(), options:_options, server_address:config.server_address});
 									});
 								} else {
 									if(_slug=="events"){
@@ -99,14 +99,14 @@ exports.init = function (app) {
 											}
 										});
 									}
-									return res.render('templates/'+_slug, {lang:_language, category:_slug, pages:_pages,  options:_options});	
+									return res.render('templates/'+_slug, {lang:_language, category:_slug, pages:_pages,  options:_options, server_address:config.server_address});	
 								}
 							});	
 						} else {
 							Page.findOne({active:true, slug:_slug}).exec(function(_err, __page){
 								if(_err || !__page) {
 									Page.findOne({active:true, slug:"home"}).exec(function(_err, __home){
-										return res.render('templates/home', {lang:_language, page:__home.toObject(), options:_options});
+										return res.render('templates/home', {lang:_language, page:__home.toObject(), options:_options, server_address:config.server_address});
 									});	
 								} else {
 									Page.updateOne({_id:__page._id}, {$inc:{"views":1}}, function(err, ___page) {
@@ -116,10 +116,10 @@ exports.init = function (app) {
 												_p.time=moment(_p.published).format("HH:mm");
 												_p.date=moment(_p.published).format("DD.MM.YY");
 											}
-											return res.render('templates/'+_p.category, {lang:_language, page:_p,   options:_options});
+											return res.render('templates/'+_p.category, {lang:_language, page:_p,   options:_options, server_address:config.server_address});
 										} else {	
 											client.multi().hmset("dev:"+_uuid, "interaction", _interaction.toString(), "time", _dev.time, "qr", (parseInt(_dev.qr)+1).toString()).exec(function(err10,ret){
-												return res.render('templates/media', {lang:_language, page:__page.toObject(),   options:_options});
+												return res.render('templates/media', {lang:_language, page:__page.toObject(),   options:_options, server_address:config.server_address});
 											});
 										}	
 									});	

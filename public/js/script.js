@@ -43,7 +43,7 @@ $(document).ready(function() {
 				StopScan(); 
 				$('.guide_blocks_container').hide();	
 				$('#global_wrap').show();	
-				GetContent("https://rosatom.loremipsumcorp.com/explore/"+_lang+"/"+_media,function(){});
+				GetContent(_server_address+"/explore/"+_lang+"/"+_media,function(){});
 			}); 
 		}
 		return false;
@@ -148,7 +148,7 @@ $(document).ready(function() {
 	
 
 	 
-	PostReq("https://rosatom.loremipsumcorp.com/sessionupdate", {uuid:(typeof _uuid!="undefined" ? _uuid : "test")}, function(__data){});	
+	PostReq(_server_address+"/sessionupdate", {uuid:(typeof _uuid!="undefined" ? _uuid : "test")}, function(__data){});	
 	
 });
 
@@ -165,8 +165,8 @@ function GetContent(_url, _cb){
 	$.get(_url+"?uuid="+(typeof _uuid!="undefined" ? _uuid : "test"), function(data, status){
 		$('.loader_start').css({'visibility':'hidden','opacity':'0'});
 		$('#global_wrap').empty();
-		data=data.replaceAll(/"\/files\//gi, '"https://rosatom.loremipsumcorp.com/files/');
-		data=data.replaceAll(/"\/css\/images\//gi, '"https://rosatom.loremipsumcorp.com/css/images/');
+		data=data.replaceAll(/"\/files\//gi, '"'+_server_address+'/files/');
+		data=data.replaceAll(/"\/css\/images\//gi, '"'+_server_address+'/css/images/');
 		
 		
 		$('#global_wrap').append(data);
@@ -343,20 +343,20 @@ function filterEvents(_typ){
 }
 //////////////////////////////////////////////////////////////////////////////////////////////
  function LanguageLoad(_l){
- 	GetContent("https://rosatom.loremipsumcorp.com/explore/"+_l+"/home",function(){
+ 	GetContent(_server_address+"/explore/"+_l+"/home",function(){
 		if($('.guide_blocks_container')[0])$('.guide_blocks_container').remove();
 		
-		$('body').append('<div class="guide_blocks_container"><div class="header"><div class="header_top"><div class="custom_container"><div class="header_title_block">'+_trs_media_guide+'</div><div class="inner_logo_block"><img src="https://rosatom.loremipsumcorp.com/css/images/inner_logo.svg" alt="" title=""/></div></div></div></div>'+
+		$('body').append('<div class="guide_blocks_container"><div class="header"><div class="header_top"><div class="custom_container"><div class="header_title_block">'+_trs_media_guide+'</div><div class="inner_logo_block"><img src="'+_server_address+'/css/images/inner_logo.svg" alt="" title=""/></div></div></div></div>'+
 				'<div class="qr_cont">'+
 					'<div class="qr_border"></div>'+
 					'<span class="media_text">'+_trs_qr+'</span>'+
 				'</div>'+
 				'<div class="media_page"><div class="inner_footer_menu">'+
-				'<div class="inner_footer_menu_block"><a href="https://rosatom.loremipsumcorp.com/explore/'+_lang+'/exhibitions"><img src="https://rosatom.loremipsumcorp.com/css/images/exhibits.svg" alt="" title="" /><span>'+_trs_exibitions+'</span></a></div>'+
-				'<div class="inner_footer_menu_block"><a href="https://rosatom.loremipsumcorp.com/explore/'+_lang+'/events"><img src="https://rosatom.loremipsumcorp.com/css/images/events.svg" alt="" title="" /><span>'+_trs_events+'</span></a></div>'+
-				'<div class="inner_footer_menu_block selected"><div class="qr_button"><img src="https://rosatom.loremipsumcorp.com/css/images/qr.svg" alt="" title="" /></div></div>'+
-				'<div class="inner_footer_menu_block"><a href="https://rosatom.loremipsumcorp.com/explore/'+_lang+'/sevices"><img src="https://rosatom.loremipsumcorp.com/css/images/services.svg" alt="" title="" /><span>'+_trs_services+'</span></a></div>'+
-				'<div class="inner_footer_menu_block"><a href="https://rosatom.loremipsumcorp.com/explore/'+_lang+'/maps"><img src="https://rosatom.loremipsumcorp.com/css/images/maps.svg" alt="" title="" /><span>'+_trs_maps+'</span></a></div>'+
+				'<div class="inner_footer_menu_block"><a href="'+_server_address+'/explore/'+_lang+'/exhibitions"><img src="'+_server_address+'/css/images/exhibits.svg" alt="" title="" /><span>'+_trs_exibitions+'</span></a></div>'+
+				'<div class="inner_footer_menu_block"><a href="'+_server_address+'/explore/'+_lang+'/events"><img src="'+_server_address+'/css/images/events.svg" alt="" title="" /><span>'+_trs_events+'</span></a></div>'+
+				'<div class="inner_footer_menu_block selected"><div class="qr_button"><img src="'+_server_address+'/css/images/qr.svg" alt="" title="" /></div></div>'+
+				'<div class="inner_footer_menu_block"><a href="'+_server_address+'/explore/'+_lang+'/sevices"><img src="'+_server_address+'/css/images/services.svg" alt="" title="" /><span>'+_trs_services+'</span></a></div>'+
+				'<div class="inner_footer_menu_block"><a href="'+_server_address+'/explore/'+_lang+'/maps"><img src="'+_server_address+'/css/images/maps.svg" alt="" title="" /><span>'+_trs_maps+'</span></a></div>'+
 				'</div><span class="cb"></span></div>'+
 			'</div>');
 	});

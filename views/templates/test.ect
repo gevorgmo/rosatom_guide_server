@@ -2,19 +2,20 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
-        <link rel="stylesheet" href="https://rosatom.loremipsumcorp.com/css/style.css">
+        <link rel="stylesheet" href="<%- @server_address %>/css/style.css">
         <title>Hello World</title>
     </head>
     <body onload="onDeviceReady()">
  		<div class="loader loader_start"><img src="img/loader.svg" alt="loader" title="loader" /></div>
 		<div id="global_wrap"></div>
         <script>
+			var _server_address="<%- @server_address %>";
 			function onDeviceReady() {
 				var e = document.createElement('script');
 				e.onload = function () {
 					console.log("scriptloaded");
 				};
-				e.src ="https://rosatom.loremipsumcorp.com/js/script.js";
+				e.src =_server_address+"/js/script.js";
 				document.body.appendChild(e);
 			}
 			function StartScan(_cb){
@@ -22,7 +23,7 @@
 			}
 			function StopScan(){
 				console.log(1000);
-			}
+			}	
 		</script>
     </body>
 </html>

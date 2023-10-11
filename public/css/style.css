@@ -1,9 +1,9 @@
 @font-face {
   font-family: 'JournalSansNewRegular';
-  src: url('https://rosatom.loremipsumcorp.com/css/fonts/JournalSansNewRegular/JournalSansNewRegular.eot??v=2#iefix') format('embedded-opentype'),  
-  url('https://rosatom.loremipsumcorp.com/css/fonts/JournalSansNewRegular/JournalSansNewRegular.woff?v=2') format('woff'), 
-  url('https://rosatom.loremipsumcorp.com/css/fonts/JournalSansNewRegular/JournalSansNewRegular.woff2?v=2') format('woff2'), 
-  url('https://rosatom.loremipsumcorp.com/css/fonts/JournalSansNewRegular/JournalSansNewRegular.ttf?v=2')  format('truetype');
+  src: url('fonts/JournalSansNewRegular/JournalSansNewRegular.eot??v=2#iefix') format('embedded-opentype'),  
+  url('fonts/JournalSansNewRegular/JournalSansNewRegular.woff?v=2') format('woff'), 
+  url('fonts/JournalSansNewRegular/JournalSansNewRegular.woff2?v=2') format('woff2'), 
+  url('fonts/JournalSansNewRegular/JournalSansNewRegular.ttf?v=2')  format('truetype');
   font-weight: normal;
   font-style: normal;
 }
