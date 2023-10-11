@@ -510,8 +510,8 @@ img	{
 
 .inner_block > span, .inner_block  .content_row p,.inner_block_short_desc
 {
-	font-size: 1.4rem;
-	line-height: 2rem;
+	font-size: 1.6rem;
+	line-height: 24px;
 	padding-top: 10px;
 	display: block;
 }
@@ -896,6 +896,7 @@ footer{background:#000}
 	padding-bottom: 40px;
 	border-bottom: 1px solid rgba(0,0,0,0.5);
 	color:#000;
+	overflow-wrap: break-word;
 }
 
 .event_block:last-child .event_info span{
@@ -1511,6 +1512,7 @@ footer{background:#000}
         line-height: 18px;
 		color: #6CACE4;
     }
+	.inner_block h3.floor{font-size: 1.6rem;line-height: 0;padding-top: 22px;}
 	.inner_block h3 a{color: #6CACE4;}
     .inner_block_short_desc,  .inner_block > span  {
         font-size: 1.6rem;
