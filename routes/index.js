@@ -10,6 +10,7 @@ var mongoose       = require('mongoose')
   , config = require('../config/config')
   , QRCode = require('qrcode')
   , ObjectId = require('mongodb').ObjectID
+  , nodemailer = require("nodemailer")
   , auth = require('../auth');
 
 
@@ -21,24 +22,6 @@ var _all_categories=["exhibition","event","service","media"];
 var _all_global_pages=["home","exhibitions","events","services","maps"];
 
 exports.init = function (app) {
-
-//////////////////////////////////////////////////////////////////////////
-	/*
-	app.get('/createuser', function(req, res) {
-		var __user= {
-			fullname:"Administrator",
-			username:"developer@loremipsumcorp.com",
-			password:"qqqqqqQ1",
-			updated:Date.now(),
-			created:Date.now(),
-			role:1
-		}
-		 User.create(__user, function(_err2, newUser){
-			if(_err2) console.log(_err2);
-			return res.status(200);
-		});
-	});
-*/
 /////////////////////////////////////////////////////////////
 	app.get('/test', function(req, res) {
 		return res.render('templates/test',{server_address:config.server_address});
@@ -607,14 +590,13 @@ exports.init = function (app) {
 	});
 //////////////////////////////////////////////////////////////////////////////////////
 	app.post('/sendemail', function(req, res) {
-		if(req.body.lang !== undefined && req.body.name !== undefined && req.body.email !== undefined && req.body.font !== undefined && req.body.password !== undefined) {
+		if(req.body.lang !== undefined && req.body.name !== undefined && req.body.email !== undefined  && req.body.password !== undefined) {
 			if(req.body.password =="ifhjd87467fjnggvys89uyg7fghbd"){
 				var _email=escape(req.body.email || "").trim().toLowerCase();
 				var _lang=req.body.lang || "ru";
 				var _name=req.body.name || "";
-				var _font=parseInt(req.body.font || 1);
 				if(_email.match(/[\d\w\-\_\.]+@[\d\w\-\_\.]+\.[\w]{2,4}/i)){
-					GeneratePDF(_lang, _font, _name, function(_file){
+					GeneratePDF(_lang, _name, function(_file){
 						SendEmail_to_address(_email, _file, function(_err){
 							res.setHeader('Access-Control-Allow-Origin', '*');
 							res.setHeader('Access-Control-Allow-Headers', 'X-Custom-Heade');
@@ -635,12 +617,16 @@ exports.init = function (app) {
 	});
 	
 /////////////////////////////////////////////////////////////
+	/*
 	app.get('/pdfgenerate', function(req, res) {
-		//GeneratePDF("en",  "Gevorg Manukyan", function(){
-			return res.render('templates/test',{});
-		//});
+		GeneratePDF("ru", "Gevorg Manukyan", function(_file){
+			SendEmail_to_address("gevorgmo@gmail.com", _file, function(_err){
+				console.log(_err);
+				return res.render('templates/test',{});
+			});	
+		});
 	});
-	
+	*/
 	
 	
 
@@ -689,6 +675,7 @@ function isToday(date) {
 }
 ////////////////////////////////////////////////////
 function SendEmail_to_address(_email, _filename, _cb){
+/*
 	var _dat="api_key=6digaixudniiw4enjosthachxzpoa5u1193nu9pe&format=json&title=rosatom";	
 	GetData('https://api.unisender.com/en/api/createList', _dat, function(_res1){
 		if(_res1) {
@@ -717,7 +704,52 @@ function SendEmail_to_address(_email, _filename, _cb){
 		} else {
 			_cb("Please try again later!");
 		}	
-	})
+	})*/
+
+	const transporter = nodemailer.createTransport({
+		host: config.email.host,
+		port: config.email.port,
+		secure: true,
+		auth: {
+			user: config.email.user,
+			pass: config.email.pass,
+		},
+	});
+	
+	let mailContent={
+		from: '"RosAtom" <'+config.email.address+'>', // sender address
+		to: _email, // list of receivers
+		subject: "Certificate", // Subject line
+		text: "Hello world?", // plain text body
+		html: "<b>Hello world?</b>", // html body
+		attachments: [
+			{   // stream as an attachment
+				filename: 'Certificate.pdf',
+				content: fs.createReadStream('./signe/'+_filename+'.pdf')
+			}
+		]
+	};
+
+	transporter.sendMail(mailContent, function(error, data){
+		DeleteFiles(_filename, function(){
+			if(error){
+				_cb("Please try again later!");
+			}else{
+				_cb(null);
+			}
+		});	
+	});
+
+}
+///////////////////////////////////
+function DeleteFiles(_filename, _cb){
+	if(fs.existsSync('./signe/'+_filename+'.pdf')) {
+		fs.unlink('./signe/'+_filename+'.pdf', function(err2) {	
+			_cb();
+		});
+	} else{
+		_cb();
+	}	
 }
 /////////////////////////////////////////////////////////////////
 function PostData(_url,_dat,_cb){
@@ -909,7 +941,7 @@ function GeneratePDF(_lang,  _name, _cb){
 	var pdfDoc = printer.createPdfKitDocument(docDefinition);
 	pdfDoc.pipe(fs.createWriteStream('./signe/'+_filename+'.pdf'));
 	pdfDoc.end();
-	_cb(pdfDoc);
+	_cb(_filename);
 }
 
 

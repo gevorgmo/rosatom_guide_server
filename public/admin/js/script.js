@@ -432,6 +432,7 @@ $(document).ready(function(){
 		$('#prpublished').datetimepicker({
 			format: "YYYY-MM-DD HH:mm",
 			ignoreReadonly:true,
+			sideBySide: true,
 			defaultDate: (_item_det.published!="" ? new Date(_item_det.published) : new Date())
 		});	
 	}

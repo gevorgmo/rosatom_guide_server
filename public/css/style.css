@@ -751,7 +751,7 @@ img	{
 	position: absolute;
 	left: 0;
 }
-.back_page img{width:16px;height:auto}
+.back_page img{width:16px;height:auto;vertical-align: top;}
 .arrow_left {
 	border: solid black;
 	border-width: 0 4px 4px 0;
@@ -1072,7 +1072,7 @@ footer{background:#000}
 	position: relative
 }
 
-.event_container h2:before, .event_speakers h2:before{
+.event_container h2:before{
 	content: '';
 	background-color: #56C02B;
 	width: 5px;
@@ -1484,8 +1484,10 @@ footer{background:#000}
 
     .header_title_block {
         font-size: 1.8rem;
-        line-height: 2.3rem;
+        line-height: 1.8rem;
 		text-align:center;
+		vertical-align: middle!important;
+		padding-top: 5px;
     }
 
     .inner_logo_block{
@@ -1493,6 +1495,7 @@ footer{background:#000}
     }
     .inner_logo_block img{
         width: 100%;
+		vertical-align: top;
     }
 
     .inner_block h2 {
@@ -1541,7 +1544,7 @@ footer{background:#000}
 		font-size: 2rem;
 		line-height: 24px;
 	}
-	.header_top{padding:32px 30px 15px 30px}
+	.header_top{padding:32px 30px 14px 30px}
 	
 	.inner_footer_menu{padding: 0 10px}
 	.inner_footer_menu_block span{    padding-top: 5px; padding-bottom: 4px;}
