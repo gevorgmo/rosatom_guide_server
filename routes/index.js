@@ -39,9 +39,8 @@ exports.init = function (app) {
 		Option.find().sort({ord:1}).exec(function(err, _options){
 			Option.updateOne({language_code:_language}, {$inc:{"views":1}}, function(err, ___option) {
 				client.hgetall("dev:"+_uuid, function (err, _device) {
-					var _dev=(_device || {time:(Date.now()/1000).toString(), qr:"0"});
-					client.multi().hmset("dev:"+_uuid, "interaction", _interaction.toString(), "time", _dev.time, "qr", _dev.qr).exec(function(err10,ret){
-					
+					var _dev=(_device || {time:(Date.now()/1000).toString(), qr:"0"});	
+					client.hmset("dev:"+_uuid, "interaction", _interaction.toString(), "time", _dev.time.toString(), "qr", _dev.qr.toString(), function(err10,ret){	
 						if(_categories[_slug]){ 
 							var _quer={active:true, category:_categories[_slug]};
 							var _sort={ord:1};
@@ -99,9 +98,15 @@ exports.init = function (app) {
 												_p.time=moment(_p.published).format("HH:mm");
 												_p.date=moment(_p.published).format("DD.MM.YY");
 											}
-											return res.render('templates/'+_p.category, {lang:_language, page:_p,   options:_options, server_address:config.server_address});
-										} else {	
-											client.multi().hmset("dev:"+_uuid, "interaction", _interaction.toString(), "time", _dev.time, "qr", (parseInt(_dev.qr)+1).toString()).exec(function(err10,ret){
+											if(_p.category=="media"){
+												client.hmset("dev:"+_uuid, "interaction", _interaction.toString(), "time", _dev.time.toString(), "qr", (parseInt(_dev.qr)+1).toString(), function(err10,ret){
+													return res.render('templates/'+_p.category, {lang:_language, page:_p,   options:_options, server_address:config.server_address});
+												});
+											} else {
+												return res.render('templates/'+_p.category, {lang:_language, page:_p,   options:_options, server_address:config.server_address});
+											}											
+										} else {
+											client.hmset("dev:"+_uuid, "interaction", _interaction.toString(), "time", _dev.time.toString(), "qr", (parseInt(_dev.qr)+1).toString(), function(err10,ret){	
 												return res.render('templates/media', {lang:_language, page:__page.toObject(),   options:_options, server_address:config.server_address});
 											});
 										}	
@@ -142,24 +147,25 @@ exports.init = function (app) {
 		res.setHeader('Content-Type', 'text/html; charset=utf-8');
 		res.setHeader('content-type', 'text/javascript');
 		
-		if(req.body.uuid){
+		if(req.body.uuid && req.body.lang){
 			var _uuid=escape(req.body.uuid || "0").trim().toLowerCase();
+			var _language=escape(req.body.lang || "ru").trim().toLowerCase();
 			var _time_now=Date.now()/1000;
 			client.hgetall("dev:"+_uuid, function (err, _device) {
 				if(_device){
 					var _interaction=parseInt(_device.interaction);
 					var _time=parseInt(_device.time);
-					if((_time_now-_interaction)>1200){
-						Option.updateOne({language_code:"ru"}, {$inc:{"sessions_count":1, "qr_count":parseInt(_device.qr),"sessions_time":(_interaction-_time)}}, function(err, ___option) {
-							client.multi().hmset("dev:"+_uuid, "interaction", _time_now.toString(), "time", _time_now.toString(), "qr", "0").exec(function(err10,ret){
+					//if((_time_now-_interaction)>1200){
+						Option.updateOne({language_code:_language}, {$inc:{"sessions_count":1, "qr_count":parseInt(_device.qr),"sessions_time":(_interaction-_time)}}, function(err, ___option) {
+							client.hmset("dev:"+_uuid, "interaction", _time_now.toString(), "time", _time_now.toString(), "qr", "0", function(err10,ret){	
 								return res.status(200).send({"status":true});
 							});	
 						});	
-					} else {
-						return res.status(200).send({"status":false});
-					}
+					//} else {
+					//	return res.status(200).send({"status":false});
+					//}
 				} else {
-					client.multi().hmset("dev:"+_uuid, "interaction", _time_now.toString(), "time", _time_now.toString(), "qr", "0").exec(function(err10,ret){
+					client.hmset("dev:"+_uuid, "interaction", _time_now.toString(), "time", _time_now.toString(), "qr", "0", function(err10,ret){	
 						return res.status(200).send({"status":false});
 					});	
 				}	
@@ -597,7 +603,7 @@ exports.init = function (app) {
 				var _name=req.body.name || "";
 				if(_email.match(/[\d\w\-\_\.]+@[\d\w\-\_\.]+\.[\w]{2,4}/i)){
 					GeneratePDF(_lang, _name, function(_file){
-						SendEmail_to_address(_email, _file, function(_err){
+						SendEmail_to_address(_lang, _email, _file, function(_err){
 							res.setHeader('Access-Control-Allow-Origin', '*');
 							res.setHeader('Access-Control-Allow-Headers', 'X-Custom-Heade');
 							res.setHeader('Content-Type', 'text/html; charset=utf-8');
@@ -617,17 +623,17 @@ exports.init = function (app) {
 	});
 	
 /////////////////////////////////////////////////////////////
-	/*
+
 	app.get('/pdfgenerate', function(req, res) {
-		GeneratePDF("ru", "Gevorg Manukyan", function(_file){
-			SendEmail_to_address("gevorgmo@gmail.com", _file, function(_err){
+		GeneratePDF("en", "Gevorg Manukyan", function(_file){
+			SendEmail_to_address("en", "gevorgmo@gmail.com", _file, function(_err){
 				console.log(_err);
 				return res.render('templates/test',{});
 			});	
 		});
 	});
-	*/
-	
+
+
 	
 
 };
@@ -674,38 +680,24 @@ function isToday(date) {
   return false;
 }
 ////////////////////////////////////////////////////
-function SendEmail_to_address(_email, _filename, _cb){
-/*
-	var _dat="api_key=6digaixudniiw4enjosthachxzpoa5u1193nu9pe&format=json&title=rosatom";	
-	GetData('https://api.unisender.com/en/api/createList', _dat, function(_res1){
-		if(_res1) {
-			if(_res1.result) {
-				var _datt={
-					"api_key":"6digaixudniiw4enjosthachxzpoa5u1193nu9pe",
-					"format":"json",
-					"email":_email,
-					"sender_name":"RosAtom",
-					"sender_email":"gevorg.manukyan@loremipsumcorp.com",
-					"subject":"RosAtom",
-					"body":"Certificate",
-					"list_id":_res1.result.id,
-					"attachments":[{"filename":"certificate.pdf","content":_filename}]
-				};
-			//	_dat="api_key&=6digaixudniiw4enjosthachxzpoa5u1193nu9pe&format=json&email="+_email+"&sender_name=RosAtom&sender_email=gevorg.manukyan@loremipsumcorp.com&subject=RosAtom&body=Certificate&list_id="+res1.result.id+"&attachments[certificate.pdf]="+_filename;	
-				PostData('https://api.unisender.com/en/api/sendEmail', _datt, function(_res2){
-				 _dat="api_key=6digaixudniiw4enjosthachxzpoa5u1193nu9pe&format=json&list_id="+_res1.result.id;	
-					GetData('https://api.unisender.com/en/api/deleteList', _dat, function(_res3){
-						_cb(null);
-					})	
-				})	
-			} else {
-				_cb("Please try again later!");
-			}		
-		} else {
-			_cb("Please try again later!");
-		}	
-	})*/
-
+function SendEmail_to_address(_lang, _email, _filename, _cb){
+	var _email_data={
+		"ru":{
+			subject:"Сертификат о подписании Московского договора",
+			text:"Прилагаем к настоящему письму сертификат, удостоверяющий подписание Вами Московского договора 1963 года.",
+			file:"Сертификат",
+			name:"Павильон АТОМ"
+		},
+		"en":{
+			subject:"Moscow Treaty Signing Certificate",
+			text:"Please find attached to this email the certificate confirming that you have signed the Moscow Treaty of 1963.",
+			file:"Certificate",
+			name:"ATOM Pavilion"
+		}
+	}
+	
+	
+	
 	const transporter = nodemailer.createTransport({
 		host: config.email.host,
 		port: config.email.port,
@@ -717,14 +709,14 @@ function SendEmail_to_address(_email, _filename, _cb){
 	});
 	
 	let mailContent={
-		from: '"RosAtom" <'+config.email.address+'>', // sender address
+		from: '"'+_email_data[_lang].name+'" <'+config.email.address+'>', // sender address
 		to: _email, // list of receivers
-		subject: "Certificate", // Subject line
-		text: "Hello world?", // plain text body
-		html: "<b>Hello world?</b>", // html body
+		subject: _email_data[_lang].subject, // Subject line
+		text: _email_data[_lang].text, // plain text body
+		html: _email_data[_lang].text, // html body
 		attachments: [
 			{   // stream as an attachment
-				filename: 'Certificate.pdf',
+				filename: _email_data[_lang].file+'.pdf',
 				content: fs.createReadStream('./signe/'+_filename+'.pdf')
 			}
 		]

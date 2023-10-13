@@ -148,7 +148,7 @@ $(document).ready(function() {
 	
 
 	 
-	PostReq(_server_address+"/sessionupdate", {uuid:(typeof _uuid!="undefined" ? _uuid : "test")}, function(__data){});	
+	//PostReq(_server_address+"/sessionupdate", {lang:_lang, uuid:(typeof _uuid!="undefined" ? _uuid : "test")}, function(__data){});	
 	
 });
 
@@ -359,6 +359,8 @@ function filterEvents(_typ){
 				'<div class="inner_footer_menu_block"><a href="'+_server_address+'/explore/'+_lang+'/maps"><img src="'+_server_address+'/css/images/maps.svg" alt="" title="" /><span>'+_trs_maps+'</span></a></div>'+
 				'</div><span class="cb"></span></div>'+
 			'</div>');
+			
+		PostReq(_server_address+"/sessionupdate", {lang:_lang, uuid:(typeof _uuid!="undefined" ? _uuid : "test")}, function(__data){});
 	});
  }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
