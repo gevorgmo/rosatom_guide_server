@@ -113,3 +113,4 @@ public/tmp
 npm-debug.log
 node_modules
 Thumbs.db
+ecosystem.config.js
