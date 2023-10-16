@@ -223,7 +223,7 @@ function GetContent(_url, _cb){
 				if((_media_type=="1" || _media_type=="4" ) && !_playstatus && _audio.src!=""){
 					_playstatus=true;
 					_audio.play();	
-				} else if(_media_type=="2" && !_playstatus && _audio.src!=""){
+				} else if((_media_type=="2" || _media_type=="3") && !_playstatus && _audio.src!=""){
 					var _duraton=_audio.duration;
 					var _currtime=_time_code+(Date.now()/1000-_page_load_time);
 					if(_currtime>=_duraton) _currtime=_currtime-_duraton;
@@ -247,7 +247,7 @@ function GetContent(_url, _cb){
 			}
 			
 			
-			if(_media_type=="2"){
+			if(_media_type=="2" || _media_type=="3"){
 				GetReq(_media_url, function(__data){
 					if(__data){
 						if(__data.success){
