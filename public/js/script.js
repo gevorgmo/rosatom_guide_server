@@ -7,7 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 
 var _audio,_playstatus=false,_playButton,_progress,_progress_drag,_media_type,_trans_id=-1,_time_code=0,_page_load_time=0,_current_status=0,_tmp_class,_map_zoom;
-var _server_address="https://rosatom.loremipsumcorp.com";
+//var _server_address="https://rosatom.loremipsumcorp.com";
 
 $(document).ready(function() {
 	
@@ -606,7 +606,7 @@ const socketCloseListener = (event) => {
 		console.log('disconnected');
 		_connectionStatus=false;
    }
-   uws = new WebSocket('wss://rosatom.loremipsumcorp.com/socket/');
+   uws = new WebSocket('wss://10.0.121.47/socket/');
    uws.binaryType = "arraybuffer"; 
    uws.addEventListener('open', socketOpenListener);
    uws.addEventListener('message', socketMessageListener);
