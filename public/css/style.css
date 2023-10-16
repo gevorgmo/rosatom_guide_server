@@ -67,6 +67,7 @@ body {
 	height: 100%;
 	  image-rendering: -webkit-optimize-contrast;
 	  image-rendering: crisp-edges;
+	touch-action: manipulation; 
 }
 body.map_page, body.events_page, body.services_page{
 	background-color: #fff !important; 

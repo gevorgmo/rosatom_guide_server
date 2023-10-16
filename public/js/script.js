@@ -147,6 +147,11 @@ $(document).ready(function() {
 	
 	
 
+	document.addEventListener('gesturestart', (event) => { event.preventDefault(); }, false);
+	
+	
+	
+	
 	 
 	//PostReq(_server_address+"/sessionupdate", {lang:_lang, uuid:(typeof _uuid!="undefined" ? _uuid : "test")}, function(__data){});	
 	

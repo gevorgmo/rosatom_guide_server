@@ -1,7 +1,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <link rel="stylesheet" href="<%- @server_address %>/css/style.css">
         <title>Hello World</title>
     </head>
@@ -15,7 +15,7 @@
 				e.onload = function () {
 					console.log("scriptloaded");
 				};
-				e.src =_server_address+"/js/script.js";
+				e.src =_server_address+"/js/script.js?v=2";
 				document.body.appendChild(e);
 			}
 			function StartScan(_cb){
