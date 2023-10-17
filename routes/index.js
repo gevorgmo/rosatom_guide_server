@@ -515,7 +515,7 @@ exports.init = function (app) {
 				return res.status(200).send({"status":true});
 			});
 		} else {
-			Option.update({_id:req.body.id},  {$set:_option}, {}, function(err, __option) {
+			Option.updateOne({_id:req.body.id},  {$set:_option}, {}, function(err, __option) {
 				if (err){ console.log(err); }
 				return res.status(200).send({"status":true});
 			});
