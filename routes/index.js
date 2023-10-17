@@ -35,7 +35,7 @@ exports.init = function (app) {
 		var _all_item={"home":"home","exhibition":"exhibition","media":"media","event":"event","service":"service","maps":"maps"};
 		var _uuid=escape(req.query.uuid || "test").trim();
 		var _interaction=Date.now()/1000;
-		consoloe.log(_uuid);
+		console.log(_uuid);
 		
 		Option.find().sort({ord:1}).exec(function(err, _options){
 			Option.updateOne({language_code:_language}, {$inc:{"views":1}}, function(err, ___option) {
