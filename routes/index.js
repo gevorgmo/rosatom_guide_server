@@ -604,12 +604,16 @@ exports.init = function (app) {
 				var _name=req.body.name || "";
 				if(_email.match(/[\d\w\-\_\.]+@[\d\w\-\_\.]+\.[\w]{2,4}/i)){
 					GeneratePDF(_lang, _name, function(_file){
-						SendEmail_to_address(_lang, _email, _file, function(_err){
-							res.setHeader('Access-Control-Allow-Origin', '*');
-							res.setHeader('Access-Control-Allow-Headers', 'X-Custom-Heade');
-							res.setHeader('Content-Type', 'text/html; charset=utf-8');
-							res.setHeader('content-type', 'text/javascript');
-							return res.status(200).send({"status":(_err ? false : true)});								
+						SendEmail_to_address(_lang, _email, _file, function(_err){		
+							User.updateOne({_id:config.signecountid},{$inc:{signecount:1}}, function(err, _datttt){
+								User.findOne({_id:config.signecountid}, function(err, _datt){
+									res.setHeader('Access-Control-Allow-Origin', '*');
+									res.setHeader('Access-Control-Allow-Headers', 'X-Custom-Heade');
+									res.setHeader('Content-Type', 'text/html; charset=utf-8');
+									res.setHeader('content-type', 'text/javascript');
+									return res.status(200).send({"status":(_err ? false : true),"count":(_datt.signecount || 0)});
+								});		
+							});	
 						});	
 					});	
 				}else {
@@ -622,9 +626,17 @@ exports.init = function (app) {
 			return res.status(404).send({"status":false});
 		}
 	});
-	
+//////////////////////////////////////////////////////////////////////////////////////
+	app.post('/getsignecount', function(req, res) {
+		User.findOne({_id:config.signecountid}, function(err, _datt){
+			res.setHeader('Access-Control-Allow-Origin', '*');
+			res.setHeader('Access-Control-Allow-Headers', 'X-Custom-Heade');
+			res.setHeader('Content-Type', 'text/html; charset=utf-8');
+			res.setHeader('content-type', 'text/javascript');
+			return res.status(200).send({"count":(_datt.signecount || 0)});		
+		});
+	});
 /////////////////////////////////////////////////////////////
-
 	app.get('/pdfgenerate', function(req, res) {
 		GeneratePDF("en", "Gevorg Manukyan", function(_file){
 			SendEmail_to_address("en", "gevorgmo@gmail.com", _file, function(_err){

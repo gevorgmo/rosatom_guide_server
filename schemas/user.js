@@ -20,6 +20,10 @@ var UserSchema = new Schema({
         type: Number,
         default: 0
     },
+	signecount:{
+        type: Number,
+        default: 0
+    },
 	lastlogin: {type: Date, default: Date.now},
     updated: {type: Date, default: Date.now},
     created: {type: Date, default: Date.now}
