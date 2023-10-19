@@ -1,6 +1,8 @@
 <% extend "layout.ect" %>
 <% all_category_titles={"exhibition":"All Exhibitions","media":"All Media","event":"All Eents","service":"All Services"} %>
 <% all_global_pages={"home":"Home Page","events":"Eents Page"} %>
+<% all_media_types=["", "Static content", "Loop video with audio", "Startup video with audio", "URL radio"] %>
+
 
 <section class="content-header p-category"><h1><%- if all_category_titles[@pagename] then all_category_titles[@pagename] else "" %></h1></section>
 
@@ -37,6 +39,7 @@
 						<% end %>	
 						<th>Title</th>
 						<% if @pagename=="media" :%>
+							<th>Media Type</th>
 							<th>Exhibition</th>
 						<% end %>
 						<% if @pagename=="media" or @pagename=="exhibition" :%>
@@ -59,6 +62,7 @@
 							<% end %>
 							<td><% if page.title.ru :%><a href="/item/<%- page._id %>"><%- page.title.ru %></a><% end %></td>
 							<% if @pagename=="media"  :%>
+								<td><%- all_media_types[page.media_type || 0] %></td>
 								<td><% if page.related :%><span style="display:none"><%- page.related._id %></span><% if page.related.title :%><%- page.related.title["ru"] || "" %><% end %><% end %></td>
 							<% end %>
 							<% if @pagename=="media" or @pagename=="exhibition" :%>

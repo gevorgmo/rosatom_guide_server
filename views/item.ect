@@ -231,10 +231,10 @@
 															<% end %>	
 														<% end %>	
 													"><i class="fa fa-plus"></i> Select Media</button>
-													<div class="selected_media_itm praudio" id="praudio<%- option.language_code %>" style="<%- if !finded then "display:none" %>;background-image:url(/admin/img/audio.png);" data-src="<%- if finded then @item.audio[option.language_code] else "" %>" data-type="audio"  data-lang="<%- option.language_code %>"><a class="media_itm_link btn btn-warning btn-flat"  href="<%- if finded then @item.audio[option.language_code] %>" target="_blank" title=""><i class="fa  fa-eye"></i></a><button type="button" class="btn-selectedmediaremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button></div>
+													<div class="selected_media_itm praudio" id="praudio<%- option.language_code %>" style="<%- if !finded then "display:none" %>;background-image:url(/admin/img/audio.png);" data-src="<%- if finded then @item.audio[option.language_code] else "" %>"  data-file="<%- if finded then (@item.audio[option.language_code+"file"] || "") %>" data-type="audio"  data-lang="<%- option.language_code %>"><a class="media_itm_link btn btn-warning btn-flat"  href="<%- if finded then @item.audio[option.language_code] %>" target="_blank" title=""><i class="fa  fa-eye"></i></a><button type="button" class="btn-selectedmediaremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button><%- if finded then "<div>"+(@item.audio[option.language_code+"file"] || "")+"</div>" %></div>
 												</div>
 												
-												<div class="form-group mediatyp mediatyp2 mediatyp3 mediatyp4" <% if @item.media_type :%><% if @item.media_type!=2 and @item.media_type!=3 :%>style="display:none"<% end %><% end %>>	
+												<div class="form-group mediatyp  mediatyp4" <% if @item.media_type :%><% if @item.media_type!=2 and @item.media_type!=3 :%>style="display:none"<% end %><% end %>>	
 													<label>Media URL</label>
 													<input type="text" class="form-control prtxt" data-id="media_url" placeholder="Enter URL" data-lang="<%- option.language_code %>" value="<% if @item.content :%><% if @item.content[option.language_code] :%><%- @item.content[option.language_code].media_url || "" %><% end %><% end %>">
 												</div>	

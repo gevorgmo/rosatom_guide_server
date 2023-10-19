@@ -208,6 +208,9 @@ function GetContent(_url, _cb){
 			var _media_url=$('#media_content_data').attr('data-url');
 			var _media_id=$('#media_content_data').attr('data-id');
 			
+			if(_media_type=="2" || _media_type=="3") _media_url="http://10.0.121.2/api/v1/video/index";
+			
+			
 			if(document.getElementById('progress')){
 				_progress = document.getElementById('progress');
 				_progress.style.width = "0%";
