@@ -31,7 +31,7 @@
 			<div class="events_blocks_container">
 			
 
-				<% if @page.poster :%><div class="events_blocks_container_img" style="background-image:url(<%- @server_address %><%- @page.poster %>)"></div><% end %>	
+				<% if @page.poster :%><div class="events_blocks_container_img" style="background-image:url(<%- if !@page.event_id_on_web then @server_address %><%- @page.poster %>)"></div><% end %>	
 				<div class="event_container">
 					<div class="inner_block_title">
 						<h2><% if @page.title :%><%- @page.title[@lang] || "" %><% end %></h2>
@@ -55,7 +55,7 @@
 								<div class="speakers_container">
 									<% for speaker in @page.content[@lang].speakers : %>
 										<div class="speaker_block">
-											<% if speaker.photo :%><div class="speaker_block_img" style="background-image:url(<%- @server_address %><%- speaker.photo %>)"></div><% end %>
+											<% if speaker.photo :%><div class="speaker_block_img" style="background-image:url(<%- if !@page.event_id_on_web then @server_address %><%- speaker.photo %>)"></div><% end %>
 											<div class="speaker_info">
 												<h3><%- speaker.name %></h3>
 												<span><%- speaker.info %></span>
