@@ -3,10 +3,11 @@ var config = require('./config/config');
 var fetch = require('node-fetch');
 var moment = require('moment');
 
-
 require("./db_initializer").init(config);
 
 var Page = mongoose.model('Page');
+var _all_places_ru={"Конференц-зал":"hall","Выставка «Атомные города»":"atom_citys","Лобби":"Lobby","Лаборатория":"laboratory","Атомариум":"atomarium"}
+
 
 GetEvents(function(_data){
 	if(!_data){
@@ -29,8 +30,27 @@ GetEvents(function(_data){
 				
 				_data.map(function(_i){
 					if(_i.ID && _i.DATE &&  _i.IMAGE && _i.TITLE && _i.SHORT_DESCRIPTION && _i._AREA && _i._AGE){
-						var _content={"ru":{},"en":{}};
+						var _content={"ru":{"type":(_i._AREA.RU || ""), "floor":""},"en":{"type":(_i._AREA.EN || ""), "floor":""}, "place":""};
+						if(_i._AREA){
+							if(_i._AREA.RU)  _content.place=(_all_places_ru[_i._AREA.RU] || "");
+						}
+						if(_i._AGE){
+							if(_i._AGE.RU) _content.ru.type=
+						}
 						
+						if(_i.SPEAKERS){
+							if(Array.isArray(_i.SPEAKERS)){
+								_content.ru.speakers=[];
+								_content.en.speakers=[];
+								_i.SPEAKERS.map(function(_q){
+									if(_q.RU) _content.ru.speakers.puash({"name":(_q.RU.NAME || ""),"photo":"https://atom-museum.ru/"+(_q.RU.PREVIEW_PICTURE || ""),"info":(_q.RU.PREVIEW_TEXT || "")});
+									if(_q.EN) _content.en.speakers.puash({"name":(_q.EN.NAME || ""),"photo":"https://atom-museum.ru/"+(_q.EN.PREVIEW_PICTURE || ""),"info":(_q.EN.PREVIEW_TEXT || "")});
+								});
+							} else if(typeof _i.SPEAKERS=="object"){
+								if(_i.SPEAKERS.RU) _content.ru.speakers=[{"name":(_i.SPEAKERS.RU.NAME || ""),"photo":"https://atom-museum.ru/"+(_i.SPEAKERS.RU.PREVIEW_PICTURE || ""),"info":(_i.SPEAKERS.RU.PREVIEW_TEXT || "")}];
+								if(_i.SPEAKERS.EN) _content.en.speakers=[{"name":(_i.SPEAKERS.EN.NAME || ""),"photo":"https://atom-museum.ru/"+(_i.SPEAKERS.EN.PREVIEW_PICTURE || ""),"info":(_i.SPEAKERS.EN.PREVIEW_TEXT || "")}];
+							}
+						}
 						
 						_insert_events.push({
 							active:true, 
@@ -46,24 +66,7 @@ GetEvents(function(_data){
 							video:{},
 							media_type:0,
 							published:moment(_i.DATE).format("YYYY-MM-DD HH:mm")
-							content:_content {
-								"ru": {
-								  "speakers": [
-									{
-									  "name": "ИМЯ ФАМИЛИЯ",
-									  "photo": "/files/2023/8/1690978566522.jpg",
-									  "info": "Внезапно, сделанные на базе интернет-аналитики выводы представляют собой не что иное, как квинтэссенцию победы маркетинга над разумом и должны быть смешаны с не уникальными данными до степени совершенной."
-									},
-								  ],
-								  "type": "Детские",
-								  "floor": "Вместимость зала: 24"
-								},
-								"place": "laboratory",
-								"en": {
-								  "type": "",
-								  "floor": ""
-								}
-							  },
+							content:_content
 						});
 					}
 				});
