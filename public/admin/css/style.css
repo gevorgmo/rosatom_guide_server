@@ -262,7 +262,6 @@ th.action {text-align:center;vertical-align:top!important; padding: 10px;}
 #media_list{overflow-y:scroll;max-height:560px}
 .media_itm{overflow: hidden;display:inline-block;position:relative;width:13.3%;max-width:120px;margin:5px;padding-bottom:12%;background-repeat:no-repeat;background-position:50% 50%;background-size:contain; border: 2px solid #bbb;border-radius:3px;}
 .media_itm>div,.selected_media_itm>div{word-break: break-word;position:absolute;bottom:0;width:100%;left:0;background:rgba(0,0,0,0.8);padding:5px;color:#fff;font-size:12px;line-height:16px;display:none}
-.selected_media_itm>div{display:block}
 .media_itm.selected{border: 2px solid #ff0000;}
 .media_itm.selected>div{display:block;}
 .btn-fileremove{position:absolute;top:0;right:0;z-index:2;display:none}
@@ -271,7 +270,7 @@ th.action {text-align:center;vertical-align:top!important; padding: 10px;}
 .more_media{min-height:50px}
 .media_wait{display:none;position:absolute;z-index:10;top:0;left:0;width:100%;height:100%;background-color:rgba(255,255,255,0.8);background-image:url(../img/loader.gif);background-repeat:no-repeat;background-position:50% 50%;}
 .media_itm:hover{opacity:0.8}
-.media_itm:hover >div{display:block}
+.media_itm:hover >div,.selected_media_itm:hover >div{display:block}
 .media_itm:hover .btn-fileremove,.media_itm:hover .media_itm_link{display:block}
 #media_set{display:none}
 
