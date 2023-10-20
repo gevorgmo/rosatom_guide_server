@@ -15,9 +15,12 @@
 <% if @page.media_type==2 or @page.media_type==3  or @page.media_type==4 :%>
 	<% if @page.content :%>
 		<% if @page.content[@lang] :%>
-			<% if @page.content[@lang].media_url :%>
+			<% if @page.content[@lang].media_id and (@page.media_type==2  or @page.media_type==3)  :%>
 				<%  aud=true %>
 			<% end %>
+			<% if @page.content[@lang].media_url and @page.media_type==4  :%>
+				<%  aud=true %>
+			<% end %>	
 		<% end %>	
 	<% end %>
 <% end %>
