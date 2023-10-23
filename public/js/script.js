@@ -262,7 +262,7 @@ function GetContent(_url, _cb){
 											_page_load_time=Date.now()/1000;
 											for(var _k=0;_k<__data.data.videos[_t].audios.length;_k++){
 												if(__data.data.videos[_t].audios[_k].lang.toLowerCase()==_lang){
-													_audio.src =__data.data.videos[_t].audios[_k].audio;
+													_audio.src =(__data.data.videos[_t].audios[_k].audio.indexOf('http')==0 ? __data.data.videos[_t].audios[_k].audio.indexOf('http') : "http://10.0.121.2"+__data.data.videos[_t].audios[_k].audio);
 													console.log(Date.now());
 													break;
 												}	
