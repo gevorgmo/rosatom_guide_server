@@ -378,6 +378,12 @@
 				</div>
 				<div class="col-md-4 col-ms-4">	
 					<div class="form-group">
+						<label>Listen to the audio and watch the screen</label>
+						<input type="text" class="form-control prtxt" data-id="listen_audio" placeholder="Enter Text" value="<% if @option.translations :%><%- @option.translations.listen_audio || "" %><% end %>">
+					</div>
+				</div>	
+				<div class="col-md-4 col-ms-4">	
+					<div class="form-group">
 						<label>Floor</label>
 						<input type="text" class="form-control prtxt" data-id="floor" placeholder="Enter Text" value="<% if @option.translations :%><%- @option.translations.floor || "" %><% end %>">
 					</div>
