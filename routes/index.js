@@ -603,8 +603,8 @@ exports.init = function (app) {
 				var _lang=req.body.lang || "ru";
 				var _name=req.body.name || "";
 				if(_email.match(/[\d\w\-\_\.]+@[\d\w\-\_\.]+\.[\w]{2,4}/i)){
-					GeneratePDF(_lang, _name, function(_file){
-						SendEmail_to_address(_lang, _email, _file, function(_err){		
+					//GeneratePDF(_lang, _name, function(_file){
+						SendEmail_to_address(_lang, _email, "certificate_"+_lang, function(_err){		
 							User.updateOne({_id:config.signecountid},{$inc:{signecount:1}}, function(err, _datttt){
 								User.findOne({_id:config.signecountid}, function(err, _datt){
 									res.setHeader('Access-Control-Allow-Origin', '*');
@@ -615,7 +615,7 @@ exports.init = function (app) {
 								});		
 							});	
 						});	
-					});	
+					//});	
 				}else {
 					return res.status(404).send({"status":false});	
 				}					
@@ -638,12 +638,12 @@ exports.init = function (app) {
 	});
 /////////////////////////////////////////////////////////////
 	app.get('/pdfgenerate', function(req, res) {
-		GeneratePDF("en", "Gevorg Manukyan", function(_file){
-			SendEmail_to_address("en", "gevorgmo@gmail.com", _file, function(_err){
+		//GeneratePDF("en", "Gevorg Manukyan", function(_file){
+			SendEmail_to_address("en", "gevorgmo@gmail.com", "certificate_en", function(_err){
 				console.log(_err);
 				return res.render('templates/test',{});
 			});	
-		});
+		//});
 	});
 
 
@@ -696,14 +696,14 @@ function isToday(date) {
 function SendEmail_to_address(_lang, _email, _filename, _cb){
 	var _email_data={
 		"ru":{
-			subject:"Сертификат о подписании Московского договора",
-			text:"Прилагаем к настоящему письму сертификат, удостоверяющий подписание Вами Московского договора 1963 года.",
-			file:"Сертификат",
+			subject:"Ваш сертификат",
+			text:"Спасибо, что поддержали Московский договор!",
+			file:"Certificate",
 			name:"Павильон АТОМ"
 		},
 		"en":{
-			subject:"Moscow Treaty Signing Certificate",
-			text:"Please find attached to this email the certificate confirming that you have signed the Moscow Treaty of 1963.",
+			subject:"Your certificate",
+			text:"Thank you for supporting the Moscow Treaty!",
 			file:"Certificate",
 			name:"ATOM Pavilion"
 		}
@@ -736,25 +736,15 @@ function SendEmail_to_address(_lang, _email, _filename, _cb){
 	};
 
 	transporter.sendMail(mailContent, function(error, data){
-		DeleteFiles(_filename, function(){
+		//DeleteFiles(_filename, function(){
 			if(error){
 				_cb("Please try again later!");
 			}else{
 				_cb(null);
 			}
-		});	
+		//});	
 	});
 
-}
-///////////////////////////////////
-function DeleteFiles(_filename, _cb){
-	if(fs.existsSync('./signe/'+_filename+'.pdf')) {
-		fs.unlink('./signe/'+_filename+'.pdf', function(err2) {	
-			_cb();
-		});
-	} else{
-		_cb();
-	}	
 }
 /////////////////////////////////////////////////////////////////
 function PostData(_url,_dat,_cb){
@@ -790,8 +780,18 @@ function GetData(_url,_dat,_cb){
 		_cb(null);  
 	});
 }
+/*
+///////////////////////////////////
+function DeleteFiles(_filename, _cb){
+	if(fs.existsSync('./signe/'+_filename+'.pdf')) {
+		fs.unlink('./signe/'+_filename+'.pdf', function(err2) {	
+			_cb();
+		});
+	} else{
+		_cb();
+	}	
+}
 /////////////////////////////////////////////////////////////////
-
 function GeneratePDF(_lang,  _name, _cb){
 	var fonts = {
 		c1: {normal: './signe/c1.ttf'},
@@ -948,7 +948,7 @@ function GeneratePDF(_lang,  _name, _cb){
 	pdfDoc.end();
 	_cb(_filename);
 }
-
+*/
 
 
 
