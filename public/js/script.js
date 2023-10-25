@@ -208,7 +208,7 @@ function GetContent(_url, _cb){
 			var _media_url=$('#media_content_data').attr('data-url');
 			var _media_id=$('#media_content_data').attr('data-id');
 			
-			if(_media_type=="2" || _media_type=="3") _media_url="http://10.0.121.2/api/v1/video/index";
+			if(_media_type!="4") _media_url="http://10.0.121.2/api/v1/video/index";
 			
 			
 			if(document.getElementById('progress')){
@@ -230,16 +230,11 @@ function GetContent(_url, _cb){
 					var _duraton=_audio.duration;
 					var _currtime=_time_code+(Date.now()/1000-_page_load_time);
 					if(_currtime>=_duraton) _currtime=_currtime-_duraton;
-					//console.log(_duraton);
-					//console.log(_currtime);
 					_audio.currentTime=_currtime;
 					_playstatus=true;
 					_audio.play();	
-					//console.log(Date.now());
-					//console.log(Date.now()/1000-_page_load_time);
 				}	
 			});
-			
 			
 			if(_media_type=="1"){
 				_progress_drag= document.getElementById('progress_drag');
@@ -248,18 +243,17 @@ function GetContent(_url, _cb){
 				_progress_drag.addEventListener("touchmove", drag);	
 				_playButton = document.getElementById('player_button');
 				_playButton.addEventListener('click', playAudio);	
-				_audio.src =_media_url;
-			}
+			}	
+				
 			
-			
-			if(_media_type=="2" || _media_type=="3"){
+			if(_media_type!="4"){
 				GetReq(_media_url, function(__data){
 					if(__data){
 						if(__data.success){
 							if(__data.data){
 								if(__data.data.videos){
 									for(var _t=0;_t<__data.data.videos.length;_t++){
-										if(__data.data.videos[_t].id.toString()==_media_id){
+										if(__data.data.videos[_t].code_name.toString()==_media_id){
 											_time_code=__data.data.videos[_t].timeCode;
 											_page_load_time=Date.now()/1000;
 											for(var _k=0;_k<__data.data.videos[_t].audios.length;_k++){

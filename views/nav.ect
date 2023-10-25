@@ -28,31 +28,28 @@
 <aside class="main-sidebar">	
 	<section class="sidebar">
 			<ul class="sidebar-menu" data-widget="tree">
-				<li class="<%- if @pagename=="dashboard"  then "active" %>" ><a href="/"><i class="fa fa-dashboard"></i><span>Dashboard</span></a></li>	
+				<li class="<%- if @pagename=="dashboard"  then "active" %>" ><a href="/"><i class="fa fa-dashboard"></i><span>Общий</span></a></li>	
 				<li class="treeview <%- if all_categories.indexOf(@pagename)>-1 then "menu-open" %>">
-					<a href="#"><i class="fa    fa-pencil-square-o"></i><span>Categories</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+					<a href="#"><i class="fa    fa-pencil-square-o"></i><span>Категории</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
 					<ul class="treeview-menu"  style="<%- if all_categories.indexOf(@pagename)>-1 then "display:block" %>">
-						<li class="<%- if @pagename=="exhibition" then "active" %>" ><a href="/category/exhibition"><i class="fa  fa-chrome"></i><span>All Exhibitions</span></a></li>
-						<li class="<%- if @pagename=="event" then "active" %>" ><a href="/category/event"><i class="fa  fa-star-half-empty"></i><span>All Events</span></a></li>
-						<li class="<%- if @pagename=="service" then "active" %>" ><a href="/category/service"><i class="fa  fa-shopping-cart"></i><span>All Services</span></a></li>
-						<li class="<%- if @pagename=="media" then "active" %>" ><a href="/category/media"><i class="fa   fa-bullseye"></i><span>All Media</span></a></li>
+						<li class="<%- if @pagename=="exhibition" then "active" %>" ><a href="/category/exhibition"><i class="fa  fa-chrome"></i><span>Все выставки</span></a></li>
+						<li class="<%- if @pagename=="event" then "active" %>" ><a href="/category/event"><i class="fa  fa-star-half-empty"></i><span>Все события</span></a></li>
+						<li class="<%- if @pagename=="service" then "active" %>" ><a href="/category/service"><i class="fa  fa-shopping-cart"></i><span>Все услуги</span></a></li>
+						<li class="<%- if @pagename=="media" then "active" %>" ><a href="/category/media"><i class="fa   fa-bullseye"></i><span>Все медии</span></a></li>
 					</ul>
 				</li>
 				
 				<li class="treeview <%- if all_pages.indexOf(@pagename)>-1 then "menu-open" %>">
-					<a href="#"><i class="fa    fa-cubes"></i><span> Main Pages</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+					<a href="#"><i class="fa    fa-cubes"></i><span> Главные страницы</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
 					<ul class="treeview-menu"  style="<%- if all_pages.indexOf(@pagename)>-1 then "display:block" %>">
-						<li class="<%- if @pagename=="home" then "active" %>" ><a href="/page/home"><i class="fa   fa-home"></i><span>Home Page</span></a></li>
-						<!--<li class="<%- if @pagename=="exhibitions" then "active" %>" ><a href="/page/exhibitions"><i class="fa  fa-chrome"></i><span>Exhibitions Page</span></a></li>-->
-						<!--<li class="<%- if @pagename=="events" then "active" %>" ><a href="/page/events"><i class="fa  fa-star-half-empty"></i><span>Events Page</span></a></li>-->
-						<!--<li class="<%- if @pagename=="services" then "active" %>" ><a href="/page/services"><i class="fa  fa-shopping-cart"></i><span>Services Page</span></a></li>-->
-						<li class="<%- if @pagename=="maps" then "active" %>" ><a href="/page/maps"><i class="fa  fa-map-o"></i><span>Maps</span></a></li>
+						<li class="<%- if @pagename=="home" then "active" %>" ><a href="/page/home"><i class="fa   fa-home"></i><span>Домашняя страница</span></a></li>
+						<li class="<%- if @pagename=="maps" then "active" %>" ><a href="/page/maps"><i class="fa  fa-map-o"></i><span>Карты</span></a></li>
 					</ul>
 				</li>
 
 				<% if @user_status=="admin" :%>
-					<li class="<%- if @pagename=="options" then "options" %>" ><a href="/options/all"><i class="fa fa-cogs"></i><span>Options</span></a></li>
-					<li class="<%- if @pagename=="users" then "active" %>" ><a href="/users/all"><i class="fa fa-users"></i><span>Users</span></a></li>
+					<li class="<%- if @pagename=="options" then "options" %>" ><a href="/options/all"><i class="fa fa-cogs"></i><span>Параметры</span></a></li>
+					<li class="<%- if @pagename=="users" then "active" %>" ><a href="/users/all"><i class="fa fa-users"></i><span>Пользователи</span></a></li>
 				<% end %>		
 			</ul>
 	</section>

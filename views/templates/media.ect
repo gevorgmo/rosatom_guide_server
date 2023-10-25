@@ -7,18 +7,13 @@
 <% end %>
 
 <%  aud=false %>
-<% if @page.media_type==1 and @page.audio:%>
-	<% if @page.audio[@lang] :%>
-			<%  aud=true %>
-	<% end %>
+<% if @page.media_type==1 or @page.media_type==2 or @page.media_type==3 :%>
+	<%  aud=true %>
 <% end %>
-<% if @page.media_type==2 or @page.media_type==3  or @page.media_type==4 :%>
+<% if @page.media_type==4 :%>
 	<% if @page.content :%>
 		<% if @page.content[@lang] :%>
-			<% if @page.content[@lang].media_id and (@page.media_type==2  or @page.media_type==3)  :%>
-				<%  aud=true %>
-			<% end %>
-			<% if @page.content[@lang].media_url and @page.media_type==4  :%>
+			<% if @page.content[@lang].media_url :%>
 				<%  aud=true %>
 			<% end %>	
 		<% end %>	
@@ -49,7 +44,7 @@
 				<h2 class="media_title"><% if @page.title :%><%- @page.title[@lang] || "" %><% end %></h2>
 					
 				<% if aud :%>
-						<div id="media_content_data" data-type="<%- @page.media_type %>"  data-url="<% if @page.media_type==1 :%><% if @page.audio :%><%-  @server_address %><%- (@page.audio[@lang] || "") %><% end %><% end %><% if @page.media_type==2 or @page.media_type==3 or @page.media_type==4  :%><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].media_url || "" %><% end %><% end %><% end %>" data-id="<% if @page.media_type==2 or @page.media_type==3 :%><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].media_id || "" %><% end %><% end %><% end %>"></div>				
+						<div id="media_content_data" data-type="<%- @page.media_type %>" data-id="<%- @page.slug %>" data-url="<% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].media_url || "" %><% end %><% end %>" ></div>				
 						<% if @page.media_type==1 :%>	
 							<% if @page.text :%>
 								<% if @page.text[@lang] :%>

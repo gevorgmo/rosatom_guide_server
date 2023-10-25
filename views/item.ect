@@ -1,6 +1,6 @@
 <% extend "layout.ect" %>
-
-<section class="content-header p-item-<%- @pagename %>"><h1 class="categoryname"><%- @pagename %> Management</h1></section>
+<% all_category_titles={"exhibition":"выставки","media":"медии","event":"события","service":"услуги","home":"домашней страницы","events":"события"} %>
+<section class="content-header p-item-<%- @pagename %>"><h1 class="categoryname">Редактор <%- if all_category_titles[@pagename] then all_category_titles[@pagename] else "" %></h1></section>
 
 <section class="content">
 	<div class="row">
@@ -11,11 +11,11 @@
 			<div class="col-md-3">
 				<div class="box box-primary">
 					<div class="box-header">
-						<h3 class="box-title"><i class="fa fa-image"></i> Primary Image</h3>												
+						<h3 class="box-title"><i class="fa fa-image"></i> Основное изображение</h3>												
 					</div>
 					<div class="box-body">
 						<div class="form-group" style="text-align: center;">
-							<button type="button" class="media_btn btn btn-info btn-flat" style="<%- if @item.poster then "display:none" %>"><i class="fa fa-image"></i> Select Media</button>
+							<button type="button" class="media_btn btn btn-info btn-flat" style="<%- if @item.poster then "display:none" %>"><i class="fa fa-image"></i> Выберите файл</button>
 							<div class="selected_media_itm"  style="<%- if @item.poster then "background-image:url("+ @item.poster+")" else "display:none" %>"  data-src="<%- @item.poster || "/admin/img/temp.png" %>"  data-type="image"  id="prposter"><a class="media_itm_link btn btn-warning btn-flat previewlink" data-template="<%- @pagename || "page" %>" id="k0" href="<%- @item.poster || "/admin/img/temp.png" %>" target="_blank" title=""><i class="fa  fa-eye"></i></a><button type="button" class="btn-selectedmediaremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button></div>
 						</div>	
 					</div>
@@ -26,39 +26,39 @@
 		<div class="col-md-<%- if @pagename=="media" then "12" else "9" %>">		
 			<div class="box box-primary">
 				<div class="box-header">
-					<h3 class="box-title"><i class="fa fa-cog"></i> General</h3>	
+					<h3 class="box-title"><i class="fa fa-cog"></i> Общий</h3>	
 					<div class="material-switch pull-right"><span class="switcherleft">Off</span><input id="practive" name="practive" type="checkbox" <%- if @item.active then "checked" %> /><label for="practive" class="label-primary"></label><span class="switcherright">On</span></div>
 				</div>
 				<div class="box-body">
 					<div class="row">										
 						<% if @pagename=="media" :%>
 							<div class="col-md-3 col-ms-3">		
-								<label style="margin: 0 0 0 10px;">QR code</label>
+								<label style="margin: 0 0 0 10px;">QR-код</label>
 								<div class="input-group margin" style="margin-top:5px;">
 									<input type="text" class="form-control" id="prslug" placeholder="Enter code" value="<%- @item.slug || "" %>">
 									<span class="input-group-btn">
-										<button type="button" class="btn btn-info btn-flat btn-qrgenerate"> <i class="fa fa-cloud-download"></i> Generate QR code</button>
+										<button type="button" class="btn btn-info btn-flat btn-qrgenerate"> <i class="fa fa-cloud-download"></i> Создать QR-код</button>
 									</span>
 								</div>	
 							</div>
 							
 							<div class="col-md-3 col-ms-3">	
 								<div class="form-group">	
-									<label>Media Type</label>
+									<label>Тип медии</label>
 									<select class="form-control" id="prmedia_type" style="width: 100%;">
-										<option value="1" <% if @item.media_type :%><% if @item.media_type==1 :%>selected<% end %><% end %>>Static content</option>
-										<option value="2" <% if @item.media_type :%><% if @item.media_type==2 :%>selected<% end %><% end %>>Loop video with audio</option>
-										<option value="3" <% if @item.media_type :%><% if @item.media_type==3 :%>selected<% end %><% end %>>Startup video with audio</option>
-										<option value="4" <% if @item.media_type :%><% if @item.media_type==4 :%>selected<% end %><% end %>>URL radio</option>
+										<option value="1" <% if @item.media_type :%><% if @item.media_type==1 :%>selected<% end %><% end %>>Статический контент</option>
+										<option value="2" <% if @item.media_type :%><% if @item.media_type==2 :%>selected<% end %><% end %>>Зацикленное видео со звуком</option>
+										<option value="3" <% if @item.media_type :%><% if @item.media_type==3 :%>selected<% end %><% end %>>Стартовое видео со звуком</option>
+										<option value="4" <% if @item.media_type :%><% if @item.media_type==4 :%>selected<% end %><% end %>>URL-радио</option>
 									</select>
 								</div>	
 							</div>
 							
 							<div class="col-md-3 col-ms-3">	
 								<div class="form-group">	
-									<label>Exhibition</label>
+									<label>Выставка</label>
 									<select class="form-control" id="prrelated" style="width: 100%;">
-										<option value="">Not Specified</option>
+										<option value="">Не указан</option>
 										<% for exhibit in @exhibitions : %>
 											<option value="<%- exhibit._id %>"  <% if @item.related :%><% if @item.related.toString()==exhibit._id.toString() :%>selected<% end %><% end %>><% if exhibit.title :%><%- exhibit.title["ru"] || "" %><% end %></option>
 										<% end %>	
@@ -70,7 +70,7 @@
 						<% if @pagename!="event" && @pagename!="media"  :%>
 							<div class="col-md-3 col-ms-3">	
 								<div class="form-group">
-									<label>Sorting order</label>
+									<label>Порядок сортировки</label>
 									<input type="number" class="form-control" id="prord" placeholder="Enter number" value="<%- @item.ord || 1 %>">
 								</div>
 							</div>
@@ -78,7 +78,7 @@
 						<% if @pagename=="event" :%>
 							<div class="col-md-4 col-ms-4">	
 								<div class="form-group">	
-									<label>Date & time</label>
+									<label>Дата и время</label>
 									<div class="input-group date">
 										<div class="input-group-addon"><i class="fa fa-calendar"></i></div>
 										<input type="text" class="form-control pull-right" id="prpublished" value="" readonly="readonly">
@@ -87,12 +87,12 @@
 							</div>
 							<div class="col-md-4 col-ms-4">	
 								<div class="form-group">	
-									<label>Place</label>
+									<label>Место</label>
 									<select class="form-control" id="prplace" style="width: 100%;">
-										<option value="lobby" <% if @item.content :%><% if @item.content.place :%><% if @item.content.place=="lobby" :%>selected<% end %><% end %><% end %>>Lobby</option>
-										<option value="hall" <% if @item.content :%><% if @item.content.place :%><% if @item.content.place=="hall" :%>selected<% end %><% end %><% end %>>Conference Hall</option>
-										<option value="laboratory" <% if @item.content :%><% if @item.content.place :%><% if @item.content.place=="laboratory" :%>selected<% end %><% end %><% end %>>Laboratory</option>
-										<option value="atomarium" <% if @item.content :%><% if @item.content.place :%><% if @item.content.place=="atomarium" :%>selected<% end %><% end %><% end %>>Atomarium</option>
+										<option value="lobby" <% if @item.content :%><% if @item.content.place :%><% if @item.content.place=="lobby" :%>selected<% end %><% end %><% end %>>Лобби</option>
+										<option value="hall" <% if @item.content :%><% if @item.content.place :%><% if @item.content.place=="hall" :%>selected<% end %><% end %><% end %>>Конференц-зал</option>
+										<option value="laboratory" <% if @item.content :%><% if @item.content.place :%><% if @item.content.place=="laboratory" :%>selected<% end %><% end %><% end %>>Лаборатория</option>
+										<option value="atomarium" <% if @item.content :%><% if @item.content.place :%><% if @item.content.place=="atomarium" :%>selected<% end %><% end %><% end %>>Атомариум</option>
 									</select>
 								</div>	
 							</div>
@@ -101,7 +101,7 @@
 						<% if @pagename=="exhibition"  or @pagename=="media":%>
 							<div class="col-md-3 col-ms-3">	
 								<div class="form-group">	
-									<label>Floor</label>
+									<label>Этаж</label>
 									<select class="form-control" id="prfloor" style="width: 100%;">
 										<option value="4" <% if @item.content :%><% if @item.content.floor :%><% if @item.content.floor=="4" :%>selected<% end %><% end %><% end %>>4</option>
 										<option value="3" <% if @item.content :%><% if @item.content.floor :%><% if @item.content.floor=="3" :%>selected<% end %><% end %><% end %>>3</option>
@@ -118,37 +118,37 @@
 						
 						<% if  @pagename=="service":%>
 							<div class="col-md-8 col-ms-8">	
-								<label>Open hours</label>
+								<label>Открытые часы</label>
 								<div class="row">	
 									<div class="col-md-6 col-ms-6">	
 										<div class="form-group">
-											<label>Monday</label>
+											<label>Понедельник</label>
 											<input type="text" class="form-control" id="prmonday" placeholder="Enter Text" value="<% if @item.content :%><%- @item.content.monday || "" %><% end %>">
 										</div>
 										<div class="form-group">
-											<label>Tuesday</label>
+											<label>Вторник</label>
 											<input type="text" class="form-control" id="prtuesday" placeholder="Enter Text" value="<% if @item.content :%><%- @item.content.tuesday || "" %><% end %>">
 										</div>
 										<div class="form-group">
-											<label>Wednesday</label>
+											<label>Среда</label>
 											<input type="text" class="form-control" id="prwednesday" placeholder="Enter Text" value="<% if @item.content :%><%- @item.content.wednesday || "" %><% end %>">
 										</div>
 										<div class="form-group">
-											<label>Thursday</label>
+											<label>Четверг</label>
 											<input type="text" class="form-control" id="prthursday" placeholder="Enter Text" value="<% if @item.content :%><%- @item.content.thursday || "" %><% end %>">
 										</div>
 									</div>
 									<div class="col-md-6 col-ms-6">	
 										<div class="form-group">
-											<label>Friday</label>
+											<label>Пятница</label>
 											<input type="text" class="form-control" id="prfriday" placeholder="Enter Text" value="<% if @item.content :%><%- @item.content.friday || "" %><% end %>">
 										</div>
 										<div class="form-group">
-											<label>Saturday</label>
+											<label>Суббота</label>
 											<input type="text" class="form-control" id="prsaturday" placeholder="Enter Text" value="<% if @item.content :%><%- @item.content.saturday || "" %><% end %>">
 										</div>
 										<div class="form-group">
-											<label>Sunday</label>
+											<label>Воскресенье</label>
 											<input type="text" class="form-control" id="prsunday" placeholder="Enter Text" value="<% if @item.content :%><%- @item.content.sunday || "" %><% end %>">
 										</div>
 									</div>
@@ -183,7 +183,7 @@
 
 							<div class="box box-primary">
 								<div class="box-header">
-									<h3 class="box-title">Content</h3>
+									<h3 class="box-title">Содержание</h3>
 								</div>
 								<div class="box-body">
 									<div class="row">
@@ -198,7 +198,7 @@
 										<% if @pagename=="event":%>
 											<div class="col-md-4 col-ms-4">	
 												<div class="form-group">	
-													<label>Event Type <%- if option.language_code=="ru" then "(required)"%></label>
+													<label>Тип события <%- if option.language_code=="ru" then "(необходимый)"%></label>
 													<input type="text" class="form-control prtxt" data-id="type" placeholder="Enter Text" data-lang="<%- option.language_code %>" value="<% if @item.content :%><% if @item.content[option.language_code] :%><%- @item.content[option.language_code].type || "" %><% end %><% end %>">
 												</div>	
 											</div>					
@@ -209,65 +209,20 @@
 										<% if @pagename=="event":%>
 											<div class="col-md-4 col-ms-4">	
 												<div class="form-group">	
-													<label>Additional information</label>
+													<label>Дополнительная информация</label>
 													<input type="text" class="form-control prtxt" data-id="floor" placeholder="Enter Text" data-lang="<%- option.language_code %>" value="<% if @item.content :%><% if @item.content[option.language_code] :%><%- @item.content[option.language_code].floor || "" %><% end %><% end %>">
 												</div>	
 											</div>		
 										<% end %>
 
 											
-										<% if @pagename=="media" :%>
-											
-											
+										<% if @pagename=="media" :%>							
 											<div class="col-md-4 col-ms-4">		
-												<div class="form-group mediatyp mediatyp1" <% if @item.media_type :%><% if @item.media_type!=1 :%>style="display:none"<% end %><% end %>>
-													<label>Audio file</label><br>
-													<button type="button" class="media_btn btn btn-info btn-flat" style="
-														<% finded=false %>			
-														<% if @item.audio :%>
-															<% if @item.audio[option.language_code] :%>
-																<% finded=true %>
-																display:none
-															<% end %>	
-														<% end %>	
-													"><i class="fa fa-plus"></i> Select Media</button>
-													<div class="selected_media_itm praudio" id="praudio<%- option.language_code %>" style="<%- if !finded then "display:none" %>;background-image:url(/admin/img/audio.png);" data-src="<%- if finded then @item.audio[option.language_code] else "" %>"  data-file="<%- if finded then (@item.audio[option.language_code+"file"] || "") %>" data-type="audio"  data-lang="<%- option.language_code %>"><a class="media_itm_link btn btn-warning btn-flat"  href="<%- if finded then @item.audio[option.language_code] %>" target="_blank" title=""><i class="fa  fa-eye"></i></a><button type="button" class="btn-selectedmediaremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button><%- if finded then "<div>"+(@item.audio[option.language_code+"file"] || "")+"</div>" %></div>
-												</div>
-												
 												<div class="form-group mediatyp  mediatyp4" <% if @item.media_type :%><% if @item.media_type!=2 and @item.media_type!=3 :%>style="display:none"<% end %><% end %>>	
-													<label>Media URL</label>
+													<label>URL медии</label>
 													<input type="text" class="form-control prtxt" data-id="media_url" placeholder="Enter URL" data-lang="<%- option.language_code %>" value="<% if @item.content :%><% if @item.content[option.language_code] :%><%- @item.content[option.language_code].media_url || "" %><% end %><% end %>">
 												</div>	
-											</div>
-											
-											<div class="col-md-4 col-ms-4">	
-												<div class="form-group mediatyp mediatyp2 mediatyp3" <% if @item.media_type :%><% if @item.media_type!=2 and @item.media_type!=3 :%>style="display:none"<% end %><% end %>>	
-													<label>Media ID</label>
-													<input type="text" class="form-control prtxt" data-id="media_id" placeholder="Enter ID" data-lang="<%- option.language_code %>" value="<% if @item.content :%><% if @item.content[option.language_code] :%><%- @item.content[option.language_code].media_id || "" %><% end %><% end %>">
-												</div>
-											</div>	
-												
-											
-											
-											
-											<!--
-											<div class="col-md-4 col-ms-4">	
-												<div class="form-group">
-													<label>Video file</label><br>
-													<button type="button" class="media_btn btn btn-info btn-flat" style="
-														<% finded=false %>
-														
-														<% if @item.video :%>
-															<% if @item.video[option.language_code] :%>
-																<% finded=true %>
-																display:none
-															<% end %>	
-														<% end %>	
-													"><i class="fa fa-plus"></i> Select Media</button>
-													<div class="selected_media_itm prvideo" id="prvideo<%- option.language_code %>" style="<%- if !finded then "display:none" %>;background-image:url(/admin/img/video.png);" data-src="<%- if finded then @item.video[option.language_code] else "" %>" data-type="video"  data-lang="<%- option.language_code %>"><a class="media_itm_link btn btn-warning btn-flat"  href="<%- if finded then @item.video[option.language_code] %>" target="_blank" title=""><i class="fa  fa-eye"></i></a><button type="button" class="btn-selectedmediaremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button></div>
-												</div>
-											</div>	
-											-->
+											</div>			
 										<% end %>
 									</div>
 									
@@ -276,10 +231,10 @@
 											<div class="col-md-12 col-ms-12">
 												<div class="form-group">
 													<% if @pagename=="media" :%>
-														<label>Transcript</label>
+														<label>Стенограмма</label>
 													<% end %>
 													<% if @pagename=="exhibition" or @pagename=="event" :%>
-														<label>Short description <%- if option.language_code=="ru" then "(required)"%></label>
+														<label>Краткое описание <%- if option.language_code=="ru" then "(необходимый)"%></label>
 													<% end %>
 													<textarea  class="form-control htmlcont_small prtranscript"  data-lang="<%- option.language_code %>"  cols="20"  ><% if @item.text :%><% if @item.text[option.language_code] :%><%- @item.text[option.language_code] %><% end %><% end %></textarea>
 												</div>
@@ -294,8 +249,8 @@
 							<% if  @pagename=="event":%>
 								<div class="box box-primary">
 									<div class="box-header">
-										<h3 class="box-title">Speakers</h3>
-										<button type="button"  class="btn btn-success btn-addspeaker pull-right"  data-lang="<%- option.language_code %>"><i class="fa fa-plus"></i> Add</button>
+										<h3 class="box-title">Спикеры</h3>
+										<button type="button"  class="btn btn-success btn-addspeaker pull-right"  data-lang="<%- option.language_code %>"><i class="fa fa-plus"></i> Добавить</button>
 									</div>
 									<div class="box-body all_speakers<%- option.language_code %>">
 										<% if @item.content :%>
@@ -305,20 +260,20 @@
 														<div class="row speakeritem" data-lang="<%- option.language_code %>" >
 															<div class="col-md-4 col-ms-4">	
 																<div class="form-group">
-																	<label>Name</label>
+																	<label>Имя</label>
 																	<input type="text" class="form-control  prname"  placeholder="Enter Text"  data-lang="<%- option.language_code %>" value="<%- (speaker.name || "") %>">
 																</div>
 															</div>
 															<div class="col-md-3 col-ms-3">	
 																<div class="form-group">
-																	<label>Photo</label><br>
-																	<button type="button" class="media_btn btn btn-info btn-flat" style="<%- if speaker.photo then "display:none" %>"><i class="fa fa-plus"></i> Select Media</button>
+																	<label>Фото</label><br>
+																	<button type="button" class="media_btn btn btn-info btn-flat" style="<%- if speaker.photo then "display:none" %>"><i class="fa fa-plus"></i> Выберите файл</button>
 																	<div class="selected_media_itm prphoto" id="prphoto<%- option.language_code %><%- o %>" style="<%- if !speaker.photo then "display:none" %>;background-image:url(<%- (speaker.photo || "/admin/img/image_icon.jpg") %>);" data-src="<%- (speaker.photo || "") %>" data-type="image"  data-lang="<%- option.language_code %>"><a class="media_itm_link btn btn-warning btn-flat previewlink" data-template="speaker" href="<%- (speaker.photo || "") %>" target="_blank" title=""><i class="fa  fa-eye"></i></a><button type="button" class="btn-selectedmediaremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button></div>
 																</div>
 															</div>
 															<div class="col-md-4 col-ms-4">
 																<div class="form-group">
-																	<label>Information</label>
+																	<label>Информация</label>
 																	<textarea  class="form-control htmlcont_small prinfo"  data-lang="<%- option.language_code %>"  cols="20"  ><%- speaker.info || "" %></textarea>
 																</div>
 															</div>
@@ -338,8 +293,8 @@
 							<% if  @pagename=="service":%>
 								<div class="box box-primary">
 									<div class="box-header">
-										<h3 class="box-title">Menu</h3>
-										<button type="button"  class="btn btn-success btn-addmenusection pull-right"  data-lang="<%- option.language_code %>"><i class="fa fa-plus"></i> Add section</button>
+										<h3 class="box-title">Меню</h3>
+										<button type="button"  class="btn btn-success btn-addmenusection pull-right"  data-lang="<%- option.language_code %>"><i class="fa fa-plus"></i> Добавить раздел</button>
 									</div>
 									<div class="box-body all_menus<%- option.language_code %>">
 										<% if @item.content :%>
@@ -347,10 +302,10 @@
 												<% if @item.content[option.language_code].menu :%>
 													<% for menu in @item.content[option.language_code].menu : %>
 														<div class="sectionitm" data-lang="<%- option.language_code %>">
-															<button type="button"  class="btn btn-success btn-addmenuitem pull-right"><i class="fa fa-plus"></i> Add item</button>
-															<button type="button"  class="btn  btn-danger btn-deletemenusection pull-right"><i class="fa fa-trash"></i>Delete section</button>
+															<button type="button"  class="btn btn-success btn-addmenuitem pull-right"><i class="fa fa-plus"></i> Добавить элемент</button>
+															<button type="button"  class="btn  btn-danger btn-deletemenusection pull-right"><i class="fa fa-trash"></i>Удалить раздел</button>
 															<div class="form-group">
-																<label>Section name</label>
+																<label>Название раздела</label>
 																<input type="text" class="form-control  prsection"  placeholder="Enter Text"  value="<%- menu.section || "" %>">
 															</div>
 															
@@ -360,19 +315,19 @@
 																			<div class="row menuitem" >
 																				<div class="col-md-4 col-ms-4">	
 																					<div class="form-group">
-																						<label>Name</label>
+																						<label>Название</label>
 																						<input type="text" class="form-control  prname"  placeholder="Enter Text" value="<%- iit.name || "" %>">
 																					</div>
 																				</div>
 																				<div class="col-md-4 col-ms-4">
 																					<div class="form-group">
-																						<label>Information</label>
+																						<label>Информация</label>
 																						<textarea  class="form-control htmlcont_small prinfo"    cols="20"  ><%- iit.info || "" %></textarea>
 																					</div>
 																				</div>
 																				<div class="col-md-3 col-ms-3">	
 																					<div class="form-group">
-																						<label>Price</label>
+																						<label>Цена</label>
 																						<input type="text" class="form-control  prprice"  placeholder="Enter Text"   value="<%- iit.price || "" %>">
 																					</div>
 																				</div>
@@ -396,13 +351,13 @@
 							
 							<div class="box box-primary">
 								<div class="box-header">
-									<h3 class="box-title">Visual Content</h3>
+									<h3 class="box-title">Визуальный контент</h3>
 								</div>
 								<div class="box-body">
 									<div class="edit_contr_cont">
 										<div class="edit_contr_left">
 											<div class="edit_contr_modules">
-												<h4 style="margin-top:0"><i class="fa fa-sticky-note-o"></i> Templates</h4>
+												<h4 style="margin-top:0"><i class="fa fa-sticky-note-o"></i> Шаблоны</h4>
 												<div class="edit_contr_modules_templs">
 													<a class="edit_templ edit_templ<%- option.language_code %> edit_templ_1" data-type="0" href="#" title="Image"></a>
 													<a class="edit_templ edit_templ<%- option.language_code %> edit_templ_2" data-type="1" href="#" title="Text"></a>
@@ -410,10 +365,10 @@
 											</div>
 										</div>
 										<div class="edit_contr_right">
-											<h4><i class="fa fa-eye"></i> Preview</h4>
+											<h4><i class="fa fa-eye"></i> Предварительный просмотр</h4>
 											<div class="edit_contr_items">
 												<div class="edit_contr_items_list" id="edit_contr_items_list<%- option.language_code %>" data-lang="<%- option.language_code %>"></div>	
-												<h3 class="box-title edit_bottom_drag_text"><i class="fa fa-arrows"></i> Drag & Drop items from templates</h3>
+												<h3 class="box-title edit_bottom_drag_text"><i class="fa fa-arrows"></i> Перетаскивание элементов из шаблонов</h3>
 											</div>	
 										</div>	
 										
@@ -432,11 +387,11 @@
 			<div class="box">
 				<div class="box-footer">
 					<div class="pull-right">
-						<a  href="/category/<%- @pagename %>" class="btn btn-default"><i class="fa fa-angle-left"></i> Back</a>
+						<a  href="/category/<%- @pagename %>" class="btn btn-default"><i class="fa fa-angle-left"></i> Назад</a>
 						<% if @item._id!="new" :%>
-							<button type="button"  class="btn btn-success btn-saveitem"><i class="fa fa-save"></i> Save</button>
+							<button type="button"  class="btn btn-success btn-saveitem"><i class="fa fa-save"></i> Сохранить</button>
 						<% end %>
-						<button type="button"  data-href="/category/<%- @pagename %>" class="btn btn-info andexit btn-saveitem"><i class="fa fa-save"></i> Save and exit</button>
+						<button type="button"  data-href="/category/<%- @pagename %>" class="btn btn-info andexit btn-saveitem"><i class="fa fa-save"></i> Сохранить и выйти</button>
 					</div>
 				</div>	
 			</div>
@@ -452,7 +407,7 @@
         <div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h4 class="modal-title">Template Values 
+				<h4 class="modal-title">Значения шаблона
 					<img src="/admin/img/temp1.png" class="edit_ttpls edit_ttpls1" />
 					<img src="/admin/img/temp5.png" class="edit_ttpls edit_ttpls2" />
 				</h4>
@@ -462,9 +417,9 @@
 					<div class="col-md-3 col-ms-6">	
 					
 						<div class="form-group editor_img1">
-							<label>Image</label>
+							<label>Изображение</label>
 							<div>
-								<button type="button" class="media_btn btn btn-info btn-flat "><i class="fa fa-plus"></i> Select Media</button>
+								<button type="button" class="media_btn btn btn-info btn-flat "><i class="fa fa-plus"></i> Выберите файл</button>
 								<div class="selected_media_itm" style="display:none"    data-src="" data-type="image"  id="primg1"><a class="media_itm_link lightbox btn btn-warning btn-flat" id="k1" href="#" target="_blank" title=""><i class="fa  fa-eye"></i></a><button type="button" class="btn-selectedmediaremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button></div>
 							</div>
 						</div>
@@ -472,21 +427,21 @@
 					
 					<div class="col-md-9 col-ms-6" style="display:none">		
 						<div class="form-group editor_img1">
-							<label>Image caption</label>
+							<label>Подпись к изображению</label>
 							<input type="text" class="form-control" id="prcaption1" placeholder="Enter image caption" value="">
 						</div>
 					</div>	
 					
 					<div class="col-md-12 col-ms-12">							
 						<div class="form-group editor_text1 prtext1">
-							<label>Text</label>
+							<label>Текст</label>
 							<textarea id="prtext1" class="form-control htmlcont_small"  rows="4" cols="50"  ></textarea>
 						</div>	
 					</div>
 				</div>	
 			</div>
 			<div class="modal-footer" style="text-align: left">
-				<button id="edit_save" type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true"><i class="fa fa-save"></i> Save</button>
+				<button id="edit_save" type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true"><i class="fa fa-save"></i> Сохранить</button>
 			</div>
 		</div>
     </div>
@@ -497,13 +452,13 @@
     <div class="modal-dialog">
         <div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title">Preview</h4>
+				<h4 class="modal-title">Предварительный просмотр</h4>
 			</div>
 			<div class="modal-body" id="preview_body">
 				
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-info" data-dismiss="modal" aria-hidden="true">Close</button>
+				<button type="button" class="btn btn-info" data-dismiss="modal" aria-hidden="true">Закрыть</button>
 			</div>
 		</div>
     </div>

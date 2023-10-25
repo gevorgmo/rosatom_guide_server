@@ -1,6 +1,6 @@
 <% extend "layout.ect" %>
 
-<section class="content-header p-profile"><h1><i class="fa fa-user"></i><span> Profile Management</h1></section>
+<section class="content-header p-profile"><h1><i class="fa fa-user"></i><span> Управление профилем</h1></section>
 
 <section class="content">
 	<input type="hidden" id="prid" value="<%- @user.id || "new" %>" />
@@ -8,22 +8,22 @@
 		<div class="col-md-6">
 			<div class="box box-success">
 				<div class="box-header">
-					<h3 class="box-title" style="font-weight:700;font-size:20px;color: #214472;">General</h3>	
+					<h3 class="box-title" style="font-weight:700;font-size:20px;color: #214472;">Общий</h3>	
 				</div>
 				<div class="box-body panel-collapse collapse in" id="collapske3o">		
 					<div class="form-group">
-						<label>Full Name</label>	
+						<label>Полное имя</label>	
 						<input type="text" class="form-control" id="prfullname"  value="<%= @user.fullname %>">
 					</div>
 					<div class="form-group">
-						<label>Username</label>	
+						<label>Имя пользователя</label>	
 						<input type="text" class="form-control" id="prusername"  value="<%= @user.username %>">
 					</div>
 					<div class="form-group">
-						<label>Role</label>	
+						<label>Роль</label>	
 						<select class="form-control selectors" id="prrole" style="width: 100%;">
-								<option  <%- if @user.role==0 then "selected='selected'" %> value="0">User</option>
-								<option  <%- if @user.role==1 then "selected='selected'" %> value="1">Administartor</option>
+								<option  <%- if @user.role==0 then "selected='selected'" %> value="0">Пользователь</option>
+								<option  <%- if @user.role==1 then "selected='selected'" %> value="1">Администратор</option>
 						</select>
 					</div>
 				</div>			
@@ -34,20 +34,20 @@
 			<div class="box box-success">
 				<div class="box-body" >				
 					<div class="form-group">
-						<label>Password</label>	
+						<label>Пароль</label>	
 						<input type="text" class="form-control" id="prpassword1"  value="">
-						<p class="hlps">Minimum 5 characters.</p>
+						<p class="hlps">Минимум 5 символов.</p>
 					</div>
 					<div class="form-group">
-						<label>Re-enter Password</label>	
+						<label>Повторно введите пароль</label>	
 						<input type="text" class="form-control" id="prpassword2"  value="">
-						<p class="hlps">Minimum 5 characters.</p>
+						<p class="hlps">Минимум 5 символов.</p>
 					</div>
 				</div>
 				<div class="box-footer">
 					<div class="pull-right">
-						<a  href="/admin/users/all" class="btn btn-default"><i class="fa fa-angle-left"></i> Cancel</a>
-						<button type="button"   class="btn btn-success btn-saveuser"><i class="fa fa-save"></i> Save</button>
+						<a  href="/admin/users/all" class="btn btn-default"><i class="fa fa-angle-left"></i> Отмена</a>
+						<button type="button"   class="btn btn-success btn-saveuser"><i class="fa fa-save"></i> Сохранить</button>
 					</div>
 				</div>
 			</div>
