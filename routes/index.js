@@ -639,7 +639,7 @@ exports.init = function (app) {
 /////////////////////////////////////////////////////////////
 	app.get('/pdfgenerate', function(req, res) {
 		//GeneratePDF("en", "Gevorg Manukyan", function(_file){
-			SendEmail_to_address("en", "gevorgmo@gmail.com", "certificate_en", function(_err){
+			SendEmail_to_address("ru", "gevorgmo@gmail.com", "certificate_ru", function(_err){
 				console.log(_err);
 				return res.render('templates/test',{});
 			});	
@@ -697,13 +697,13 @@ function SendEmail_to_address(_lang, _email, _filename, _cb){
 	var _email_data={
 		"ru":{
 			subject:"Ваш сертификат",
-			text:"Спасибо, что поддержали Московский договор!",
+			text:"Спасибо,<br>что поддержали<br>Московский<br>договор!",
 			file:"Certificate",
 			name:"Павильон АТОМ"
 		},
 		"en":{
 			subject:"Your certificate",
-			text:"Thank you for supporting the Moscow Treaty!",
+			text:"Thank you<br>for supporting<br>the Moscow<br>Treaty!",
 			file:"Certificate",
 			name:"ATOM Pavilion"
 		}
@@ -725,8 +725,8 @@ function SendEmail_to_address(_lang, _email, _filename, _cb){
 		from: '"'+_email_data[_lang].name+'" <'+config.email.address+'>', // sender address
 		to: _email, // list of receivers
 		subject: _email_data[_lang].subject, // Subject line
-		text: _email_data[_lang].text, // plain text body
-		html: _email_data[_lang].text, // html body
+		//text: _email_data[_lang].text, // plain text body
+		html: '<table align="center"  cellpadding="0" cellspacing="0"  width="100%" style="margin:0 auto;border:0;padding:0;" ><tbody><tr><td style="padding:0;width:100%;text-align:center;background-color:#fff;margin:20px auto  0 auto;border:0;padding:0;"><img src="https://loremipsumcorp.com/templates/atom_logo.jpg" style="width:225px;height:58px;" /></td></tr><tr><td style="padding:0;width:100%;text-align:center;background-color:#fff;margin:0 auto;border:0;padding:0;"><p  style="padding:0px;color:#666666;font-family:Arial, sans-serif;font-size:45px;font-weight:600;margin:50px 0 0 0;line-height:50px;">'+_email_data[_lang].text+'</p></td></tr></tbody></table>', // html body
 		attachments: [
 			{   // stream as an attachment
 				filename: _email_data[_lang].file+'.pdf',
