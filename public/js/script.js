@@ -7,7 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 
 var _audio,_playstatus=false,_playButton,_progress,_progress_drag,_media_type,_trans_id=-1,_time_code=0,_page_load_time=0,_current_status=0,_tmp_class,_map_zoom;
-//var _server_address="https://rosatom.loremipsumcorp.com";
+
 
 $(document).ready(function() {
 	
@@ -150,11 +150,7 @@ $(document).ready(function() {
 	document.addEventListener('gesturestart', (event) => { event.preventDefault(); }, false);
 	
 	
-	
-	
-	 
-	//PostReq(_server_address+"/sessionupdate", {lang:_lang, uuid:(typeof _uuid!="undefined" ? _uuid : "test")}, function(__data){});	
-	
+
 });
 
 
@@ -227,6 +223,8 @@ function GetContent(_url, _cb){
 					_playstatus=true;
 					_audio.play();	
 				} else if((_media_type=="2" || _media_type=="3") && !_playstatus && _audio.src!=""){
+					console.log(_time_code);
+					console.log(_page_load_time);
 					var _duraton=_audio.duration;
 					var _currtime=_time_code+(Date.now()/1000-_page_load_time);
 					if(_currtime>=_duraton) _currtime=_currtime-_duraton;
