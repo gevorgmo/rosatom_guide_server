@@ -199,7 +199,11 @@ function GetContent(_url, _cb){
 		}
 		
 
-		if($('#media_content_data')[0]){		
+		if($('#media_content_data')[0]){
+
+			if($('.media_player_block_text_cont')[0]) $('#trans_cont').css({"height": 540-$('.media_title').height()+'px'});
+			if($('.media_player_block')[0])  $('.media_player_block').css({"height": 570-$('.media_title').height()+'px'});
+		
 			_media_type=$('#media_content_data').attr('data-type');
 			var _media_url=$('#media_content_data').attr('data-url');
 			var _media_id=$('#media_content_data').attr('data-id');
