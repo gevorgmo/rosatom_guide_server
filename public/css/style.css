@@ -125,14 +125,14 @@ h1, h2, h3, h4, h5, h6 {
 ::-webkit-input-placeholder{color:#000;font-family: 'PSFournierProLight';}
 
 
-scrollbar{width:2px; height: 2px;}
-scrollbar-track{background-color:#bcbcbc;border:0}
-scrollbar-thumb{background-color:#C29D69;border-radius:0px}
-scrollbar-thumb:hover{background-color:#C29D69}
-::-webkit-scrollbar{width:2px; height: 2px;}
-::-webkit-scrollbar-track{background-color:#bcbcbc;border:0}
-::-webkit-scrollbar-thumb{background-color:#C29D69;}
-::-webkit-scrollbar-thumb:hover{background-color:#C29D69;}
+scrollbar{width:0px; height: 0px;}
+scrollbar-track{background-color:transparent;border:0}
+scrollbar-thumb{background-color:transparent;border-radius:0px}
+scrollbar-thumb:hover{background-color:transparent}
+::-webkit-scrollbar{width:0px; height: 0px;}
+::-webkit-scrollbar-track{background-color:transparent;border:0}
+::-webkit-scrollbar-thumb{background-color:transparent;}
+::-webkit-scrollbar-thumb:hover{background-color:transparent;}
 
 * {
     -webkit-box-sizing: border-box; 
