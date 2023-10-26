@@ -340,7 +340,14 @@ function GetContent(_url, _cb){
 		}
 
 		_cb();		
-	});
+		
+	}).fail(function() {
+		$('.loader_start').append('<div class="wifierror">'+_trs_wifi+'</div>');
+		$('.loader_start').css({'visibility':'visible','opacity':'1'});
+		_cb();
+	});	
+});
+	
 }
 //////////////////////////////////////////////////////////////////////////////////////////////
 function filterEvents(_typ){
