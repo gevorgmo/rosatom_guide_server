@@ -165,7 +165,9 @@ function GetContent(_url, _cb){
 		
 	}
 	
-	alert("Отсутствует сигнал. В настоящее время сигнал WiFi отсутствует. Пожалуйста, верните медиагид на стойку и следуйте рекомендациям сотрудника.");
+	
+
+	
 	
 	$.get(_url+"?uuid="+(typeof _uuid!="undefined" ? _uuid : "test"), function(data, status){
 		$('.loader_start').css({'visibility':'hidden','opacity':'0'});
@@ -187,6 +189,8 @@ function GetContent(_url, _cb){
 		} else if(data.indexOf('media_iner_page')>-1){
 			if(!$('body').hasClass('media_page')) $('body').addClass('media_page');
 		} else if(data.indexOf('evnet_page')>-1 || data.indexOf('evnet_iner_page')>-1){
+			$('.loader_start')append('<div class="wifierror">Отсутствует сигнал.<br>В настоящее время сигнал WiFi отсутствует. Пожалуйста, верните медиагид на стойку и следуйте рекомендациям сотрудника.</div>');
+			$('.loader_start').css({'visibility':'visible','opacity':'1'});
 			if(!$('body').hasClass('events_page')) $('body').addClass('events_page');
 		} else if(data.indexOf('services_page')>-1 || data.indexOf('services_iner_page')>-1){
 			if(!$('body').hasClass('services_page')) $('body').addClass('services_page');

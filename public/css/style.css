@@ -1444,7 +1444,7 @@ footer{background:#000}
 
 .inner_block_title{padding:0 25px;position:relative}
 
-
+.wifierror{font-family: 'JournalSansNewRegular';color: #fff;font-size: 2rem; line-height: 2.4rem;text-align:center;padding:0 25px;position:absolute;left:0;top:52%}
 
 
 @media only screen and (orientation : landscape) {
