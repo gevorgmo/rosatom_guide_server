@@ -161,7 +161,11 @@ function GetContent(_url, _cb){
 		_audio.src="";
 		_playstatus=false;
 		_audio=null;
+		//$.get(" http://10.0.121.2/disconnectguide", function(data, status){});
+		
 	}
+	
+	alert("Отсутствует сигнал. В настоящее время сигнал WiFi отсутствует. Пожалуйста, верните медиагид на стойку и следуйте рекомендациям сотрудника.");
 	
 	$.get(_url+"?uuid="+(typeof _uuid!="undefined" ? _uuid : "test"), function(data, status){
 		$('.loader_start').css({'visibility':'hidden','opacity':'0'});
