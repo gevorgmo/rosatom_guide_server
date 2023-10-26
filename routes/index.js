@@ -726,7 +726,7 @@ function SendEmail_to_address(_lang, _email, _filename, _cb){
 		to: _email, // list of receivers
 		subject: _email_data[_lang].subject, // Subject line
 		//text: _email_data[_lang].text, // plain text body
-		html: '<table align="center"  cellpadding="0" cellspacing="0"  width="100%" style="margin:0 auto;border:0;padding:0;" ><tbody><tr><td style="padding:0;width:100%;text-align:center;background-color:#fff;margin:20px auto  0 auto;border:0;padding:0;"><img src="https://loremipsumcorp.com/templates/atom_logo.jpg" style="width:225px;height:58px;" /></td></tr><tr><td style="padding:0;width:100%;text-align:center;background-color:#fff;margin:0 auto;border:0;padding:0 20px;"><p  style="padding:0px;color:#666666;font-family:Arial, sans-serif;font-size:45px;font-weight:600;margin:50px 0 0 0;line-height:50px;">'+_email_data[_lang].text+'</p></td></tr></tbody></table>', // html body
+		html: '<table align="center"  cellpadding="0" cellspacing="0"  width="100%" style="margin:0 auto;border:0;padding:0;" ><tbody><tr><td style="width:100%;text-align:center;background-color:#fff;margin:0 auto;border:0;padding:70px 0 0 0;"><img src="https://loremipsumcorp.com/templates/atom_logo.jpg" style="width:225px;height:58px;" /></td></tr><tr><td style="width:100%;text-align:center;background-color:#fff;margin:0;border:0;padding:50px 20px;"><p  style="padding:0px;color:#666666;font-family:Georgia, sans-serif;font-size:45px;font-weight:400;margin:0;line-height:50px;letter-spacing:1px">'+_email_data[_lang].text+'</p></td></tr></tbody></table>', // html body
 		attachments: [
 			{   // stream as an attachment
 				filename: _email_data[_lang].file+'.pdf',
