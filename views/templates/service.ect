@@ -34,27 +34,30 @@
 			
 
 				<% if @page.poster :%><div class="service_blocks_container_img" style="background-image:url(<%- @server_address %><%-  @page.poster %>)"></div><% end %>	
-				
+				<%  ismenu=false %>
 				<div class="serv_categories">
-					<div class="serv_categories_itm selected" data-type="menu">
-						<div class="serv_categories_itm_txt">
-							<% if @page.content :%>
-								<% if @page.content[@lang] :%>
-									<% if @page.content[@lang].menu :%>
-										<% if opt.translations :%><%- opt.translations.menu || "" %><% end %>
-									<% else :%>	
-										<% if opt.translations :%><%- opt.translations.information || "" %><% end %>
-									<% end %>
-								<% end %>
-							<% end %>
-											
-						</div>
-					</div>
+					<% if @page.content :%>
+						<% if @page.content[@lang] :%>
+							<% if @page.content[@lang].menu :%>
+								<div class="serv_categories_itm selected" data-type="menu">
+									<div class="serv_categories_itm_txt">
+										<% if @page.content[@lang].menu :%>	
+											<% if opt.translations :%><%- opt.translations.menu || "" %><% end %>
+										<% else :%>	
+											<% if opt.translations :%><%- opt.translations.information || "" %><% end %>
+										<% end %>			
+									</div>
+								</div>
+							<% end %>	
+						<% end %>
+					<% end %>
+								
+								
 					
 					<% if @page.content :%>
 						<% if @page.content.monday :%>
 							<% if @page.content.monday!="" :%>
-								<div class="serv_categories_itm" data-type="open"><div class="serv_categories_itm_txt"><% if opt.translations :%><%- opt.translations.hours || "" %><% end %></div></div> 
+								<div class="serv_categories_itm <%- if  !ismenu then "selected" %>" data-type="open"><div class="serv_categories_itm_txt"><% if opt.translations :%><%- opt.translations.hours || "" %><% end %></div></div> 
 							<% end %>	
 						<% end %>
 					<% end %>
