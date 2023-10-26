@@ -39,6 +39,7 @@
 					<% if @page.content :%>
 						<% if @page.content[@lang] :%>
 							<% if @page.content[@lang].menu :%>
+								<%  ismenu=true %>
 								<div class="serv_categories_itm selected" data-type="menu">
 									<div class="serv_categories_itm_txt">
 										<% if @page.content[@lang].menu :%>	
@@ -65,7 +66,7 @@
 
 
 				<div class="serv_container">
-					<div data-type="menu">
+					<div data-type="menu" style="<%- if  !ismenu then "display: none" %>">
 						<% if @page.content :%>
 							<% if @page.content[@lang] :%>
 								<% if @page.content[@lang].menu :%>
@@ -92,7 +93,7 @@
 							<% end %>
 						<% end %>	
 					</div>
-					<div data-type="open" style="display: none;">
+					<div data-type="open" style="<%- if ismenu then "display: none" %>">
 						<div class="menu_hours"> 
 							<ul>
 								<li><span><% if opt.translations :%><%- opt.translations.monday || "" %><% end %></span><span><% if @page.content :%><%- @page.content.monday || "" %><% end %></span></li>
