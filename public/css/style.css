@@ -1306,9 +1306,27 @@ footer{background:#000}
 }
 
 .media_player_block{
-	padding: 80px 25px 150px 25px;
 	text-align: center;
 	height: 470px;
+	position:relative;
+}
+
+.media_player_block_iiiinner{
+	position:absolute;
+	top:50%;
+	left:0;
+	width:100%;
+	text-align:center;
+	padding:0 25px;
+	font-size: 3rem;
+	line-height: 3.8rem;
+	transform: translateY(-50%);
+	-webkit-transform: translateY(-50%);
+}
+
+.media_player_block div{
+	font-size: 3rem;
+	line-height: 3.8rem;
 }
 
 .media_player_block_text{
@@ -1391,10 +1409,7 @@ footer{background:#000}
 	-webkit-text-fill-color: transparent;
 }
 
-.media_player_block div{
-	font-size: 3rem;
-	line-height: 3.8rem;
-}
+
 
 .player_button{
 	width: 60px;
