@@ -38,7 +38,7 @@
 				<div class="serv_categories">
 					<% if @page.content :%>
 						<% if @page.content[@lang] :%>
-							<% if @page.content[@lang].menu :%>
+							<% if @page.content[@lang].menu || @page.content[@lang].content :%>
 								<%  ismenu=true %>
 								<div class="serv_categories_itm selected" data-type="menu">
 									<div class="serv_categories_itm_txt">
