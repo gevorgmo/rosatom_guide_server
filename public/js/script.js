@@ -189,8 +189,6 @@ function GetContent(_url, _cb){
 		} else if(data.indexOf('media_iner_page')>-1){
 			if(!$('body').hasClass('media_page')) $('body').addClass('media_page');
 		} else if(data.indexOf('evnet_page')>-1 || data.indexOf('evnet_iner_page')>-1){
-			$('.loader_start').html('<div class="wifierror">'+_trs_wifi+'</div>');
-			$('.loader_start').css({'visibility':'visible','opacity':'1'});
 			if(!$('body').hasClass('events_page')) $('body').addClass('events_page');
 		} else if(data.indexOf('services_page')>-1 || data.indexOf('services_iner_page')>-1){
 			if(!$('body').hasClass('services_page')) $('body').addClass('services_page');
@@ -342,7 +340,7 @@ function GetContent(_url, _cb){
 		_cb();		
 		
 	}).fail(function() {
-		$('.loader_start').append('<div class="wifierror">'+_trs_wifi+'</div>');
+		$('.loader_start').html('<div class="wifierror">'+_trs_wifi+'</div>');
 		$('.loader_start').css({'visibility':'visible','opacity':'1'});
 		_cb();
 	});	
