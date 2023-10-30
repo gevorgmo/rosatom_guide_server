@@ -161,8 +161,8 @@ function GetContent(_url, _cb){
 		_audio.src="";
 		_playstatus=false;
 		_audio=null;
-		//$.get(" http://10.0.121.2/disconnectguide", function(data, status){});
-		
+
+		if (typeof SendUDP === "function") SendUDP("disconnectguide", "10.0.121.2",  8401, function(data){  console.log(data);});
 	}
 	
 	
