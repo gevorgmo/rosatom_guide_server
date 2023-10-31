@@ -189,7 +189,7 @@
 									<div class="row">
 										<div class="col-md-4 col-ms-4">	
 											<div class="form-group">
-												<label>Title <%- if option.language_code=="ru" and (@pagename=="event" or @pagename=="exhibition") then "(required)"%></label>
+												<label>Название <%- if option.language_code=="ru" and (@pagename=="event" or @pagename=="exhibition") then "(required)"%></label>
 												<input type="text" class="form-control  prtitle"  placeholder="Enter Text"  data-lang="<%- option.language_code %>" value="<% if @item.title :%><%- @item.title[option.language_code] || "" %><% end %>">
 											</div>
 										</div>
