@@ -45,20 +45,22 @@
 					
 				<% if aud :%>
 						<div id="media_content_data" data-type="<%- @page.media_type %>" data-id="<%- @page.slug %>" data-url="<% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].media_url || "" %><% end %><% end %>" ></div>				
-						<% if @page.media_type==1 :%>	
-							<% if @page.text :%>
-								<% if @page.text[@lang] :%>
-									<div class="media_player_block_text">
-										<div class="show_trnascript_button" ><% if opt.translations :%><%- opt.translations.transcript || "" %><% end %></div>
-										<div class="media_player_block_text_cont" id="trans_cont">
-											<%- @page.text[@lang] || ""%>
-										</div>		
-									</div>
-								<% end %>	
+							
+						<%  transs=false %>	
+						<% if @page.text :%>
+							<% if @page.text[@lang] :%>
+								<div class="media_player_block_text">
+									<div class="show_trnascript_button" ><% if opt.translations :%><%- opt.translations.transcript || "" %><% end %></div>
+									<div class="media_player_block_text_cont" id="trans_cont">
+										<%- @page.text[@lang] || ""%>
+										<%  transs=true %>	
+									</div>		
+								</div>
 							<% end %>	
 						<% end %>	
+							
 						
-						<% if @page.media_type==2 or @page.media_type==3 :%>	
+						<% if !transs :%>	
 							<div class="media_player_block">				
 								<div class="media_player_block_iiiinner"><% if opt.translations :%><%- opt.translations.listen_audio || "" %><% end %></div>
 							</div>	
