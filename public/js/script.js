@@ -280,6 +280,7 @@ function GetContent(_url, _cb){
 									if(!_find_media) {
 										document.getElementById('progress_wrap').style.display="none";
 										if(_media_type=="1") document.getElementById('player_button').style.display="none";
+										if(!document.getElementById('trans_cont') &&  document.getElementById('media_player_block')) document.getElementById('media_player_block').style.display="none";
 									}
 								}	
 							}
