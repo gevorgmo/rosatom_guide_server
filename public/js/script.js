@@ -262,6 +262,7 @@ function GetContent(_url, _cb){
 						if(__data.success){
 							if(__data.data){
 								if(__data.data.videos){
+									var _find_media=false;
 									for(var _t=0;_t<__data.data.videos.length;_t++){
 										if(__data.data.videos[_t].code_name.toString()==_media_id){
 											_time_code=__data.data.videos[_t].timeCode;
@@ -269,12 +270,16 @@ function GetContent(_url, _cb){
 											for(var _k=0;_k<__data.data.videos[_t].audios.length;_k++){
 												if(__data.data.videos[_t].audios[_k].lang.toLowerCase()==_lang){
 													_audio.src =(__data.data.videos[_t].audios[_k].audio.indexOf('http')==0 ? __data.data.videos[_t].audios[_k].audio.indexOf('http') : "http://10.0.121.2"+__data.data.videos[_t].audios[_k].audio);
-													//console.log(Date.now());
+													_find_media=true;
 													break;
 												}	
 											}
 											break;
 										}
+									}
+									if(!_find_media) {
+										document.getElementById('progress_wrap').style.display="none";
+										if((_media_type=="1") document.getElementById('player_button').style.display="none";
 									}
 								}	
 							}
