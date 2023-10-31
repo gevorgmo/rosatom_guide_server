@@ -228,7 +228,7 @@
 									
 									<% if @pagename!="service" :%>
 										<div class="row">
-											<div class="col-md-12 col-ms-12 mediatyp1  mediatyp4">
+											<div class="col-md-12 col-ms-12 <% if @pagename=="media" :%>mediatyp mediatyp1  mediatyp4<% end %>">
 												<div class="form-group">
 													<% if @pagename=="media" :%>
 														<label>Стенограмма</label>
