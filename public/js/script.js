@@ -279,7 +279,7 @@ function GetContent(_url, _cb){
 									}
 									if(!_find_media) {
 										document.getElementById('progress_wrap').style.display="none";
-										if((_media_type=="1") document.getElementById('player_button').style.display="none";
+										if(_media_type=="1") document.getElementById('player_button').style.display="none";
 									}
 								}	
 							}
