@@ -6,7 +6,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 
-var _audio,_playstatus=false,_playButton,_progress,_progress_drag,_media_type,_trans_id=-1,_time_code=0,_page_load_time=0,_current_status=0,_tmp_class,_map_zoom;
+var _audio,_playstatus=false,_playButton,_progress,_progress_drag,_media_type,_media_id,_trans_id=-1,_time_code=0,_page_load_time=0,_current_status=0,_tmp_class,_map_zoom;
 
 
 $(document).ready(function() {
@@ -161,7 +161,8 @@ function GetContent(_url, _cb){
 		_audio.src="";
 		_playstatus=false;
 		_audio=null;
-
+		_media_id=null;
+		_media_type=null;
 		if (typeof SendUDP === "function") SendUDP("disconnectguide", "10.0.121.2",  8401, function(data){  console.log(data);});
 	}
 	
@@ -171,6 +172,12 @@ function GetContent(_url, _cb){
 	
 	$.get(_url+"?uuid="+(typeof _uuid!="undefined" ? _uuid : "test"), function(data, status){
 		$('.loader_start').css({'visibility':'hidden','opacity':'0'});
+		
+		if($('.wifierror')[0]){ 
+			$('.wifierror').remove();
+			$('.loader_start img').css({'visibility':'visible','opacity':'1'});
+		}
+		
 		$('#global_wrap').empty();
 		data=data.replaceAll(/"\/files\//gi, '"'+_server_address+'/files/');
 		data=data.replaceAll(/"\/css\/images\//gi, '"'+_server_address+'/css/images/');
@@ -212,7 +219,7 @@ function GetContent(_url, _cb){
 		
 			_media_type=$('#media_content_data').attr('data-type');
 			var _media_url=$('#media_content_data').attr('data-url');
-			var _media_id=$('#media_content_data').attr('data-id');
+			_media_id=$('#media_content_data').attr('data-id');
 			
 			if(_media_type!="4") _media_url="http://10.0.121.2/api/v1/video/index";
 			
@@ -229,17 +236,13 @@ function GetContent(_url, _cb){
 			}
 			
 			_audio.addEventListener('canplay', function(){
-				if((_media_type=="1" || _media_type=="4" ) && !_playstatus && _audio.src!=""){
+				if((_media_type=="1") && !_playstatus && _audio.src!=""){
 					_playstatus=true;
 					_audio.play();	
-				} else if((_media_type=="2" || _media_type=="3") && !_playstatus && _audio.src!=""){
+				} else if((_media_type=="2" || _media_type=="3" || _media_type=="4") && !_playstatus && _audio.src!=""){
 					var _duraton=_audio.duration;
 					var _currtime=_time_code+(Date.now()/1000-_page_load_time);
 					if(_currtime>=_duraton) _currtime=_currtime-_duraton;	
-					console.log(_time_code);
-					console.log(_page_load_time);
-					console.log(_currtime);
-					console.log(_duraton);
 					_audio.currentTime=_currtime;
 					_playstatus=true;
 					_audio.play();	
@@ -289,9 +292,7 @@ function GetContent(_url, _cb){
 				});
 			}
 			
-			if(_media_type=="4"){
-				_audio.src =_media_url;
-			}
+
 			
 			if($('.media_player_block_text_cont')[0]){
 				var _match = $('.media_player_block_text_cont').text();
@@ -346,8 +347,10 @@ function GetContent(_url, _cb){
 		_cb();		
 		
 	}).fail(function() {
-		$('.loader_start').html('<div class="wifierror">'+_trs_wifi+'</div>');
+		$('.loader_start').append('<div class="wifierror">'+_trs_wifi+'</div>');
+		$('.loader_start img').css({'visibility':'hidden','opacity':'0'});
 		$('.loader_start').css({'visibility':'visible','opacity':'1'});
+		setTimeout(function(){ GetContent(_url,function(){});},2000);
 		_cb();
 	});	
 
@@ -502,10 +505,6 @@ function PostReq(_url, _data, _cb){
 	});			
 }
 /////////////////////////////////////////////////////////////////
-function BroadCastHandl(data,info){
-	alert(data);
-}
-/////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
@@ -600,52 +599,57 @@ function pointerup_handler(){
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/*
-var _connectionStatus=false;
-var uws;
-
-const socketMessageListener = (event) => {
-	new Response(event.data).arrayBuffer().then(buffer=> {
-		let json = JSON.parse(String.fromCharCode.apply(null, new Uint8Array(buffer)));
-		if(json.status){
-			if(json.status=="eventresp"){
-				Socket_onMyEventGet(json.data);
-			} else if(json.status=="roomevent"){
-				Socket_onRoomEventsGet(json.data);
-			} 	
-		} 
-	})
-   
-};
-
-const socketOpenListener = (event) => {
-	console.log('connected');
-	_connectionStatus=true;
-};
-
-const socketCloseListener = (event) => {
-   if (uws) {
-		console.log('disconnected');
-		_connectionStatus=false;
-   }
-   uws = new WebSocket('wss://10.0.121.47/socket/');
-   uws.binaryType = "arraybuffer"; 
-   uws.addEventListener('open', socketOpenListener);
-   uws.addEventListener('message', socketMessageListener);
-   uws.addEventListener('close', socketCloseListener);
-};
-
-function Socket_onRoomEventsGet(_data){
-	alert(JSON.stringify(_data));
+/////////////////////////////////////////////////////////////////
+function BroadCastHandl(data,info){
+	//alert(data);
+	var _comma=data.split(";");
+	if(_comma.length>=2 && _media_id){
+		if(_media_id==_comma[1]){	
+			if(_comma[0]=="play" && _comma.length==2){
+					GetReq("http://10.0.121.2/api/v1/video/index", function(__data){
+						if(__data){
+							if(__data.success){
+								if(__data.data){
+									if(__data.data.videos){
+										var _find_media=false;
+										for(var _t=0;_t<__data.data.videos.length;_t++){
+											if(__data.data.videos[_t].code_name.toString()==_comma[2]){
+												_time_code=__data.data.videos[_t].timeCode;
+												_page_load_time=Date.now()/1000;
+												for(var _k=0;_k<__data.data.videos[_t].audios.length;_k++){
+													if(__data.data.videos[_t].audios[_k].lang.toLowerCase()==_lang){
+														_audio.src =(__data.data.videos[_t].audios[_k].audio.indexOf('http')==0 ? __data.data.videos[_t].audios[_k].audio.indexOf('http') : "http://10.0.121.2"+__data.data.videos[_t].audios[_k].audio);
+														_find_media=true;
+														break;
+													}	
+												}
+												break;
+											}
+										}
+										if(!_find_media) {
+											document.getElementById('progress_wrap').style.display="none";
+											if(!document.getElementById('trans_cont') &&  document.getElementById('media_player_block')) document.getElementById('media_player_block').style.display="none";
+										}
+									}	
+								}
+							}
+						}	
+					});
+			} else if(_comma[0]=="stop" && _playstatus  && _audio){
+				_audio.pause();
+				_playstatus=false;
+			} else if(_comma[0]=="resume" && _playstatus  && _audio){
+				_audio.play();
+				_playstatus=true;	
+			} else if(_comma[0]=="mute" && _playstatus  && _audio){
+				_audio.muted = true;
+			} else if(_comma[0]=="unmute" && _playstatus  && _audio){
+				_audio.muted = false;
+			} else if(_comma[0]=="seek" && _playstatus  && _audio){
+				_audio.currentTime=parseFloat(_comma[1]);
+				_playstatus=true;
+				_audio.play();	
+			}
+		}
+	}	
 }
-
-function Socket_onMyEventGet(_data){
-	alert(JSON.stringify(_data));
-}
-
-function Socket_SendEvent(_data){
-	if(_connectionStatus) uws.send(JSON.stringify({"status":"event", "data":_data}));
-}
-
-socketCloseListener();
-*/
