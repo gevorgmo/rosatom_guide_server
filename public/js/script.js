@@ -163,12 +163,10 @@ function GetContent(_url, _cb){
 		_audio=null;
 		_media_id=null;
 		_media_type=null;
-		if (typeof SendUDP === "function") SendUDP("disconnectguide", "10.0.121.2",  8401, function(data){  console.log(data);});
+		if (typeof SendUDP === "function") SendUDP("disconnectguide", "10.0.121.2",  6024, function(data){  console.log(data);});
 	}
 	
-	
 
-	
 	
 	$.get(_url+"?uuid="+(typeof _uuid!="undefined" ? _uuid : "test"), function(data, status){
 		$('.loader_start').css({'visibility':'hidden','opacity':'0'});
