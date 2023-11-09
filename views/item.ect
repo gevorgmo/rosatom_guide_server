@@ -49,7 +49,7 @@
 										<option value="1" <% if @item.media_type :%><% if @item.media_type==1 :%>selected<% end %><% end %>>Статический контент</option>
 										<option value="2" <% if @item.media_type :%><% if @item.media_type==2 :%>selected<% end %><% end %>>Зацикленное видео со звуком</option>
 										<option value="3" <% if @item.media_type :%><% if @item.media_type==3 :%>selected<% end %><% end %>>Стартовое видео со звуком</option>
-										<option value="4" <% if @item.media_type :%><% if @item.media_type==4 :%>selected<% end %><% end %>>URL-радио</option>
+										<option value="4" <% if @item.media_type :%><% if @item.media_type==4 :%>selected<% end %><% end %>>Динамическое аудио</option>
 									</select>
 								</div>	
 							</div>
@@ -218,7 +218,7 @@
 											
 										<% if @pagename=="media" :%>							
 											<div class="col-md-4 col-ms-4">		
-												<div class="form-group mediatyp  mediatyp4" <% if @item.media_type :%><% if @item.media_type!=2 and @item.media_type!=3 :%>style="display:none"<% end %><% end %>>	
+												<div class="form-group mediatyp  mediatyp5" <% if @item.media_type :%><% if @item.media_type!=2 and @item.media_type!=3 :%>style="display:none"<% end %><% end %>>	
 													<label>URL медии</label>
 													<input type="text" class="form-control prtxt" data-id="media_url" placeholder="Enter URL" data-lang="<%- option.language_code %>" value="<% if @item.content :%><% if @item.content[option.language_code] :%><%- @item.content[option.language_code].media_url || "" %><% end %><% end %>">
 												</div>	
