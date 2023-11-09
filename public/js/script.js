@@ -291,11 +291,10 @@ function GetContent(_url, _cb){
 						if(!document.getElementById('trans_cont') &&  document.getElementById('media_player_block')) document.getElementById('media_player_block').style.display="none";
 					}
 					
-					setTimeout(function(){ console.log(30); $('.loader_start').css({'visibility':'hidden','opacity':'0'});},400);
+					 $('.loader_start').css({'visibility':'hidden','opacity':'0'});
 					
 				});
 			} else {
-				console.log(20);
 				$('.loader_start').css({'visibility':'hidden','opacity':'0'});
 			}
 			
@@ -317,7 +316,6 @@ function GetContent(_url, _cb){
 				}
 			}
 		} else {
-		console.log(10);
 			$('.loader_start').css({'visibility':'hidden','opacity':'0'});
 		}
 		
