@@ -162,9 +162,10 @@ a:focus,a:visited,a:active{
 	margin:0;
 	padding:0;
 	background-color:#000;
-
+/*
 	transition: all 0.5s  ease;
 	-webkit-transition: all 0.5s ease; 
+	*/
 }
 .loader img{
 	margin: 0;
