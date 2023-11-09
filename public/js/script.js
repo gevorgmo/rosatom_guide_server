@@ -163,8 +163,7 @@ function GetContent(_url, _cb){
 		_playstatus=false;
 		_audio=null;
 		_media_id=null;
-		_media_type=null;
-		if (typeof SendUDP === "function") SendUDP("disconnectguide", "10.0.121.2",  6024, function(data){  console.log(data);});
+		_media_type=null;	
 	}
 	
 
@@ -247,6 +246,9 @@ function GetContent(_url, _cb){
 					_audio.play();	
 				}	
 			});
+			
+			if (typeof SendUDP === "function" && _media_type=="4") SendUDP("start "+_media_id, "10.0.121.2",  6024, function(data){  console.log(data);});
+			
 			
 			if(_media_type=="1"){
 				_progress_drag= document.getElementById('progress_drag');
