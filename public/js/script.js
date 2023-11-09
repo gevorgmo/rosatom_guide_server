@@ -290,7 +290,7 @@ function GetContent(_url, _cb){
 						if(!document.getElementById('trans_cont') &&  document.getElementById('media_player_block')) document.getElementById('media_player_block').style.display="none";
 					}
 					
-					$('.loader_start').css({'visibility':'hidden','opacity':'0'});
+					setTimeout(function(){ $('.loader_start').css({'visibility':'hidden','opacity':'0'});},500);
 					
 				});
 			} else {
