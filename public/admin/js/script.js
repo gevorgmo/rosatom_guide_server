@@ -636,7 +636,7 @@ $(document).ready(function(){
 		if($('.prtranscript')[0]){
 			$('.prtranscript').each(function(){
 				_data['text'][$(this).attr('data-lang')]=$(this).val();
-				if($(this).attr('data-lang')=="ru" && ($('#prcategory').val()=="event" || ($('#prcategory').val()=="media" && _data["media_type"]!="2" && _data["media_type"]!="3" && _data["media_type"]!="1")) && $(this).val().trim()==""){
+				if($(this).attr('data-lang')=="ru" && ($('#prcategory').val()=="event" || ($('#prcategory').val()=="media" && _data["media_type"]!="4" &&  _data["media_type"]!="2" && _data["media_type"]!="3" && _data["media_type"]!="1")) && $(this).val().trim()==""){
 					noerror=false;
 				}
 			});
