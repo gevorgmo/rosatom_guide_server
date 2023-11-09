@@ -247,7 +247,7 @@ function GetContent(_url, _cb){
 				}	
 			});
 			
-			if (typeof SendUDP === "function" && _media_type=="4") SendUDP("start "+_media_id, "10.0.121.2",  6024, function(data){  console.log(data);});
+			if (typeof SendUDP === "function" && _media_type=="4") SendUDP("start;"+_media_id, "10.0.121.2",  6024, function(data){  console.log(data);});
 			
 			
 			if(_media_type=="1"){
