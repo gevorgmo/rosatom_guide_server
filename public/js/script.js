@@ -169,7 +169,7 @@ function GetContent(_url, _cb){
 
 	
 	$.get(_url+"?uuid="+(typeof _uuid!="undefined" ? _uuid : "test"), function(data, status){
-		$('.loader_start').css({'visibility':'hidden','opacity':'0'});
+		
 		
 		if($('.wifierror')[0]){ 
 			$('.wifierror').remove();
@@ -183,7 +183,7 @@ function GetContent(_url, _cb){
 		
 		$('#global_wrap').append(data);
 		
-		console.log(_url);
+		//console.log(_url);
 		
 		document.body.className="";
 		
@@ -259,11 +259,12 @@ function GetContent(_url, _cb){
 			
 			if(_media_type!="4"){
 				GetReq(_media_url, function(__data){
+					var _find_media=false;
+					
 					if(__data){
 						if(__data.success){
 							if(__data.data){
-								if(__data.data.videos){
-									var _find_media=false;
+								if(__data.data.videos){		
 									for(var _t=0;_t<__data.data.videos.length;_t++){
 										if(__data.data.videos[_t].code_name.toString()==_media_id){
 											_time_code=__data.data.videos[_t].timeCode;
@@ -278,16 +279,22 @@ function GetContent(_url, _cb){
 											break;
 										}
 									}
-									if(!_find_media) {
-										document.getElementById('progress_wrap').style.display="none";
-										if(_media_type=="1") document.getElementById('player_button').style.display="none";
-										if(!document.getElementById('trans_cont') &&  document.getElementById('media_player_block')) document.getElementById('media_player_block').style.display="none";
-									}
 								}	
 							}
 						}
-					}	
+					}
+
+					if(!_find_media) {
+						document.getElementById('progress_wrap').style.display="none";
+						if(_media_type=="1") document.getElementById('player_button').style.display="none";
+						if(!document.getElementById('trans_cont') &&  document.getElementById('media_player_block')) document.getElementById('media_player_block').style.display="none";
+					}
+					
+					$('.loader_start').css({'visibility':'hidden','opacity':'0'});
+					
 				});
+			} else {
+				$('.loader_start').css({'visibility':'hidden','opacity':'0'});
 			}
 			
 
@@ -307,6 +314,8 @@ function GetContent(_url, _cb){
 					}
 				}
 			}
+		} else {
+			$('.loader_start').css({'visibility':'hidden','opacity':'0'});
 		}
 		
 		
