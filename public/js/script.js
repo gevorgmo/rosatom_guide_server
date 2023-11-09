@@ -259,6 +259,7 @@ function GetContent(_url, _cb){
 				_playButton.addEventListener('click', playAudio);	
 			}	
 				
+			console.log(_media_type);
 			
 			if(_media_type!="4"){
 				GetReq(_media_url, function(__data){
