@@ -15,8 +15,7 @@ $(document).ready(function() {
 	
  
 	$('body').on('click', 'a', function(evt) {
-		evt.preventDefault();
-		$('.loader_start').css({'visibility':'visible','opacity':'1'});
+		evt.preventDefault();	
 		var _link=$(this).attr('href');
 		$('.guide_blocks_container').hide();	
 		$('#global_wrap').show();	
@@ -43,7 +42,6 @@ $(document).ready(function() {
 				StopScan(); 
 				$('.guide_blocks_container').hide();	
 				$('#global_wrap').show();
-				$('.loader_start').css({'visibility':'visible','opacity':'1'});
 				GetContent(_server_address+"/explore/"+_lang+"/"+_media,function(){});
 			}); 
 		}
@@ -157,6 +155,8 @@ $(document).ready(function() {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 function GetContent(_url, _cb){
+	$('.loader_start').css({'visibility':'visible','opacity':'1'});
+	
 	if(_playstatus || _audio){
 		_audio.pause();
 		_audio.src="";
