@@ -42,7 +42,8 @@ $(document).ready(function() {
 				var _media=_resp.replace('http://',"").replace('https://',"");
 				StopScan(); 
 				$('.guide_blocks_container').hide();	
-				$('#global_wrap').show();	
+				$('#global_wrap').show();
+				$('.loader_start').css({'visibility':'visible','opacity':'1'});
 				GetContent(_server_address+"/explore/"+_lang+"/"+_media,function(){});
 			}); 
 		}
@@ -290,7 +291,7 @@ function GetContent(_url, _cb){
 						if(!document.getElementById('trans_cont') &&  document.getElementById('media_player_block')) document.getElementById('media_player_block').style.display="none";
 					}
 					
-					setTimeout(function(){ console.log(100); $('.loader_start').css({'visibility':'hidden','opacity':'0'});},600);
+					setTimeout(function(){ $('.loader_start').css({'visibility':'hidden','opacity':'0'});},200);
 					
 				});
 			} else {
