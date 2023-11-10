@@ -297,6 +297,7 @@ function GetContent(_url, _cb){
 					
 				});
 			} else {
+				console.log("start;"+_media_id);
 				$('.loader_start').css({'visibility':'hidden','opacity':'0'});
 				if (typeof SendUDP === "function") SendUDP("start;"+_media_id, "10.0.121.2",  6024, function(data){  console.log("start;"+_media_id);});
 			}
@@ -650,7 +651,7 @@ function BroadCastHandl(data,info){
 			} else if(_comma[0]=="stop" && _playstatus  && _audio){
 				_audio.pause();
 				_playstatus=false;
-			} else if(_comma[0]=="resume" && _playstatus  && _audio){
+			} else if(_comma[0]=="resume" && !_playstatus  && _audio){
 				_audio.play();
 				_playstatus=true;	
 			} else if(_comma[0]=="mute" && _playstatus  && _audio){
@@ -659,7 +660,6 @@ function BroadCastHandl(data,info){
 				_audio.muted = false;
 			} else if(_comma[0]=="seek" && _playstatus  && _audio){
 				_audio.currentTime=parseFloat(_comma[1]);
-				_playstatus=true;
 				_audio.play();	
 			}
 		}
