@@ -238,10 +238,9 @@ function GetContent(_url, _cb){
 					_playstatus=true;
 					_audio.play();	
 				} else if((_media_type=="2" || _media_type=="3" || _media_type=="4") && !_playstatus && _audio.src!=""){
-					console.log(100);
 					var _duraton=_audio.duration;
 					var _currtime=_time_code+(Date.now()/1000-_page_load_time);
-					if(_currtime>=_duraton) _currtime=_currtime-_duraton;	
+					if(_currtime>=_duraton) _currtime=0;	
 					_audio.currentTime=_currtime;
 					_playstatus=true;
 					_audio.play();	
