@@ -219,7 +219,7 @@ function GetContent(_url, _cb){
 			var _media_url=$('#media_content_data').attr('data-url');
 			_media_id=$('#media_content_data').attr('data-id');
 			
-			if(_media_type!="4") _media_url="http://10.0.121.2/api/v1/video/index";
+			if(_media_type!="4" && _media_type!="3") _media_url="http://10.0.121.2/api/v1/video/index";
 			
 			
 			if(document.getElementById('progress')){
@@ -260,7 +260,7 @@ function GetContent(_url, _cb){
 			}	
 				
 			
-			if(_media_type!="4"){
+			if(_media_type!="4" && _media_type!="3"){
 				GetReq(_media_url, function(__data){
 					var _find_media=false;
 					
