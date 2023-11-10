@@ -612,11 +612,11 @@ function pointerup_handler(){
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
 function BroadCastHandl(data,info){
-	alert(data);
+	//alert(data);
 	var _comma=data.split(";");
 	if(_comma.length>=2 && _media_id){
 		if(_media_id==_comma[1]){	
-			if(_comma[0]=="play" && _comma.length==2){
+			if(_comma[0]=="play" && _comma.length==3){
 					GetReq("http://10.0.121.2/api/v1/video/index", function(__data){
 						if(__data){
 							if(__data.success){
