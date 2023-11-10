@@ -238,6 +238,7 @@ function GetContent(_url, _cb){
 					_playstatus=true;
 					_audio.play();	
 				} else if((_media_type=="2" || _media_type=="3" || _media_type=="4") && !_playstatus && _audio.src!=""){
+					console.log(100);
 					var _duraton=_audio.duration;
 					var _currtime=_time_code+(Date.now()/1000-_page_load_time);
 					if(_currtime>=_duraton) _currtime=_currtime-_duraton;	
@@ -270,7 +271,7 @@ function GetContent(_url, _cb){
 								if(__data.data.videos){		
 									for(var _t=0;_t<__data.data.videos.length;_t++){
 										if(__data.data.videos[_t].code_name.toString()==_media_id){
-											_time_code=__data.data.videos[_t].timeCode;
+											_time_code=parseFloat(__data.data.videos[_t].timeCode);
 											_page_load_time=Date.now()/1000;
 											for(var _k=0;_k<__data.data.videos[_t].audios.length;_k++){
 												if(__data.data.videos[_t].audios[_k].lang.toLowerCase()==_lang){
@@ -625,7 +626,7 @@ function BroadCastHandl(data,info){
 										var _find_media=false;
 										for(var _t=0;_t<__data.data.videos.length;_t++){
 											if(__data.data.videos[_t].code_name.toString()==_comma[2]){
-												_time_code=__data.data.videos[_t].timeCode;
+												_time_code=parseFloat(__data.data.videos[_t].timeCode);
 												_page_load_time=Date.now()/1000;
 												for(var _k=0;_k<__data.data.videos[_t].audios.length;_k++){
 													if(__data.data.videos[_t].audios[_k].lang.toLowerCase()==_lang){
