@@ -296,6 +296,11 @@ function GetContent(_url, _cb){
 					$('.loader_start').css({'visibility':'hidden','opacity':'0'});
 					
 				});
+				
+				///////////////////////// OGNENSK
+				if (typeof SendUDP === "function" && _media_id=="c6") SendUDP("run00", "10.0.121.14",  6024, function(data){  console.log("start;"+_media_id);});
+				
+				
 			} else {
 				console.log("start;"+_media_id);
 				$('.loader_start').css({'visibility':'hidden','opacity':'0'});
