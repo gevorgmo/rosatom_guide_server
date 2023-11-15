@@ -7,17 +7,16 @@
 <% end %>
 
 <%  aud=false %>
-<% if @page.media_type==1 and @page.audio:%>
-	<% if @page.audio[@lang] :%>
-			<%  aud=true %>
-	<% end %>
+<% if @page.media_type==1 or @page.media_type==2 or @page.media_type==3 or @page.media_type==4 :%>
+	<%  aud=true %>
 <% end %>
-<% if @page.media_type==2 or @page.media_type==3  or @page.media_type==4 :%>
+
+<% if @page.media_type==5 :%>
 	<% if @page.content :%>
 		<% if @page.content[@lang] :%>
 			<% if @page.content[@lang].media_url :%>
 				<%  aud=true %>
-			<% end %>
+			<% end %>	
 		<% end %>	
 	<% end %>
 <% end %>
@@ -46,28 +45,30 @@
 				<h2 class="media_title"><% if @page.title :%><%- @page.title[@lang] || "" %><% end %></h2>
 					
 				<% if aud :%>
-						<div id="media_content_data" data-type="<%- @page.media_type %>"  data-url="<% if @page.media_type==1 :%><% if @page.audio :%><%-  @server_address %><%- (@page.audio[@lang] || "") %><% end %><% end %><% if @page.media_type==2 or @page.media_type==3 or @page.media_type==4  :%><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].media_url || "" %><% end %><% end %><% end %>" data-id="<% if @page.media_type==2 or @page.media_type==3 :%><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].media_id || "" %><% end %><% end %><% end %>"></div>				
-						<% if @page.media_type==1 :%>	
-							<% if @page.text :%>
-								<% if @page.text[@lang] :%>
-									<div class="media_player_block_text">
-										<div class="show_trnascript_button" ><% if opt.translations :%><%- opt.translations.transcript || "" %><% end %></div>
-										<div class="media_player_block_text_cont" id="trans_cont">
-											<%- @page.text[@lang] || ""%>
-										</div>		
-									</div>
-								<% end %>	
+						<div id="media_content_data" data-type="<%- @page.media_type %>" data-id="<%- @page.slug %>" data-url="<% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].media_url || "" %><% end %><% end %>" ></div>				
+							
+						<%  transs=false %>	
+						<% if @page.text :%>
+							<% if @page.text[@lang] :%>
+								<div class="media_player_block_text">
+									<div class="show_trnascript_button" ><% if opt.translations :%><%- opt.translations.transcript || "" %><% end %></div>
+									<div class="media_player_block_text_cont" id="trans_cont">
+										<%- @page.text[@lang] || ""%>
+										<%  transs=true %>	
+									</div>		
+								</div>
 							<% end %>	
 						<% end %>	
+							
 						
-						<% if @page.media_type==2 or @page.media_type==3 :%>	
-							<div class="media_player_block">				
-								<div>Listen to the audio <br />and watch the screen</div>
+						<% if !transs :%>	
+							<div class="media_player_block"  id="media_player_block">				
+								<div class="media_player_block_iiiinner"><% if opt.translations :%><%- opt.translations.listen_audio || "" %><% end %></div>
 							</div>	
 						<% end %>	
 						
 						<% if @page.media_type!=4 :%>	
-							<div  class="progress_wrap">
+							<div  class="progress_wrap" id="progress_wrap">
 								<div  class="progressbar">
 									<div id="player_current_time"></div>
 									<div id="player_total_time"></div>

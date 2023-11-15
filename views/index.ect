@@ -1,12 +1,12 @@
 <% extend "layout.ect" %>
-<section class="content-header"><h1><i class="fa fa-dashboard"></i> Dashboard</h1></section>
+<section class="content-header"><h1><i class="fa fa-dashboard"></i> Общий</h1></section>
 
 <section class="content">
 	<div class="row">
 		<div class="col-md-7">
 			<div class="box">
 				<div class="box-header with-border">
-					<h3 class="box-title">Most viewed content</h3>
+					<h3 class="box-title">Самый просматриваемый контент</h3>
 				</div>
 				<div class="box-body">
 					<div class="table-responsive">
@@ -14,9 +14,9 @@
 							<thead>
 								<tr>
 									<th></th>
-									<th>Category</th>
-									<th>Title</th>
-									<th>Views</th>
+									<th>Категория</th>
+									<th>Заголовок</th>
+									<th>Просмотры</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -38,17 +38,17 @@
 			<div class="col-md-5">
 			<div class="box">
 				<div class="box-header with-border">
-					<h3 class="box-title">Language statistics</h3>
+					<h3 class="box-title">Языковая статистика</h3>
 				</div>
 				<div class="box-body">
 					<div class="table-responsive">
 						<table class="table no-margin">
 							<thead>
 								<tr>
-									<th>Name</th>
-									<th>Views</th>
-									<th>Session length</th>
-									<th>QR scans in the session</th>
+									<th></th>
+									<th>Просмотры</th>
+									<th>Продолжительность сеанса</th>
+									<th>QR сканы в сеансе</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -56,7 +56,7 @@
 									<tr>	
 										<td class="uppercase"><a href="/options/<%- option._id %>"><%- option.language_title %></a></td>
 										<td><%- option.views %></td>
-										<td><%- ((option.sessions_time || 0)/(option.sessions_count || 1)).toFixed(2) %> seconds</td>
+										<td><%- ((option.sessions_time || 0)/(option.sessions_count || 1)).toFixed(2) %> секунды</td>
 										<td><%- ((option.qr_count || 0)/(option.sessions_count || 1)).toFixed(2) %></td>
 									</tr>
 								<% end %>

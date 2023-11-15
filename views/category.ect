@@ -1,19 +1,19 @@
 <% extend "layout.ect" %>
-<% all_category_titles={"exhibition":"All Exhibitions","media":"All Media","event":"All Eents","service":"All Services"} %>
-<% all_global_pages={"home":"Home Page","events":"Eents Page"} %>
-<% all_media_types=["", "Static content", "Loop video with audio", "Startup video with audio", "URL radio"] %>
+<% all_category_titles={"exhibition":"Все выставки","media":"Все медии","event":"Все события","service":"Все услуги"} %>
+<% all_global_pages={"home":"Домашняя страница","events":"Страница событий"} %>
+<% all_media_types=["", "Статический контент", "Зацикленное видео со звуком", "Стартовое видео со звуком", "URL-радио"] %>
 
 
 <section class="content-header p-category"><h1><%- if all_category_titles[@pagename] then all_category_titles[@pagename] else "" %></h1></section>
 
 <section class="content-header">
 
-	<a href="/item/new?category=<%- @pagename %>" class="btn btn-primary"><i class="fa fa-plus"></i>Create new</a>
+	<a href="/item/new?category=<%- @pagename %>" class="btn btn-primary"><i class="fa fa-plus"></i> Создавать новое</a>
 
 	<% if @pagename=="media" :%>
 		<div style="display:none">	
 			<select class="form-control" id="prexibitions" style="width: 100%;">
-				<option value="">All Exhibitions</option>
+				<option value="">Все выставки</option>
 				<% for exhibit in @exhibitions : %>
 					<option value="<%- exhibit._id %>"><% if exhibit.title :%><%- exhibit.title["ru"] || "" %><% end %></option>
 				<% end %>	
@@ -31,23 +31,23 @@
 				<thead>
 					<tr>
 						<% if @pagename=="event" :%>
-							<th>Date</th>
+							<th>Дата</th>
 						<% else if @pagename=="media" :%>
 							<th>QR</th>
 						<% else :%>	
-							<th>Sorting Order</th>
+							<th>Порядок сортировки</th>
 						<% end %>	
-						<th>Title</th>
+						<th>Заголовок</th>
 						<% if @pagename=="media" :%>
-							<th>Media Type</th>
-							<th>Exhibition</th>
+							<th>Тип медии</th>
+							<th>Выставка</th>
 						<% end %>
 						<% if @pagename=="media" or @pagename=="exhibition" :%>
-							<th>Floor</th>
+							<th>Этаж</th>
 						<% end %>	
-						<th>Views</th>
-						<th>Status</th>	
-						<th class="no-sort">Delete</th>
+						<th>Просмотры</th>
+						<th>Статус</th>	
+						<th class="no-sort">Удалить</th>
 					</tr>
 				</thead>
 				<tbody>	

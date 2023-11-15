@@ -40,6 +40,10 @@ var PageSchema = new Schema({
         type: Number,
         default: 0
     },
+	event_id_on_web: {
+        type: String,
+        trim: true
+    },
 	published: {type: Date, default: Date.now},
 	created: {type: Date, default: Date.now}
 });

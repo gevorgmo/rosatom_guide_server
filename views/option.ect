@@ -1,6 +1,6 @@
 <% extend "layout.ect" %>
 
-<section class="content-header p-option"><h1 class="categoryname">Option Management</h1></section>
+<section class="content-header p-option"><h1 class="categoryname">Управление опциями</h1></section>
 
 <section class="content">
 
@@ -8,12 +8,12 @@
 	
 	<div class="box box-primary">
 		<div class="box-header">
-			<h3 class="box-title"><i class="fa fa-cog"></i> General</h3>	
+			<h3 class="box-title"><i class="fa fa-cog"></i> Общий</h3>	
 		</div>
 		<div class="box-body">
 			<div class="row">										
 				<div class="col-md-4">
-					<label>Language</label>
+					<label>Язык</label>
 					<div class="input-group">
 						<select class="form-control" id="prlanguage_code" style="width: 100%;">
 							<option value="ab">Abkhazian (ab)</option>
@@ -204,14 +204,14 @@
 				</div>	
 				<div class="col-md-4 col-ms-4">	
 					<div class="form-group">
-						<label>Language Name</label>
+						<label>Название языка</label>
 						<input type="text" class="form-control" id="prlanguage_title" placeholder="Enter Name" value="<%- @option.language_title || "" %>">
 					</div>
 				</div>
 
 				<div class="col-md-4 col-ms-4">	
 					<div class="form-group">
-						<label>Sorting order</label>
+						<label>Порядок сортировки</label>
 						<input type="number" class="form-control" id="prord" placeholder="Enter number" value="<%- @option.ord || 1 %>">
 					</div>
 				</div>
@@ -222,172 +222,184 @@
 	
 	<div class="box box-primary">
 		<div class="box-header">
-			<h3 class="box-title">Translations</h3>	
+			<h3 class="box-title">Переводы</h3>	
 		</div>
 		<div class="box-body">
 			<div class="row">										
 				<div class="col-md-4 col-ms-4">	
 					<div class="form-group">
-						<label>Exhibitions</label>
+						<label>Выставки</label>
 						<input type="text" class="form-control prtxt" data-id="exibitions" placeholder="Enter Text" value="<% if @option.translations :%><%- @option.translations.exibitions || "" %><% end %>">
 					</div>
 				</div>
 				<div class="col-md-4 col-ms-4">	
 					<div class="form-group">
-						<label>Events</label>
+						<label>События</label>
 						<input type="text" class="form-control prtxt" data-id="events" placeholder="Enter Text" value="<% if @option.translations :%><%- @option.translations.events || "" %><% end %>">
 					</div>
 				</div>	
 				<div class="col-md-4 col-ms-4">	
 					<div class="form-group">
-						<label>Services</label>
+						<label>Услуги</label>
 						<input type="text" class="form-control prtxt" data-id="services" placeholder="Enter Text" value="<% if @option.translations :%><%- @option.translations.services || "" %><% end %>">
 					</div>
 				</div>	
 				<div class="col-md-4 col-ms-4">	
 					<div class="form-group">
-						<label>Maps</label>
+						<label>Карты</label>
 						<input type="text" class="form-control prtxt" data-id="maps" placeholder="Enter Text" value="<% if @option.translations :%><%- @option.translations.maps || "" %><% end %>">
 					</div>
 				</div>	
 				<div class="col-md-4 col-ms-4">	
 					<div class="form-group">
-						<label>QR scanning placeholder</label>
+						<label>Заполнитель для QR-сканирования</label>
 						<input type="text" class="form-control prtxt" data-id="qr" placeholder="Enter Text" value="<% if @option.translations :%><%- @option.translations.qr || "" %><% end %>">
 					</div>
 				</div>
 				<div class="col-md-4 col-ms-4">	
 					<div class="form-group">
-						<label>Media guide</label>
+						<label>Медиа-гид</label>
 						<input type="text" class="form-control prtxt" data-id="media_guide" placeholder="Enter Text" value="<% if @option.translations :%><%- @option.translations.media_guide || "" %><% end %>">
 					</div>
 				</div>	
 				<div class="col-md-4 col-ms-4">	
 					<div class="form-group">
-						<label>Today</label>
+						<label>Сегодня</label>
 						<input type="text" class="form-control prtxt" data-id="today" placeholder="Enter Text" value="<% if @option.translations :%><%- @option.translations.today || "" %><% end %>">
 					</div>
 				</div>	
 				<div class="col-md-4 col-ms-4">	
 					<div class="form-group">
-						<label>Upcoming events</label>
+						<label>Предстоящие События</label>
 						<input type="text" class="form-control prtxt" data-id="upcoming" placeholder="Enter Text" value="<% if @option.translations :%><%- @option.translations.upcoming || "" %><% end %>">
 					</div>
 				</div>	
 				<div class="col-md-4 col-ms-4">	
 					<div class="form-group">
-						<label>All events</label>
+						<label>Все события</label>
 						<input type="text" class="form-control prtxt" data-id="all_events" placeholder="Enter Text" value="<% if @option.translations :%><%- @option.translations.all_events || "" %><% end %>">
 					</div>
 				</div>
 				<div class="col-md-4 col-ms-4">	
 					<div class="form-group">
-						<label>Lobby</label>
+						<label>Лобби</label>
 						<input type="text" class="form-control prtxt" data-id="lobby" placeholder="Enter Text" value="<% if @option.translations :%><%- @option.translations.lobby || "" %><% end %>">
 					</div>
 				</div>
 				<div class="col-md-4 col-ms-4">	
 					<div class="form-group">
-						<label>Conference Hall</label>
+						<label>Конференц-зал</label>
 						<input type="text" class="form-control prtxt" data-id="hall" placeholder="Enter Text" value="<% if @option.translations :%><%- @option.translations.hall || "" %><% end %>">
 					</div>
 				</div>	
 				<div class="col-md-4 col-ms-4">	
 					<div class="form-group">
-						<label>Laboratory</label>
+						<label>Лаборатория</label>
 						<input type="text" class="form-control prtxt" data-id="laboratory" placeholder="Enter Text" value="<% if @option.translations :%><%- @option.translations.laboratory || "" %><% end %>">
 					</div>
 				</div>
 				<div class="col-md-4 col-ms-4">	
 					<div class="form-group">
-						<label>Atomarium</label>
+						<label>Атомариум</label>
 						<input type="text" class="form-control prtxt" data-id="atomarium" placeholder="Enter Text" value="<% if @option.translations :%><%- @option.translations.atomarium || "" %><% end %>">
 					</div>
 				</div>	
 				<div class="col-md-4 col-ms-4">	
 					<div class="form-group">
-						<label>Speakers</label>
+						<label>Спикеры</label>
 						<input type="text" class="form-control prtxt" data-id="speakers" placeholder="Enter Text" value="<% if @option.translations :%><%- @option.translations.speakers || "" %><% end %>">
 					</div>
 				</div>	
 				<div class="col-md-4 col-ms-4">	
 					<div class="form-group">
-						<label>Menu</label>
+						<label>Меню</label>
 						<input type="text" class="form-control prtxt" data-id="menu" placeholder="Enter Text" value="<% if @option.translations :%><%- @option.translations.menu || "" %><% end %>">
 					</div>
 				</div>	
 				<div class="col-md-4 col-ms-4">	
 					<div class="form-group">
-						<label>Open hours</label>
+						<label>Открытые часы</label>
 						<input type="text" class="form-control prtxt" data-id="hours" placeholder="Enter Text" value="<% if @option.translations :%><%- @option.translations.hours || "" %><% end %>">
 					</div>
 				</div>
 				<div class="col-md-4 col-ms-4">	
 					<div class="form-group">
-						<label>Monday</label>
+						<label>Понедельник</label>
 						<input type="text" class="form-control prtxt" data-id="monday" placeholder="Enter Text" value="<% if @option.translations :%><%- @option.translations.monday || "" %><% end %>">
 					</div>
 				</div>
 				<div class="col-md-4 col-ms-4">	
 					<div class="form-group">
-						<label>Tuesday</label>
+						<label>Вторник</label>
 						<input type="text" class="form-control prtxt" data-id="tuesday" placeholder="Enter Text" value="<% if @option.translations :%><%- @option.translations.tuesday || "" %><% end %>">
 					</div>
 				</div>
 				<div class="col-md-4 col-ms-4">	
 					<div class="form-group">
-						<label>Wednesday</label>
+						<label>Среда</label>
 						<input type="text" class="form-control prtxt" data-id="wednesday" placeholder="Enter Text" value="<% if @option.translations :%><%- @option.translations.wednesday || "" %><% end %>">
 					</div>
 				</div>
 				<div class="col-md-4 col-ms-4">	
 					<div class="form-group">
-						<label>Thursday</label>
+						<label>Четверг</label>
 						<input type="text" class="form-control prtxt" data-id="thursday" placeholder="Enter Text" value="<% if @option.translations :%><%- @option.translations.thursday || "" %><% end %>">
 					</div>
 				</div>
 				<div class="col-md-4 col-ms-4">	
 					<div class="form-group">
-						<label>Friday</label>
+						<label>Пятница</label>
 						<input type="text" class="form-control prtxt" data-id="friday" placeholder="Enter Text" value="<% if @option.translations :%><%- @option.translations.friday || "" %><% end %>">
 					</div>
 				</div>
 				<div class="col-md-4 col-ms-4">	
 					<div class="form-group">
-						<label>Saturday</label>
+						<label>Суббота</label>
 						<input type="text" class="form-control prtxt" data-id="saturday" placeholder="Enter Text" value="<% if @option.translations :%><%- @option.translations.saturday || "" %><% end %>">
 					</div>
 				</div>
 				<div class="col-md-4 col-ms-4">	
 					<div class="form-group">
-						<label>Sunday</label>
+						<label>Воскресенье</label>
 						<input type="text" class="form-control prtxt" data-id="sunday" placeholder="Enter Text" value="<% if @option.translations :%><%- @option.translations.sunday || "" %><% end %>">
 					</div>
 				</div>
 				<div class="col-md-4 col-ms-4">	
 					<div class="form-group">
-						<label>Information</label>
+						<label>Информация</label>
 						<input type="text" class="form-control prtxt" data-id="information" placeholder="Enter Text" value="<% if @option.translations :%><%- @option.translations.information || "" %><% end %>">
 					</div>
 				</div>
 				<div class="col-md-4 col-ms-4">	
 					<div class="form-group">
-						<label>Please tap here to show transcript</label>
+						<label>Пожалуйста, нажмите здесь, чтобы показать стенограмму</label>
 						<input type="text" class="form-control prtxt" data-id="transcript" placeholder="Enter Text" value="<% if @option.translations :%><%- @option.translations.transcript || "" %><% end %>">
 					</div>
 				</div>
 				<div class="col-md-4 col-ms-4">	
 					<div class="form-group">
-						<label>Floor</label>
+						<label>Слушайте аудио и смотрите на экран</label>
+						<input type="text" class="form-control prtxt" data-id="listen_audio" placeholder="Enter Text" value="<% if @option.translations :%><%- @option.translations.listen_audio || "" %><% end %>">
+					</div>
+				</div>	
+				<div class="col-md-4 col-ms-4">	
+					<div class="form-group">
+						<label>Этаж</label>
 						<input type="text" class="form-control prtxt" data-id="floor" placeholder="Enter Text" value="<% if @option.translations :%><%- @option.translations.floor || "" %><% end %>">
+					</div>
+				</div>	
+				<div class="col-md-4 col-ms-4">	
+					<div class="form-group">
+						<label>Отсутствует сигнал WiFi</label>
+						<input type="text" class="form-control prtxt" data-id="wifi" placeholder="Enter Text" value="<% if @option.translations :%><%- @option.translations.wifi || "" %><% end %>">
 					</div>
 				</div>	
 			</div>
 		</div>
 		<div class="box-footer">
 			<div class="pull-right">
-				<a  href="/options/all" class="btn btn-default"><i class="fa fa-angle-left"></i> Back</a>
-				<button type="button"  data-href="/options/all" class="btn btn-info andexit btn-saveoption"><i class="fa fa-save"></i> Save</button>
+				<a  href="/options/all" class="btn btn-default"><i class="fa fa-angle-left"></i> Назад</a>
+				<button type="button"  data-href="/options/all" class="btn btn-info andexit btn-saveoption"><i class="fa fa-save"></i> Сохранить</button>
 			</div>
 		</div>	
 	</div>

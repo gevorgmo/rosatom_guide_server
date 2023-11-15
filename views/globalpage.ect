@@ -1,6 +1,6 @@
 <% extend "layout.ect" %>
-
-<section class="content-header p-globalpage"><h1 class="categoryname"><%- @pagename %> Page Management</h1></section>
+<% all_category_titles={"exhibition":"выставки","media":"медии","event":"события","service":"услуги","home":"домашней страницы","events":"события"} %>
+<section class="content-header p-globalpage"><h1 class="categoryname">Редактор <%- if all_category_titles[@pagename] then all_category_titles[@pagename] else "" %></h1></section>
 
 <section class="content">
 
@@ -27,13 +27,13 @@
 											<div class="row">
 												<div class="col-md-4 col-ms-4">	
 													<div class="form-group">
-														<label>Exhibitions Title</label>
+														<label>Название выставки</label>
 														<input type="text" class="form-control  prtxt" data-id="title1" placeholder="Enter title"  data-lang="<%- option.language_code %>" value="<% if @item.content :%><% if @item.content[option.language_code] :%><%- @item.content[option.language_code].title1 || "" %><% end %><% end %>">
 													</div>
 												</div>
 												<div class="col-md-4 col-ms-4">	
 													<div class="form-group">
-														<label>Exhibitions Poster</label><br>
+														<label>Плакат выставки</label><br>
 														<button type="button" class="media_btn btn btn-info btn-flat" style="
 															<% finded=false %>			
 															<% if @item.content :%>
@@ -44,7 +44,7 @@
 																	<% end %>
 																<% end %>	
 															<% end %>	
-														"><i class="fa fa-plus"></i> Select Media</button>
+														"><i class="fa fa-plus"></i> Выберите файл</button>
 														<div class="selected_media_itm primage1" id="primage1<%- option.language_code %>" style="<%- if finded then "background-image:url("+@item.content[option.language_code].image1+")" else "display:none" %>" data-src="<%- if finded then @item.content[option.language_code].image1 else "" %>" data-type="image"  data-lang="<%- option.language_code %>"><a class="media_itm_link  btn btn-warning btn-flat previewlink"  data-template="home" href="<%- if finded then @item.content[option.language_code].image1 %>" target="_blank" title=""><i class="fa  fa-eye"></i></a><button type="button" class="btn-selectedmediaremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button></div>								
 													</div>
 												</div> 
@@ -53,13 +53,13 @@
 											<div class="row">
 												<div class="col-md-4 col-ms-4">	
 													<div class="form-group">
-														<label>Events Title</label>
+														<label>Название события</label>
 														<input type="text" class="form-control  prtxt" data-id="title2"  placeholder="Enter title"  data-lang="<%- option.language_code %>" value="<% if @item.content :%><% if @item.content[option.language_code] :%><%- @item.content[option.language_code].title2 || "" %><% end %><% end %>">
 													</div>
 												</div>
 												<div class="col-md-4 col-ms-4">	
 													<div class="form-group">
-														<label>Events Poster</label><br>
+														<label>Афиша мероприятий</label><br>
 														<button type="button" class="media_btn btn btn-info btn-flat" style="
 															<% finded=false %>			
 															<% if @item.content :%>
@@ -70,7 +70,7 @@
 																	<% end %>
 																<% end %>	
 															<% end %>	
-														"><i class="fa fa-plus"></i> Select Media</button>
+														"><i class="fa fa-plus"></i> Выберите файл</button>
 														<div class="selected_media_itm primage2" id="primage2<%- option.language_code %>" style="<%- if finded then "background-image:url("+@item.content[option.language_code].image2+")" else "display:none" %>" data-src="<%- if finded then @item.content[option.language_code].image2 else "" %>" data-type="image"  data-lang="<%- option.language_code %>"><a class="media_itm_link  btn btn-warning btn-flat previewlink"  data-template="home" href="<%- if finded then @item.content[option.language_code].image2 %>" target="_blank" title=""><i class="fa  fa-eye"></i></a><button type="button" class="btn-selectedmediaremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button></div>								
 													</div>
 												</div>
@@ -79,13 +79,13 @@
 											<div class="row">
 												<div class="col-md-4 col-ms-4">	
 													<div class="form-group">
-														<label>Services Title</label>
+														<label>Название услуги</label>
 														<input type="text" class="form-control  prtxt" data-id="title3"  placeholder="Enter title"  data-lang="<%- option.language_code %>" value="<% if @item.content :%><% if @item.content[option.language_code] :%><%- @item.content[option.language_code].title3 || "" %><% end %><% end %>">
 													</div>
 												</div>
 												<div class="col-md-4 col-ms-4">	
 													<div class="form-group">
-														<label>Services Poster</label><br>
+														<label>Плакат услуги</label><br>
 														<button type="button" class="media_btn btn btn-info btn-flat" style="
 															<% finded=false %>			
 															<% if @item.content :%>
@@ -96,7 +96,7 @@
 																	<% end %>
 																<% end %>	
 															<% end %>	
-														"><i class="fa fa-plus"></i> Select Media</button>
+														"><i class="fa fa-plus"></i> Выберите файл</button>
 														<div class="selected_media_itm primage3" id="primage3<%- option.language_code %>" style="<%- if finded then "background-image:url("+@item.content[option.language_code].image3+")" else "display:none" %>" data-src="<%- if finded then @item.content[option.language_code].image3 else "" %>" data-type="image"  data-lang="<%- option.language_code %>"><a class="media_itm_link  btn btn-warning btn-flat previewlink"  data-template="home"  href="<%- if finded then @item.content[option.language_code].image3 %>" target="_blank" title=""><i class="fa  fa-eye"></i></a><button type="button" class="btn-selectedmediaremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button></div>								
 													</div>
 												</div>
@@ -105,13 +105,13 @@
 											<div class="row">
 												<div class="col-md-4 col-ms-4">	
 													<div class="form-group">
-														<label>Maps Title</label>
+														<label>Название карты</label>
 														<input type="text" class="form-control  prtxt" data-id="title4"  placeholder="Enter title"  data-lang="<%- option.language_code %>" value="<% if @item.content :%><% if @item.content[option.language_code] :%><%- @item.content[option.language_code].title4 || ""  %><% end %><% end %>">
 													</div>
 												</div>
 												<div class="col-md-4 col-ms-4">	
 													<div class="form-group">
-														<label>Maps Poster</label><br>
+														<label>Плакат карты</label><br>
 														<button type="button" class="media_btn btn btn-info btn-flat" style="
 															<% finded=false %>			
 															<% if @item.content :%>
@@ -122,7 +122,7 @@
 																	<% end %>
 																<% end %>	
 															<% end %>	
-														"><i class="fa fa-plus"></i> Select Media</button>
+														"><i class="fa fa-plus"></i> Выберите файл</button>
 														<div class="selected_media_itm primage4" id="primage4<%- option.language_code %>" style="<%- if finded then "background-image:url("+@item.content[option.language_code].image4+")" else "display:none" %>" data-src="<%- if finded then @item.content[option.language_code].image4 else "" %>" data-type="image"  data-lang="<%- option.language_code %>"><a class="media_itm_link  btn btn-warning btn-flat previewlink" data-template="home"   href="<%- if finded then @item.content[option.language_code].image4 %>" target="_blank" title=""><i class="fa  fa-eye"></i></a><button type="button" class="btn-selectedmediaremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button></div>								
 													</div>
 												</div>
@@ -134,7 +134,7 @@
 											<div class="row">
 												<div class="col-md-6 col-ms-6">	
 													<div class="form-group">
-														<label>Global Map Image</label><br>
+														<label>Изображение глобальной карты</label><br>
 														<button type="button" class="media_btn btn btn-info btn-flat" style="
 															<% finded=false %>			
 															<% if @item.content :%>
@@ -145,7 +145,7 @@
 																	<% end %>
 																<% end %>	
 															<% end %>	
-														"><i class="fa fa-plus"></i> Select Media</button>
+														"><i class="fa fa-plus"></i> Выберите файл</button>
 														<div class="selected_media_itm primage0" id="primage0<%- option.language_code %>" style="<%- if finded then "background-image:url("+@item.content[option.language_code].image0+")" else "display:none" %>" data-src="<%- if finded then @item.content[option.language_code].image0 else "" %>" data-type="image"  data-lang="<%- option.language_code %>"><a class="media_itm_link  btn btn-warning btn-flat previewlink"  data-template="map"  href="<%- if finded then @item.content[option.language_code].image0 %>" target="_blank" title=""><i class="fa  fa-eye"></i></a><button type="button" class="btn-selectedmediaremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button></div>								
 													</div>
 												</div>
@@ -164,9 +164,9 @@
 			<div class="box">
 				<div class="box-footer">
 					<div class="pull-right">
-						<a  href="/" class="btn btn-default"><i class="fa fa-angle-left"></i> Back</a>
-						<button type="button"  class="btn btn-success btn-saveitem"><i class="fa fa-save"></i> Save</button>
-						<button type="button"  data-href="/" class="btn btn-info andexit btn-saveitem"><i class="fa fa-save"></i> Save and exit</button>
+						<a  href="/" class="btn btn-default"><i class="fa fa-angle-left"></i> Назад</a>
+						<button type="button"  class="btn btn-success btn-saveitem"><i class="fa fa-save"></i> Сохранить</button>
+						<button type="button"  data-href="/" class="btn btn-info andexit btn-saveitem"><i class="fa fa-save"></i> Сохранить и выйти</button>
 					</div>
 				</div>	
 			</div>
@@ -181,13 +181,13 @@
     <div class="modal-dialog">
         <div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title">Preview</h4>
+				<h4 class="modal-title">Предварительный просмотр</h4>
 			</div>
 			<div class="modal-body" id="preview_body">
 				
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-info" data-dismiss="modal" aria-hidden="true">Close</button>
+				<button type="button" class="btn btn-info" data-dismiss="modal" aria-hidden="true">Закрыть</button>
 			</div>
 		</div>
     </div>
@@ -200,7 +200,7 @@
         <div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h4 class="modal-title">Template Values 
+				<h4 class="modal-title">Значения шаблона 
 					<img src="/admin/img/temp1.png" class="edit_ttpls edit_ttpls1" />
 					<img src="/admin/img/temp5.png" class="edit_ttpls edit_ttpls2" />
 				</h4>
@@ -210,30 +210,30 @@
 					<div class="col-md-3 col-ms-6">	
 					
 						<div class="form-group editor_img1">
-							<label>Image</label>
+							<label>Изображение</label>
 							<div>
-								<button type="button" class="media_btn btn btn-info btn-flat "><i class="fa fa-plus"></i> Select Media</button>
+								<button type="button" class="media_btn btn btn-info btn-flat "><i class="fa fa-plus"></i> Выберите файл</button>
 								<div class="selected_media_itm" style="display:none"    data-src="" data-type="image"  id="primg1"><a class="media_itm_link lightbox btn btn-warning btn-flat" id="k1" href="#" target="_blank" title=""><i class="fa  fa-eye"></i></a><button type="button" class="btn-selectedmediaremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button></div>
 							</div>
 						</div>
 					</div>	
 					<div class="col-md-9 col-ms-6">		
 						<div class="form-group editor_img1">
-							<label>Image caption</label>
+							<label>Подпись к изображению</label>
 							<input type="text" class="form-control" id="prcaption1" placeholder="Enter image caption" value="">
 						</div>
 					</div>	
 					
 					<div class="col-md-12 col-ms-12">							
 						<div class="form-group editor_text1 prtext1">
-							<label>Text</label>
+							<label>Текст</label>
 							<textarea id="prtext1" class="form-control htmlcont_small"  rows="4" cols="50"  ></textarea>
 						</div>	
 					</div>
 				</div>	
 			</div>
 			<div class="modal-footer" style="text-align: left">
-				<button id="edit_save" type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true"><i class="fa fa-save"></i> Save</button>
+				<button id="edit_save" type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true"><i class="fa fa-save"></i> Сохранить</button>
 			</div>
 		</div>
     </div>

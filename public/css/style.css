@@ -125,14 +125,14 @@ h1, h2, h3, h4, h5, h6 {
 ::-webkit-input-placeholder{color:#000;font-family: 'PSFournierProLight';}
 
 
-scrollbar{width:2px; height: 2px;}
-scrollbar-track{background-color:#bcbcbc;border:0}
-scrollbar-thumb{background-color:#C29D69;border-radius:0px}
-scrollbar-thumb:hover{background-color:#C29D69}
-::-webkit-scrollbar{width:2px; height: 2px;}
-::-webkit-scrollbar-track{background-color:#bcbcbc;border:0}
-::-webkit-scrollbar-thumb{background-color:#C29D69;}
-::-webkit-scrollbar-thumb:hover{background-color:#C29D69;}
+scrollbar{width:0px; height: 0px;}
+scrollbar-track{background-color:transparent;border:0}
+scrollbar-thumb{background-color:transparent;border-radius:0px}
+scrollbar-thumb:hover{background-color:transparent}
+::-webkit-scrollbar{width:0px; height: 0px;}
+::-webkit-scrollbar-track{background-color:transparent;border:0}
+::-webkit-scrollbar-thumb{background-color:transparent;}
+::-webkit-scrollbar-thumb:hover{background-color:transparent;}
 
 * {
     -webkit-box-sizing: border-box; 
@@ -162,9 +162,6 @@ a:focus,a:visited,a:active{
 	margin:0;
 	padding:0;
 	background-color:#000;
-
-	transition: all 0.5s  ease;
-	-webkit-transition: all 0.5s ease; 
 }
 .loader img{
 	margin: 0;
@@ -1283,7 +1280,7 @@ footer{background:#000}
 .map_inner{display: none}
 
 .media_blocks_container{
-	padding: 85px 0 75px 0
+	padding: 120px 0 75px 0
 }
 .media_blocks_container img{
 	width: 100%
@@ -1306,9 +1303,27 @@ footer{background:#000}
 }
 
 .media_player_block{
-	padding: 80px 25px 150px 25px;
 	text-align: center;
-	height: 360px;
+	height: 470px;
+	position:relative;
+}
+
+.media_player_block_iiiinner{
+	position:absolute;
+	top:50%;
+	left:0;
+	width:100%;
+	text-align:center;
+	padding:0 25px;
+	font-size: 3rem;
+	line-height: 3.8rem;
+	transform: translateY(-50%);
+	-webkit-transform: translateY(-50%);
+}
+
+.media_player_block div{
+	font-size: 3rem;
+	line-height: 3.8rem;
 }
 
 .media_player_block_text{
@@ -1319,7 +1334,7 @@ footer{background:#000}
 	margin: 0px 0 30px 0;
 	overflow-x:hidden;
 	overflow-y:scroll;
-	height: 560px;
+	height: 500px;
 	visibility:hidden;
 	opacity:0;
 }
@@ -1370,7 +1385,8 @@ footer{background:#000}
 	line-height: 2.3rem;
 	text-transform:uppercase;
 	text-align:center;
-	margin-bottom:10px
+	margin-bottom:10px;
+	padding:0 30px;
 }
 
 .media_player_block span,
@@ -1390,10 +1406,7 @@ footer{background:#000}
 	-webkit-text-fill-color: transparent;
 }
 
-.media_player_block div{
-	font-size: 3rem;
-	line-height: 3.8rem;
-}
+
 
 .player_button{
 	width: 60px;
@@ -1428,6 +1441,7 @@ footer{background:#000}
 
 .inner_block_title{padding:0 25px;position:relative}
 
+.wifierror{font-family: 'JournalSansNewRegular';color: #fff;font-size: 2.4rem; line-height: 2.6rem;text-align:center;padding:0 25px;position:absolute;left:0;top:50%;transform: translateY(-50%);-webkit-transform: translateY(-50%);}
 
 
 

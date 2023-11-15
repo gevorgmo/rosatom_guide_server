@@ -29,9 +29,9 @@
 		<main class="content">
 			<div class="events_blocks_container">
 				<% if @pages.today.length>0 :%>
-					<% if @pages.today[0] :%><div class="events_blocks_container_img" style="background-image:url(<%- @server_address  %><%- @pages.today[0].poster || "" %>)" ></div><% end %>
+					<% if @pages.today[0] :%><div class="events_blocks_container_img" style="background-image:url(<%- if !@pages.today[0].event_id_on_web then @server_address  %><%- @pages.today[0].poster || "" %>)" ></div><% end %>
 				<%  else :%>	
-					<% if @pages.upcoming[0] :%><div class="events_blocks_container_img" style="background-image:url(<%- @server_address %><%- @pages.upcoming[0].poster || "" %>)"  ></div><% end %>
+					<% if @pages.upcoming[0] :%><div class="events_blocks_container_img" style="background-image:url(<%- if !@pages.today[0].event_id_on_web then @server_address %><%- @pages.upcoming[0].poster || "" %>)"  ></div><% end %>
 				<% end %>	
 				
 				<div class="events_categories">
@@ -68,7 +68,7 @@
 										<span class="event_typ"><% if page.content :%><% if page.content[@lang] :%><%- page.content[@lang].type || "" %><% end %><% end %></span>
 									</div>	
 									<div class="event_info">
-										<% if page.poster :%><a class="event_block_img" style="background-image:url(<%- @server_address %><%- page.poster %>)" href="<%- @server_address %>/explore/<%- @lang %>/<%- page.slug %>"></a><% end %>
+										<% if page.poster :%><a class="event_block_img" style="background-image:url(<%- if !page.event_id_on_web then  @server_address %><%- page.poster %>)" href="<%- @server_address %>/explore/<%- @lang %>/<%- page.slug %>"></a><% end %>
 										<h2><a  href="<%- @server_address %>/explore/<%- @lang %>/<%- page.slug %>"><% if page.title :%><% if page.title[@lang] :%><%- page.title[@lang] %><% end %><% end %></a></h2>
 										<span class="event_place"><% if opt.translations :%><% if page.content :%><% if page.content.place :%><%- opt.translations[page.content.place] || "" %><% end %><% end %><% end %></span>
 										<a  href="<%- @server_address %>/explore/<%- @lang %>/<%- page.slug %>" class="event_short"><% if page.text :%><% if page.text[@lang] :%><%- page.text[@lang] %><% end %><% end %></a>
@@ -87,7 +87,7 @@
 									<span class="event_typ"><% if page.content :%><% if page.content[@lang] :%><%- page.content[@lang].type || "" %><% end %><% end %></span>
 								</div>	
 								<div class="event_info">
-									<% if page.poster :%><a class="event_block_img" style="background-image:url(<%- @server_address  %><%-  page.poster %>)" href="<%- @server_address %>/explore/<%- @lang %>/<%- page.slug %>"></a><% end %>
+									<% if page.poster :%><a class="event_block_img" style="background-image:url(<%- if !page.event_id_on_web then @server_address  %><%-  page.poster %>)" href="<%- @server_address %>/explore/<%- @lang %>/<%- page.slug %>"></a><% end %>
 									<h2><a  href="<%- @server_address %>/explore/<%- @lang %>/<%- page.slug %>"><% if page.title :%><% if page.title[@lang] :%><%- page.title[@lang] %><% end %><% end %></a></h2>
 									<span class="event_place"><% if opt.translations :%><% if page.content :%><% if page.content.place :%><%- opt.translations[page.content.place] || "" %><% end %><% end %><% end %></span>
 									<a  href="<%- @server_address %>/explore/<%- @lang %>/<%- page.slug %>" class="event_short"><% if page.text :%><% if page.text[@lang] :%><%- page.text[@lang] %><% end %><% end %></a>

@@ -1,9 +1,9 @@
 <% extend "layout.ect" %>
 <% all_roles=["User","Administartor"]  %>
-<section class="content-header"><h1><i class="fa fa-users p-users"></i>All Users</h1></section>
+<section class="content-header"><h1><i class="fa fa-users p-users"></i>Все пользователи</h1></section>
 
 <section class="content-header">
-	<a href="/users/new" class="btn btn-primary"><i class="fa fa-plus"></i>Create new</a>
+	<a href="/users/new" class="btn btn-primary"><i class="fa fa-plus"></i>Создать новое</a>
 </section>
 
 <section class="content">
@@ -14,12 +14,12 @@
 						<table id="customerslist" class="table table-bordered table-hover table-striped dataTable" role="grid">
 							<thead>
 								<tr>
-									<th class="tblsrt">Full Name</th>		
-									<th class="tblsr">Username</th>	
-									<th class="tblsrt">Role</th>
-									<th class="tblsrt">Created</th>
-									<th class="tblsrt">Last Login</th>
-									<th class="no-sort">Action</th>
+									<th class="tblsrt">Полное имя</th>		
+									<th class="tblsr">Имя пользователя</th>	
+									<th class="tblsrt">Роль</th>
+									<th class="tblsrt">Созданный</th>
+									<th class="tblsrt">Последний вход</th>
+									<th class="no-sort">Действие</th>
 								</tr>
 							</thead>
 							<tbody id="tbody">	
