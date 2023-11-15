@@ -107,11 +107,11 @@ dist
 pids
 logs
 config
-files
+files2
 results
 tmp
 public/tmp
-public/files
+public/files2
 npm-debug.log
 node_modules
 Thumbs.db
