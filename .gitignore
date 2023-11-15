@@ -107,6 +107,7 @@ dist
 pids
 logs
 config
+files2
 results
 public/tmp
 npm-debug.log
