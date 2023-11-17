@@ -304,7 +304,10 @@ function GetContent(_url, _cb){
 			} else {
 				console.log("start;"+_media_id);
 				$('.loader_start').css({'visibility':'hidden','opacity':'0'});
-				if (typeof SendUDP === "function") SendUDP("start;"+_media_id, "10.0.121.2",  6024, function(data){  console.log("start;"+_media_id);});
+				if (typeof SendUDP === "function") {
+					alert("start;"+_media_id);
+					SendUDP("start;"+_media_id, "10.0.121.2",  6024, function(data){  console.log("start;"+_media_id);});
+				}
 			}
 			
 
