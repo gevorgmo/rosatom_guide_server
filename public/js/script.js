@@ -309,11 +309,13 @@ function GetContent(_url, _cb){
 				//SendUDP("start;"+_media_id, "10.0.121.2",  6024, function(data){ alert("after sent-"+data);  console.log("start;"+_media_id);});
 				var datagram = cordova.require("cordova-plugin-datagram4.datagram");
 				var socket = datagram.createSocket("multicast-udp4");
-				socket.bind(6024, function(data) {});
-				
-				socket.send("start;"+_media_id, "10.0.121.2",  6024, function(_err, _data) {
-					alert(_err);
+				socket.bind(6024, function(data) {
+					socket.send("start;"+_media_id, "10.0.121.2",  6024, function(_err, _data) {
+						alert(_err);
+					});
 				});
+				
+
 				//}
 			}
 			
