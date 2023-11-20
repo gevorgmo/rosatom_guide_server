@@ -331,9 +331,9 @@ function GetContent(_url, _cb){
 						socket = datagram.createSocket("udp4");
 							
 						socket.send("start;"+_media_id, "10.0.121.2",  6025, function(_err2, _data) {	
-							socket.bind(6024, function(data) {
-								alert("bind "+data);
-							}); 
+							//socket.bind(6024, function(data) {
+							//	alert("bind "+data);
+							//}); 
 							socket.on("message", function(data, info) {
 								BroadCastHandl(data,info);
 							});
