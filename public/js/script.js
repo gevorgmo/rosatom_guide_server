@@ -304,9 +304,12 @@ function GetContent(_url, _cb){
 			} else {
 				console.log("start;"+_media_id);
 				$('.loader_start').css({'visibility':'hidden','opacity':'0'});
-				if (typeof SendUDP === "function") {
+				if (socket) {
 					alert("sent-start;"+_media_id);
-					SendUDP("start;"+_media_id, "10.0.121.2",  6024, function(data){  console.log("start;"+_media_id);});
+					SendUDP("start;"+_media_id, "10.0.121.2",  6024, function(data){ alert("after sent-"+data);  console.log("start;"+_media_id);});
+					//socket.send("start;"+_media_id, "10.0.121.2",  6024, function() {
+					//	console.log("start;"+_media_id);
+					//});
 				}
 			}
 			
