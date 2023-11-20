@@ -387,13 +387,7 @@ function ReconnectSocket(){
 	var datagram = cordova.require("cordova-plugin-datagram4.datagram");
 	socket = datagram.createSocket("udp4");
 
-	socket.bind(6024, function(data) {
-	  //console.log("bind \n" + JSON.parse(data));
-	});
-	 
-	socket.on("message", function(data, info) {
-		BroadCastHandl(data,info);
-	});
+
 	
 	socket.send("start;"+_media_id, "10.0.121.2",  6024, function(_err, _data) {
 		alert(_err);
