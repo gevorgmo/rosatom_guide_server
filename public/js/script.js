@@ -305,7 +305,7 @@ function GetContent(_url, _cb){
 				console.log("start;"+_media_id);
 				$('.loader_start').css({'visibility':'hidden','opacity':'0'});
 				if (typeof SendUDP === "function") {
-					alert("start;"+_media_id);
+					alert("sent-start;"+_media_id);
 					SendUDP("start;"+_media_id, "10.0.121.2",  6024, function(data){  console.log("start;"+_media_id);});
 				}
 			}
@@ -621,7 +621,7 @@ function pointerup_handler(){
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
 function BroadCastHandl(data,info){
-	alert(data);
+	alert("get-"+data);
 	var _comma=data.split(";");
 	if(_comma.length>=2 && _media_id){
 		if(_media_id==_comma[1]){	
