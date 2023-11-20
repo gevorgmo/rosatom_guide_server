@@ -309,7 +309,7 @@ function GetContent(_url, _cb){
 				console.log("start;"+_media_id);
 				$('.loader_start').css({'visibility':'hidden','opacity':'0'});
 				//alert("sent-start;"+_media_id);
-				if (typeof SendUDP === "function")  SendUDP("start;"+_media_id, "10.0.121.2",  6025, function(error){ if(error) alert(error); });
+				if (typeof SendUDP === "function")  SendUDP("start;"+_media_id, "10.0.121.2",  6025, function(error){ alert(error); if(error) alert(error); });
 				
 			}
 			
