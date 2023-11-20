@@ -22,12 +22,8 @@ $(document).ready(function() {
 		if(document.body.className=="scanning") {
 			document.body.className=_tmp_class;
 			StopScan(); 
-		} 
-		if($(this).hasClass('test_llink')){
-			GetContent("http://10.0.121.47/explore/ru/d12",function(){});
-		} else {
-			GetContent(_link,function(){});
-		}
+		} 	
+		GetContent(_link,function(){});
 		return false;
 	});	
 	
