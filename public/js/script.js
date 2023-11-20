@@ -304,7 +304,6 @@ function GetContent(_url, _cb){
 			} else {
 				console.log("start;"+_media_id);
 				$('.loader_start').css({'visibility':'hidden','opacity':'0'});
-				//if (socket) {
 				alert("sent-start;"+_media_id);
 			
 				socket.send("start;"+_media_id, "10.0.121.2",  6025, function(_err, _data) {
