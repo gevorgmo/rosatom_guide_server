@@ -7,12 +7,25 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 
 var _audio,_playstatus=false,_playButton,_progress,_progress_drag,_media_type,_media_id,_trans_id=-1,_time_code=0,_page_load_time=0,_current_status=0,_tmp_class,_map_zoom;
-
+var _new_sock;
 
 $(document).ready(function() {
 	
 	LanguageLoad('ru');
 	
+	var datagram = cordova.require("cordova-plugin-datagram4.datagram");
+	_new_sock = datagram.createSocket("udp4");
+ 
+	_new_sock.bind(6024, function(data) {
+	  //console.log("bind \n" + JSON.parse(data));
+	}); 
+	_new_sock.on("message", function(data, info) {
+		BroadCastHandl(data,info);
+	});
+ 
+ 
+ 
+ 
  
 	$('body').on('click', 'a', function(evt) {
 		evt.preventDefault();	
@@ -297,35 +310,22 @@ function GetContent(_url, _cb){
 					
 				});
 				
+				
 				///////////////////////// OGNENSK
-				if (typeof SendUDP === "function" && _media_id=="c6") SendUDP("run00", "10.0.121.14",  6025, function(data){  console.log("start;"+_media_id);});
+				if (_media_id=="c6") {
+					_new_sock.send("run00", "10.0.121.14",  6024, function(_err, _data) {
+						alert(_err);
+					});	
+				}
 				
 				
 			} else {
 				console.log("start;"+_media_id);
 				$('.loader_start').css({'visibility':'hidden','opacity':'0'});
 				alert("sent-start;"+_media_id);
-			
-				socket.send("start;"+_media_id, "10.0.121.2",  6025, function(_err, _data) {
+				_new_sock.send("start;"+_media_id, "10.0.121.2",  6025, function(_err, _data) {
 					alert(_err);
-					socket.close();
-					if(_err){
-						var datagram = cordova.require("cordova-plugin-datagram4.datagram");
-						socket = datagram.createSocket("udp4");
-
-						socket.send("start;"+_media_id, "10.0.121.2",  6025, function(_err2, _data) {
-							alert(_err2);
-							if(!_err2){
-								socket.bind(6024, function(data) {
-								  //console.log("bind \n" + JSON.parse(data));
-								}); 
-								socket.on("message", function(data, info) {
-									BroadCastHandl(data,info);
-								});
-							}
-						});
-					}
-				});	
+				});
 			}
 			
 
