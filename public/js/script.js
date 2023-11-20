@@ -300,7 +300,7 @@ function GetContent(_url, _cb){
 				///////////////////////// OGNENSK
 				if (_media_id=="c6") {
 					socket.send("run00", "10.0.121.14",  6024, function(_err, _data) {
-						alert(_err);
+						//alert(_err);
 						if(_err){
 							var datagram = cordova.require("cordova-plugin-datagram4.datagram");
 							socket = datagram.createSocket("udp4");
@@ -312,7 +312,7 @@ function GetContent(_url, _cb){
 								socket.on("message", function(data, info) {
 									BroadCastHandl(data,info);
 								});	
-								alert(_err2);
+								//alert(_err2);
 							});
 						}
 					});
@@ -322,10 +322,10 @@ function GetContent(_url, _cb){
 			} else {
 				console.log("start;"+_media_id);
 				$('.loader_start').css({'visibility':'hidden','opacity':'0'});
-				alert("sent-start;"+_media_id);
+				//alert("sent-start;"+_media_id);
 				
 				socket.send("start;"+_media_id, "10.0.121.2",  6025, function(_err, _data) {
-					alert(_err);
+					//alert(_err);
 					if(_err){
 						var datagram = cordova.require("cordova-plugin-datagram4.datagram");
 						socket = datagram.createSocket("udp4");
@@ -337,7 +337,7 @@ function GetContent(_url, _cb){
 							socket.on("message", function(data, info) {
 								BroadCastHandl(data,info);
 							});
-							alert(_err2);
+							//alert(_err2);
 						});
 
 					}
