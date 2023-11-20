@@ -306,19 +306,16 @@ function GetContent(_url, _cb){
 				$('.loader_start').css({'visibility':'hidden','opacity':'0'});
 				//if (socket) {
 				alert("sent-start;"+_media_id);
-				if(typeof socket!="undefined") {
-					if(socket.isClosed()) {
-						alert("socket-err");
-						var datagram = cordova.require("cordova-plugin-datagram4.datagram");
-						socket = datagram.createSocket("udp4");	
-						socket.bind(6024, function(data) {
 
-						});		
-					}	
-				}
+				socket.close();
+				var datagram = cordova.require("cordova-plugin-datagram4.datagram");
+				socket = datagram.createSocket("udp4");	
+				socket.bind(6024, function(data) {
 
-				
-				socket.send("start;"+_media_id, "10.0.121.2",  6024, function(_err, _data) {
+				});					
+
+			
+				socket.send("start;"+_media_id, "10.0.121.2",  6025, function(_err, _data) {
 					alert(_err);
 				});
 			}
