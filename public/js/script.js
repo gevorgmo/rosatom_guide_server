@@ -307,15 +307,10 @@ function GetContent(_url, _cb){
 				//if (socket) {
 				alert("sent-start;"+_media_id);
 
-				socket.close();
 				var datagram = cordova.require("cordova-plugin-datagram4.datagram");
-				socket = datagram.createSocket("udp4");	
-				socket.bind(6024, function(data) {
-
-				});					
-
+				socket = datagram.createSocket("udp4");
 			
-				socket.send("start;"+_media_id, "10.0.121.2",  6025, function(_err, _data) {
+				socket.send("start;"+_media_id, "10.0.121.2",  6024, function(_err, _data) {
 					alert(_err);
 				});
 			}
