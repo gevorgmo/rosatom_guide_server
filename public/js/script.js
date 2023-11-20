@@ -306,7 +306,8 @@ function GetContent(_url, _cb){
 				$('.loader_start').css({'visibility':'hidden','opacity':'0'});
 				//if (socket) {
 				alert("sent-start;"+_media_id);
-				
+				if(socket) socket.close();
+
 				var datagram = cordova.require("cordova-plugin-datagram4.datagram");
 				socket = datagram.createSocket("udp4");	
 				socket.bind(6024, function(data) {
