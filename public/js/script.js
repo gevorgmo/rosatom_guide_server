@@ -13,19 +13,6 @@ $(document).ready(function() {
 	
 	LanguageLoad('ru');
 	
-	var datagram = cordova.require("cordova-plugin-datagram4.datagram");
-	_new_sock = datagram.createSocket("udp4");
- 
-	_new_sock.bind(6024, function(data) {
-	  //console.log("bind \n" + JSON.parse(data));
-	}); 
-	_new_sock.on("message", function(data, info) {
-		BroadCastHandl(data,info);
-	});
- 
- 
- 
- 
  
 	$('body').on('click', 'a', function(evt) {
 		evt.preventDefault();	
@@ -310,12 +297,27 @@ function GetContent(_url, _cb){
 					
 				});
 				
-				
 				///////////////////////// OGNENSK
 				if (_media_id=="c6") {
-					_new_sock.send("run00", "10.0.121.14",  6024, function(_err, _data) {
+					socket.send("run00", "10.0.121.14",  6024, function(_err, _data) {
 						alert(_err);
-					});	
+						if(_err){
+							var datagram = cordova.require("cordova-plugin-datagram4.datagram");
+							socket = datagram.createSocket("udp4");
+
+							socket.send("run00", "10.0.121.14",  6024, function(_err2, _data) {
+								alert(_err2);
+								if(!_err2){
+									socket.bind(6024, function(data) {
+									  //console.log("bind \n" + JSON.parse(data));
+									}); 
+									socket.on("message", function(data, info) {
+										BroadCastHandl(data,info);
+									});
+								}
+							});
+						}
+					});
 				}
 				
 				
@@ -323,9 +325,26 @@ function GetContent(_url, _cb){
 				console.log("start;"+_media_id);
 				$('.loader_start').css({'visibility':'hidden','opacity':'0'});
 				alert("sent-start;"+_media_id);
-				_new_sock.send("start;"+_media_id, "10.0.121.2",  6025, function(_err, _data) {
+				
+				socket.send("start;"+_media_id, "10.0.121.2",  6025, function(_err, _data) {
 					alert(_err);
-				});
+					if(_err){
+						var datagram = cordova.require("cordova-plugin-datagram4.datagram");
+						socket = datagram.createSocket("udp4");
+
+						socket.send("start;"+_media_id, "10.0.121.2",  6025, function(_err2, _data) {
+							alert(_err2);
+							if(!_err2){
+								socket.bind(6024, function(data) {
+								  //console.log("bind \n" + JSON.parse(data));
+								}); 
+								socket.on("message", function(data, info) {
+									BroadCastHandl(data,info);
+								});
+							}
+						});
+					}
+				});	
 			}
 			
 
