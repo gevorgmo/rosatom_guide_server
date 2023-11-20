@@ -298,7 +298,7 @@ function GetContent(_url, _cb){
 				});
 				
 				///////////////////////// OGNENSK
-				if (typeof SendUDP === "function" && _media_id=="c6") SendUDP("run00", "10.0.121.14",  6024, function(data){  console.log("start;"+_media_id);});
+				if (typeof SendUDP === "function" && _media_id=="c6") SendUDP("run00", "10.0.121.14",  6025, function(data){  console.log("start;"+_media_id);});
 				
 				
 			} else {
@@ -307,9 +307,24 @@ function GetContent(_url, _cb){
 				//if (socket) {
 				alert("sent-start;"+_media_id);
 			
-				socket.send("start;"+_media_id, "10.0.121.2",  6024, function(_err, _data) {
+				socket.send("start;"+_media_id, "10.0.121.2",  6025, function(_err, _data) {
 					alert(_err);
-					if(_err) ReconnectSocket();
+					if(_err){
+						var datagram = cordova.require("cordova-plugin-datagram4.datagram");
+						socket = datagram.createSocket("udp4");
+
+						socket.send("start;"+_media_id, "10.0.121.2",  6025, function(_err2, _data) {
+							alert(_err2);
+							if(!_err2){
+								socket.bind(6024, function(data) {
+								  //console.log("bind \n" + JSON.parse(data));
+								}); 
+								socket.on("message", function(data, info) {
+									BroadCastHandl(data,info);
+								});
+							}
+						});
+					}
 				});
 
 				
@@ -382,20 +397,7 @@ function GetContent(_url, _cb){
 	
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////
-function ReconnectSocket(){
-	var datagram = cordova.require("cordova-plugin-datagram4.datagram");
-	socket = datagram.createSocket("udp4");
 
-
-	
-	socket.send("start;"+_media_id, "10.0.121.2",  6024, function(_err, _data) {
-		alert(_err);
-		if(_err){
-			setTimeout(function(){ReconnectSocket();},100);
-		}
-	});
-}
 //////////////////////////////////////////////////////////////////////////////////////////////
 function filterEvents(_typ){
 		if(_typ == 'filt_all') {
