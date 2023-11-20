@@ -309,7 +309,6 @@ function GetContent(_url, _cb){
 				socket.send("start;"+_media_id, "10.0.121.2",  6025, function(_err, _data) {
 					alert(_err);
 					if(_err){
-					/*
 						var datagram = cordova.require("cordova-plugin-datagram4.datagram");
 						socket = datagram.createSocket("udp4");
 
@@ -324,7 +323,6 @@ function GetContent(_url, _cb){
 								});
 							}
 						});
-						*/
 					}
 				});	
 			}
