@@ -39,7 +39,7 @@
 					</a>
 				</div>
 				<div class="home_block">
-					<a href="<%- @server_address %>/explore/<%- @lang %>/maps">
+					<a class="test_llink" href="<%- @server_address %>/explore/<%- @lang %>/maps">
 						<div style="background-image: url('<% if @page.content :%><% if @page.content[@lang] :%><%-  @server_address %><%-(@page.content[@lang].image4 || "") %><% end %><% end %>');" class="home_block_img"></div>
 						<span><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].title4 || "" %><% end %><% end %></span>
 					</a>

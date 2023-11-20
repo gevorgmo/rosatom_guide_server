@@ -22,8 +22,12 @@ $(document).ready(function() {
 		if(document.body.className=="scanning") {
 			document.body.className=_tmp_class;
 			StopScan(); 
-		} 	
-		GetContent(_link,function(){});
+		} 
+		if($(this).hasClass('test_llink')){
+			GetContent("http://10.0.121.47/explore/ru/d12",function(){});
+		} else {
+			GetContent(_link,function(){});
+		}
 		return false;
 	});	
 	
@@ -298,14 +302,14 @@ function GetContent(_url, _cb){
 				});
 				
 				///////////////////////// OGNENSK
-				if (typeof SendUDP === "function" && _media_id=="c6")  SendUDP("run00", "10.0.121.14",  6024, function(){});
+				if (typeof SendUDP === "function" && _media_id=="c6")  SendUDP("run00", "10.0.121.14",  6024, function(error){if(error) alert(error);});
 
 				
 			} else {
 				console.log("start;"+_media_id);
 				$('.loader_start').css({'visibility':'hidden','opacity':'0'});
 				//alert("sent-start;"+_media_id);
-				if (typeof SendUDP === "function")  SendUDP("start;"+_media_id, "10.0.121.2",  6025, function(){});
+				if (typeof SendUDP === "function")  SendUDP("start;"+_media_id, "10.0.121.2",  6025, function(error){ if(error) alert(error); });
 				
 			}
 			
