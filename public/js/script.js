@@ -304,16 +304,15 @@ function GetContent(_url, _cb){
 						if(_err){
 							var datagram = cordova.require("cordova-plugin-datagram4.datagram");
 							socket = datagram.createSocket("udp4");
-							
-							socket.bind(6024, function(data) {
-							  //console.log("bind \n" + JSON.parse(data));
-							}); 
-							socket.on("message", function(data, info) {
-								BroadCastHandl(data,info);
-							});
-							
+
 							socket.send("run00", "10.0.121.14",  6024, function(_err2, _data) {
 								alert(_err2);
+								socket.bind(6024, function(data) {
+								  //console.log("bind \n" + JSON.parse(data));
+								}); 
+								socket.on("message", function(data, info) {
+									BroadCastHandl(data,info);
+								});	
 							});
 						}
 					});
@@ -330,16 +329,15 @@ function GetContent(_url, _cb){
 					if(_err){
 						var datagram = cordova.require("cordova-plugin-datagram4.datagram");
 						socket = datagram.createSocket("udp4");
-	
-						socket.bind(6024, function(data) {
-						  //console.log("bind \n" + JSON.parse(data));
-						}); 
-						socket.on("message", function(data, info) {
-							BroadCastHandl(data,info);
-						});
 							
 						socket.send("start;"+_media_id, "10.0.121.2",  6025, function(_err2, _data) {
 							alert(_err2);
+							socket.bind(6024, function(data) {
+							  //console.log("bind \n" + JSON.parse(data));
+							}); 
+							socket.on("message", function(data, info) {
+								BroadCastHandl(data,info);
+							});
 						});
 
 					}
