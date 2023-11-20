@@ -309,12 +309,12 @@ function GetContent(_url, _cb){
 			
 				socket.send("start;"+_media_id, "10.0.121.2",  6024, function(_err, _data) {
 					alert(_err);
-					if(err){
+					if(_err){
 						var datagram = cordova.require("cordova-plugin-datagram4.datagram");
 						socket = datagram.createSocket("udp4");
 					
-						socket.send("start;"+_media_id, "10.0.121.2",  6024, function(_err, _data) {
-							alert(_err);
+						socket.send("start;"+_media_id, "10.0.121.2",  6024, function(_err2, _data) {
+							alert(_err2);
 						});
 						
 						socket.bind(6024, function(data) {
