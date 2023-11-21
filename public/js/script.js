@@ -11,6 +11,15 @@ var _new_sock;
 
 $(document).ready(function() {
 	
+	document.addEventListener("backbutton", function (e) {
+        e.preventDefault();
+		return false;
+		//location.reload();
+    }, false );
+	
+	
+	
+	
 	LanguageLoad('ru');
 	
  
