@@ -15,6 +15,7 @@ $(document).ready(function() {
         e.preventDefault();
 		return false;
 		//location.reload();
+		//navigator.app.exitApp();
     }, false );
 	
 	
