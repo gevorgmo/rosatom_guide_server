@@ -363,7 +363,7 @@ $(document).ready(function(){
 			"lengthMenu": [[100, 200, 500, -1], [100, 200, 500, "All"]],
 			"dom": 'lrtip',
 			initComplete: function () {
-				$('#itemslist_length').append('<div class="row"><div class="col-sm-4"><div class="form-group searchdiv"><input type="text" class="form-control" id="filter_search" placeholder="Search ..."></div></div>'+($('#prexibitions')[0] ? '<div class="col-sm-4" id="exibitionfilter"></div>' : '')+'<div class="col-sm-4 pagelengthi"></div></div>');
+				$('#itemslist_length').append('<div class="row"><div class="col-sm-4"><div class="form-group searchdiv"><input type="text" class="form-control" id="filter_search" placeholder="Поиск ..."></div></div>'+($('#prexibitions')[0] ? '<div class="col-sm-4" id="exibitionfilter"></div>' : '')+'<div class="col-sm-4 pagelengthi"></div></div>');
 				$('div.dataTables_length label').appendTo('.pagelengthi');
 				$('#exibitionfilter').append($('#prexibitions'));
 			}

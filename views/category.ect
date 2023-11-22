@@ -1,5 +1,5 @@
 <% extend "layout.ect" %>
-<% all_category_titles={"exhibition":"Все выставки","media":"Все медии","event":"Все события","service":"Все услуги"} %>
+<% all_category_titles={"exhibition":"Все выставки","media":"Весь контент","event":"Все мероприятия","service":"Все сервисы"} %>
 <% all_global_pages={"home":"Домашняя страница","events":"Страница событий"} %>
 <% all_media_types=["", "Статический контент", "Зацикленное видео со звуком", "Стартовое видео со звуком", "URL-радио"] %>
 
@@ -8,12 +8,12 @@
 
 <section class="content-header">
 
-	<a href="/item/new?category=<%- @pagename %>" class="btn btn-primary"><i class="fa fa-plus"></i> Создавать новое</a>
+	<a href="/item/new?category=<%- @pagename %>" class="btn btn-primary"><i class="fa fa-plus"></i> Создать</a>
 
 	<% if @pagename=="media" :%>
 		<div style="display:none">	
 			<select class="form-control" id="prexibitions" style="width: 100%;">
-				<option value="">Все выставки</option>
+				<option value="">Тип контента</option>
 				<% for exhibit in @exhibitions : %>
 					<option value="<%- exhibit._id %>"><% if exhibit.title :%><%- exhibit.title["ru"] || "" %><% end %></option>
 				<% end %>	
@@ -33,11 +33,17 @@
 						<% if @pagename=="event" :%>
 							<th>Дата</th>
 						<% else if @pagename=="media" :%>
-							<th>QR</th>
+							<th>QR</th>			
 						<% else :%>	
 							<th>Порядок сортировки</th>
-						<% end %>	
-						<th>Заголовок</th>
+						<% end %>
+						
+						<% if @pagename=="media" :%>
+							<th>Заголовок</th>
+						<% else :%>	
+							<th>Название</th>
+						<% end %>
+						
 						<% if @pagename=="media" :%>
 							<th>Тип медии</th>
 							<th>Выставка</th>

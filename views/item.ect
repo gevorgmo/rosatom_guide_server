@@ -1,5 +1,5 @@
 <% extend "layout.ect" %>
-<% all_category_titles={"exhibition":"выставки","media":"медии","event":"события","service":"услуги","home":"домашней страницы","events":"события"} %>
+<% all_category_titles={"exhibition":"выставки","media":"контента","event":"мероприятия","service":"сервиса","home":"домашней страницы","events":"мероприятия"} %>
 <section class="content-header p-item-<%- @pagename %>"><h1 class="categoryname">Редактор <%- if all_category_titles[@pagename] then all_category_titles[@pagename] else "" %></h1></section>
 
 <section class="content">
@@ -44,11 +44,11 @@
 							
 							<div class="col-md-3 col-ms-3">	
 								<div class="form-group">	
-									<label>Тип медии</label>
+									<label>Тип контента</label>
 									<select class="form-control" id="prmedia_type" style="width: 100%;">
-										<option value="1" <% if @item.media_type :%><% if @item.media_type==1 :%>selected<% end %><% end %>>Статический контент</option>
+										<option value="1" <% if @item.media_type :%><% if @item.media_type==1 :%>selected<% end %><% end %>>Статичный контент</option>
 										<option value="2" <% if @item.media_type :%><% if @item.media_type==2 :%>selected<% end %><% end %>>Зацикленное видео со звуком</option>
-										<option value="3" <% if @item.media_type :%><% if @item.media_type==3 :%>selected<% end %><% end %>>Стартовое видео со звуком</option>
+										<option value="3" <% if @item.media_type :%><% if @item.media_type==3 :%>selected<% end %><% end %>>Аудио, запускающее программу</option>
 										<option value="4" <% if @item.media_type :%><% if @item.media_type==4 :%>selected<% end %><% end %>>Динамическое аудио</option>
 									</select>
 								</div>	
@@ -118,7 +118,7 @@
 						
 						<% if  @pagename=="service":%>
 							<div class="col-md-8 col-ms-8">	
-								<label>Открытые часы</label>
+								<label>Время работы</label>
 								<div class="row">	
 									<div class="col-md-6 col-ms-6">	
 										<div class="form-group">
@@ -189,7 +189,7 @@
 									<div class="row">
 										<div class="col-md-4 col-ms-4">	
 											<div class="form-group">
-												<label>Название <%- if option.language_code=="ru" and (@pagename=="event" or @pagename=="exhibition") then "(required)"%></label>
+												<label>Название <%- if option.language_code=="ru" and (@pagename=="event" or @pagename=="exhibition") then "(обязательно)"%></label>
 												<input type="text" class="form-control  prtitle"  placeholder="Enter Text"  data-lang="<%- option.language_code %>" value="<% if @item.title :%><%- @item.title[option.language_code] || "" %><% end %>">
 											</div>
 										</div>
@@ -231,7 +231,7 @@
 											<div class="col-md-12 col-ms-12">
 												<div class="form-group">
 													<% if @pagename=="media" :%>
-														<label>Стенограмма</label>
+														<label>Расшифровка</label>
 													<% end %>
 													<% if @pagename=="exhibition" or @pagename=="event" :%>
 														<label>Краткое описание <%- if option.language_code=="ru" then "(необходимый)"%></label>
