@@ -399,7 +399,9 @@
 		<div class="box-footer">
 			<div class="pull-right">
 				<a  href="/options/all" class="btn btn-default"><i class="fa fa-angle-left"></i> Назад</a>
-				<button type="button"  data-href="/options/all" class="btn btn-info andexit btn-saveoption"><i class="fa fa-save"></i> Сохранить</button>
+				<% if @user_status=="admin" :%>
+					<button type="button"  data-href="/options/all" class="btn btn-info andexit btn-saveoption"><i class="fa fa-save"></i> Сохранить</button>
+				<% end %>	
 			</div>
 		</div>	
 	</div>

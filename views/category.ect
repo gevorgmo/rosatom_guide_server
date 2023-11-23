@@ -7,9 +7,10 @@
 <section class="content-header p-category"><h1><%- if all_category_titles[@pagename] then all_category_titles[@pagename] else "" %></h1></section>
 
 <section class="content-header">
-
-	<a href="/item/new?category=<%- @pagename %>" class="btn btn-primary"><i class="fa fa-plus"></i> Создать</a>
-
+	<% if @user_status=="admin" :%>
+		<a href="/item/new?category=<%- @pagename %>" class="btn btn-primary"><i class="fa fa-plus"></i> Создать</a>
+	<% end %>	
+	
 	<% if @pagename=="media" :%>
 		<div style="display:none">	
 			<select class="form-control" id="prexibitions" style="width: 100%;">
@@ -82,8 +83,10 @@
 									<a href="#" class="itemturnicon-turn" data-status="0" data-id="<%- page._id %>" id="statusswicher<%- page._id %>"><i class="fa fa-toggle-off"></i>off</a>
 								<% end %>	
 							</td>
-							<td>	
-								<button type="button" data-id="<%- page._id %>"  class="btn btn-danger btn-xs btn-flat btn-deleteitem"><i class="glyphicon glyphicon-trash"></i></button>							
+							<td>
+								<% if @user_status=="admin" :%>
+									<button type="button" data-id="<%- page._id %>"  class="btn btn-danger btn-xs btn-flat btn-deleteitem"><i class="glyphicon glyphicon-trash"></i></button>		
+								<% end %>	
 							</td>
 						</tr>	
 					<% end %>

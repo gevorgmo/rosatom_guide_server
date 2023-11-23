@@ -10,7 +10,9 @@
 	<% for option in @options : %>
 			<div class="info-box" id="<%- option._id %>" style="min-height: unset;">
 				<div class="info-box-right" style="text-align:right;">	
-					<button type="button" data-id="<%- option._id %>"  class="btn btn-danger btn-xs btn-flat btn-deleteoption"><i class="glyphicon glyphicon-trash"></i></button>							
+					<% if @user_status=="admin" :%>
+						<button type="button" data-id="<%- option._id %>"  class="btn btn-danger btn-xs btn-flat btn-deleteoption"><i class="glyphicon glyphicon-trash"></i></button>							
+					<% end %>
 				</div>
 				<div class="info-box-content" style="margin-left: 0;">
 					<a href="/options/<%- option._id %>"><span class="info-box-number"><%- (option.language_title || "")  %></span></a>								

@@ -388,10 +388,12 @@
 				<div class="box-footer">
 					<div class="pull-right">
 						<a  href="/category/<%- @pagename %>" class="btn btn-default"><i class="fa fa-angle-left"></i> Назад</a>
-						<% if @item._id!="new" :%>
-							<button type="button"  class="btn btn-success btn-saveitem"><i class="fa fa-save"></i> Сохранить</button>
-						<% end %>
-						<button type="button"  data-href="/category/<%- @pagename %>" class="btn btn-info andexit btn-saveitem"><i class="fa fa-save"></i> Сохранить и выйти</button>
+						<% if @user_status=="admin" :%>
+							<% if @item._id!="new" :%>
+								<button type="button"  class="btn btn-success btn-saveitem"><i class="fa fa-save"></i> Сохранить</button>
+							<% end %>
+							<button type="button"  data-href="/category/<%- @pagename %>" class="btn btn-info andexit btn-saveitem"><i class="fa fa-save"></i> Сохранить и выйти</button>
+						<% end %>	
 					</div>
 				</div>	
 			</div>

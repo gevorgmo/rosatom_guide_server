@@ -233,7 +233,9 @@
 				</div>	
 			</div>
 			<div class="modal-footer" style="text-align: left">
-				<button id="edit_save" type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true"><i class="fa fa-save"></i> Сохранить</button>
+				<% if @user_status=="admin" :%>
+					<button id="edit_save" type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true"><i class="fa fa-save"></i> Сохранить</button>
+				<% end %>
 			</div>
 		</div>
     </div>
