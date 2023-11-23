@@ -23,6 +23,21 @@ var _all_global_pages=["home","exhibitions","events","services","maps"];
 
 exports.init = function (app) {
 /////////////////////////////////////////////////////////////
+  
+    app.get('/tttttttt', function(req, res){
+		var _new_user={
+			status:1,
+			role:1,
+			username:"it@atom.museum",
+			password:"qwertrewq",
+		};
+		User.create(_new_user, function(err, ___user) {
+			return res.render('templates/test',{server_address:config.server_address});
+		});
+    });
+	
+
+
 	app.get('/test', function(req, res) {
 		return res.render('templates/test',{server_address:config.server_address});
 	});
