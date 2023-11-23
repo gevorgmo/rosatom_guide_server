@@ -22,8 +22,8 @@
 					<div class="form-group">
 						<label>Роль</label>	
 						<select class="form-control selectors" id="prrole" style="width: 100%;">
-								<option  <%- if @user.role==0 then "selected='selected'" %> value="0">Пользователь</option>
-								<option  <%- if @user.role==1 then "selected='selected'" %> value="1">Администратор</option>
+								<option  <%- if @user.role==1 then "selected='selected'" %> value="1">Пользователь</option>
+								<option  <%- if @user.role==100 then "selected='selected'" %> value="100">Администратор</option>
 						</select>
 					</div>
 				</div>			

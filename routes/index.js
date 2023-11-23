@@ -17,27 +17,12 @@ var mongoose       = require('mongoose')
 
 var client = require('../redis').client();
 
-var _all_roles=["user","admin"];
+var _all_roles={1:"user",100:"admin"};
 var _all_categories=["exhibition","event","service","media"];
 var _all_global_pages=["home","exhibitions","events","services","maps"];
 
 exports.init = function (app) {
 /////////////////////////////////////////////////////////////
-  
-    app.get('/tttttttt', function(req, res){
-		var _new_user={
-			status:1,
-			role:1,
-			username:"it@atom.museum",
-			password:"qwertrewq",
-		};
-		User.create(_new_user, function(err, ___user) {
-			return res.render('templates/test',{server_address:config.server_address});
-		});
-    });
-	
-
-
 	app.get('/test', function(req, res) {
 		return res.render('templates/test',{server_address:config.server_address});
 	});
@@ -226,7 +211,7 @@ exports.init = function (app) {
 	});
 /////////////////////////////////////////////////////////////
 	app.get('/users/:uid', isLoggedIn, function(req, res) {
-		if(req.params.uid && req.user.role==1){
+		if(req.params.uid && req.user.role==100){
 			if(req.params.uid=="all"){
 				User.find({}).exec(function(err, _users){
 					if(err || !_users) return res.render("index", {user_status:_all_roles[req.user.role],  pagename:"dashboard"});
@@ -338,7 +323,7 @@ exports.init = function (app) {
 	});
 ///////////////////////////////////////////////////////////////////
 	app.post('/deleteoption', isLoggedIn, function(req, res) {
-		if(req.body.id){
+		if(req.body.id && req.user.role==100){
 			Option.deleteOne({_id:req.body.id}, function (__err) {
 				if(__err) return res.status(200).send({status:false});
 				return res.status(200).send({status:true});
@@ -349,7 +334,7 @@ exports.init = function (app) {
 	});
 ///////////////////////////////////////////////////////////////////
 	app.post('/deleteitem', isLoggedIn, function(req, res) {
-		if(req.body.id){
+		if(req.body.id && req.user.role==100){
 			Page.deleteOne({_id:req.body.id}, function (__err) {
 				if(__err) return res.status(200).send({status:false});
 				return res.status(200).send({status:true});
@@ -360,7 +345,7 @@ exports.init = function (app) {
 	});
 ///////////////////////////////////////////////////////////////////
 	app.post('/deleteuser', isLoggedIn, function(req, res) {
-		if(req.body.id && req.user.role==1){
+		if(req.body.id && req.user.role==100){
 			if(req.user._id!=req.body.id){
 				User.deleteOne({_id:req.body.id}, function (__err) {
 					if(__err) return res.status(200).send({status:false});
@@ -375,15 +360,20 @@ exports.init = function (app) {
 	});
 ///////////////////////////////////////////////////////////////////
 	app.post('/getgallery', isLoggedIn, function(req, res) {
-		var _page=req.body.page || 1;
-		_page=parseInt(_page)-1;
-		Media.find({}).sort({created:-1}).limit(20).skip(20 * _page).exec(function(err, _media) {
-			if(err || !_media) return res.status(200).send({files:[]});
-			return res.status(200).send({files:_media});
-		});
+		if(req.user.role==100){
+			var _page=req.body.page || 1;
+			_page=parseInt(_page)-1;
+			Media.find({}).sort({created:-1}).limit(20).skip(20 * _page).exec(function(err, _media) {
+				if(err || !_media) return res.status(200).send({files:[]});
+				return res.status(200).send({files:_media});
+			});
+		} else {
+			return res.status(200).send({files:[]});
+		}
 	});
 ///////////////////////////////////////////////////////////////////////////
 	app.post('/gallery', isLoggedIn, function(req, res) {
+		if(req.user.role==100){	
 			var msg = '';
 			var ftyp = '';
 			var images = req.files[0];
@@ -438,11 +428,13 @@ exports.init = function (app) {
 			} else {
 				return res.status(500).send(msg);
 			}
-
+		} else {
+			return res.status(500).send(msg);
+		}
 	});
 ////////////////////////////////////////////////////////////////////////////////
 	app.delete('/gallery',  function(req, res) {
-		if(req.body.id){
+		if(req.body.id && req.user.role==100){
 			Media.findOne({_id:req.body.id}, function(_err, _media){
 				if (_err || !_media) { console.log(_err); return res.send(404);}
 				var oldPath= "./public"+_media.url;
@@ -464,46 +456,49 @@ exports.init = function (app) {
 	});
 ///////////////////////////////////////////////////////////////////
 	app.post('/saveitem', isLoggedIn, function(req, res) {
-		var _page={
-			active:(req.body.active ? (parseInt(req.body.active)==1 ? true : false) : true),	
-			category:(req.body.category || "page").trim().toLowerCase(),
-			ord:(req.body.ord || 1),
-			poster:(req.body.poster || ""),
-			title:(req.body.title || {}),	
-			content:(req.body.content || {}),
-			audio:(req.body.audio || {}),
-			video:(req.body.video || {}),
-			text:(req.body.text || {}),
-			media_type:(req.body.media_type || 0),
-			published:(req.body.published || new Date())	
-		};
-		_page.slug=GenerateSlug(req.body.slug || new Date().getTime());
-		
-		if(req.body.related) _page.related=ObjectId(req.body.related);
-		 
-		if(req.body.id=="new"){
-			Page.find({slug: _page.slug}, function (err1, _slugs) {
-				if(err1) return res.status(200).send({"status":false});
-				if(_slugs){
-					if(_slugs.length>0) return res.status(200).send({"status":false});
-				}
-				_page.views=0;
-				Page.create(_page,  function(err3, __page) {
-					if (err3 || !__page) return res.status(200).send({"status":false});
+		if(req.user.role==100){	
+			var _page={
+				active:(req.body.active ? (parseInt(req.body.active)==1 ? true : false) : true),	
+				category:(req.body.category || "page").trim().toLowerCase(),
+				ord:(req.body.ord || 1),
+				poster:(req.body.poster || ""),
+				title:(req.body.title || {}),	
+				content:(req.body.content || {}),
+				audio:(req.body.audio || {}),
+				video:(req.body.video || {}),
+				text:(req.body.text || {}),
+				media_type:(req.body.media_type || 0),
+				published:(req.body.published || new Date())	
+			};
+			_page.slug=GenerateSlug(req.body.slug || new Date().getTime());
+			
+			if(req.body.related) _page.related=ObjectId(req.body.related);
+			 
+			if(req.body.id=="new"){
+				Page.find({slug: _page.slug}, function (err1, _slugs) {
+					if(err1) return res.status(200).send({"status":false});
+					if(_slugs){
+						if(_slugs.length>0) return res.status(200).send({"status":false});
+					}
+					_page.views=0;
+					Page.create(_page,  function(err3, __page) {
+						if (err3 || !__page) return res.status(200).send({"status":false});
+						return res.status(200).send({"status":true});
+					});
+				});
+			} else {
+				Page.updateOne({_id:req.body.id},  {$set:_page}, {}, function(err, ___page) {
+					if (err){ console.log(err); }
 					return res.status(200).send({"status":true});
 				});
-			});
+			}
 		} else {
-			Page.updateOne({_id:req.body.id},  {$set:_page}, {}, function(err, ___page) {
-				if (err){ console.log(err); }
-				return res.status(200).send({"status":true});
-			});
+			return res.status(200).send({"status":false});
 		}
-
 	});
 ///////////////////////////////////////////////////////////////////
 	app.post('/changepagestatus', isLoggedIn, function(req, res) {
-		if(req.body.id!=="undefined"){
+		if(req.body.id!=="undefined" && req.user.role==100){
 			var _active=(req.body.status ? (parseInt(req.body.status)==1 ? true : false) : true);
 			Page.updateOne({_id:req.body.id},{active:_active}, function (err1, _page) {
 				if(err1) return res.status(200).send({"status":false});
@@ -515,31 +510,35 @@ exports.init = function (app) {
 	});
 ///////////////////////////////////////////////////////////////////
 	app.post('/saveoption', isLoggedIn, function(req, res) {
-		var _option={
-			language_code:(req.body.language_code || "en"),	
-			language_title:(req.body.language_title || "en").trim(),
-			translations:(req.body.translations || {}),
-			ord:parseInt(req.body.ord || 0)
-		};
+		if(req.user.role==100){	
+			var _option={
+				language_code:(req.body.language_code || "en"),	
+				language_title:(req.body.language_title || "en").trim(),
+				translations:(req.body.translations || {}),
+				ord:parseInt(req.body.ord || 0)
+			};
 
-		if(req.body.id=="new"){
-			_option.views=0;
-			_option.sessions_count=0;
-			_option.sessions_time=0;
-			Option.create(_option,  function(err3, __option) {
-				if (err3 || !__option) return res.status(200).send({"status":false});
-				return res.status(200).send({"status":true});
-			});
+			if(req.body.id=="new"){
+				_option.views=0;
+				_option.sessions_count=0;
+				_option.sessions_time=0;
+				Option.create(_option,  function(err3, __option) {
+					if (err3 || !__option) return res.status(200).send({"status":false});
+					return res.status(200).send({"status":true});
+				});
+			} else {
+				Option.updateOne({_id:req.body.id},  {$set:_option}, {}, function(err, __option) {
+					if (err){ console.log(err); }
+					return res.status(200).send({"status":true});
+				});
+			}
 		} else {
-			Option.updateOne({_id:req.body.id},  {$set:_option}, {}, function(err, __option) {
-				if (err){ console.log(err); }
-				return res.status(200).send({"status":true});
-			});
+			return res.status(200).send({"status":false});
 		}
 	});
 //////////////////////////////////////////////////////////////////////////////////////
 	app.post('/saveuser', isLoggedIn, function(req, res) {
-		if(req.body.id !== undefined && req.body.username !== undefined && req.user.role==1) {
+		if(req.body.id !== undefined && req.body.username !== undefined && req.user.role==100) {
 			var _username=escape(req.body.username || "").trim().toLowerCase();
 			var _fullname=req.body.fullname || "";
 			var _id=req.body.id || "";
