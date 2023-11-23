@@ -636,7 +636,7 @@ function BroadCastHandl(data,info){
 	var _comma=data.split(";");
 	if(_comma.length>=2 && _media_id){
 		if(_media_id==_comma[1]){	
-			if(_comma[0]=="play" && _comma.length==3){
+			if(_comma[0]=="play" && _comma.length>2){
 					GetReq("http://10.0.121.2/api/v1/video/index", function(__data){
 						if(__data){
 							if(__data.success){
@@ -644,7 +644,7 @@ function BroadCastHandl(data,info){
 									if(__data.data.videos){
 										var _find_media=false;
 										for(var _t=0;_t<__data.data.videos.length;_t++){
-											if(__data.data.videos[_t].code_name.toString()==_comma[2]){
+											if(_comma[2].indexOf('.')<0 && __data.data.videos[_t].code_name.toString()==_comma[2]){
 												_time_code=parseFloat(__data.data.videos[_t].timeCode);
 												_page_load_time=Date.now()/1000;
 												for(var _k=0;_k<__data.data.videos[_t].audios.length;_k++){
@@ -655,6 +655,13 @@ function BroadCastHandl(data,info){
 														break;
 													}	
 												}
+												break;
+											} else if(_comma[2].indexOf('.')>0 && __data.data.videos[_t].code_name.toString()==_media_id){
+												_audio.src ="http://10.0.121.2/raduga/"+(_lang=="ru" ?_comma[2] : _comma[3]);
+												_time_code=parseFloat(__data.data.videos[_t].timeCode);
+												_page_load_time=Date.now()/1000;	
+												_find_media=true;
+												_playstatus=false;
 												break;
 											}
 										}
