@@ -62,8 +62,12 @@
 							
 						
 						<% if !transs :%>	
-							<div class="media_player_block"  id="media_player_block">				
-								<div class="media_player_block_iiiinner"><% if opt.translations :%><%- opt.translations.listen_audio || "" %><% end %></div>
+							<div class="media_player_block"  id="media_player_block">
+								<% if @page.media_type!=4 :%>	
+									<div class="media_player_block_iiiinner"><% if opt.translations :%><%- opt.translations.listen_audio || "" %><% end %></div>
+								<% else :%>
+									<div class="media_player_block_iiiinner"><% if opt.translations :%><%- opt.translations.dynamic_content || "" %><% end %></div>
+								<% end %>	
 							</div>	
 						<% end %>	
 						
