@@ -464,20 +464,20 @@ $(document).ready(function(){
 				'<div class="row speakeritem" data-lang="'+_ll+'">'+
 					'<div class="col-md-4 col-ms-4">'+	
 						'<div class="form-group">'+
-							'<label>Name</label>'+
+							'<label>Имя</label>'+
 							'<input type="text" class="form-control  prname"  placeholder="Enter name"  data-lang="'+_ll+'" value="">'+
 						'</div>'+
 					'</div>'+
 					'<div class="col-md-3 col-ms-3">'+	
 						'<div class="form-group">'+
-							'<label>Photo</label><br>'+
+							'<label>Фото</label><br>'+
 							'<button type="button" class="media_btn btn btn-info btn-flat" ><i class="fa fa-plus"></i> Select Media</button>'+
 							'<div class="selected_media_itm prphoto" id="prphoto'+_ll+(new Date()).getTime()+'" style="display:none;background-image:url(/admin/img/image_icon.jpg);" data-src="" data-type="image"  data-lang="'+_ll+'"><a class="media_itm_link btn btn-warning btn-flat previewlink" data-template="speaker" href="" target="_blank" title=""><i class="fa  fa-eye"></i></a><button type="button" class="btn-selectedmediaremove  btn btn-danger btn-flat"><i class="fa fa-trash"></i></button></div>'+
 						'</div>'+
 					'</div>'+
 					'<div class="col-md-4 col-ms-4">'+
 						'<div class="form-group">'+
-							'<label>Information</label>'+
+							'<label>Информация</label>'+
 							'<textarea  class="form-control htmlcont_small prinfo"  data-lang="'+_ll+'"  cols="20"  ></textarea>'+
 						'</div>'+
 					'</div>'+
@@ -494,10 +494,10 @@ $(document).ready(function(){
 		var _ll=$(this).attr('data-lang');
 		$('.all_menus'+_ll).append(
 			'<div class="sectionitm" data-lang="'+_ll+'">'+
-				'<button type="button"  class="btn btn-success btn-addmenuitem pull-right"><i class="fa fa-plus"></i> Add item</button>'+
-				'<button type="button"  class="btn  btn-danger btn-deletemenusection pull-right"><i class="fa fa-trash"></i> Delete section</button>'+
+				'<button type="button"  class="btn btn-success btn-addmenuitem pull-right"><i class="fa fa-plus"></i> Добавить элемент</button>'+
+				'<button type="button"  class="btn  btn-danger btn-deletemenusection pull-right"><i class="fa fa-trash"></i> Удалить раздел</button>'+
 				'<div class="form-group">'+
-					'<label>Section name</label>'+
+					'<label>Название раздела</label>'+
 					'<input type="text" class="form-control  prsection"  placeholder="Enter title"  value="">'+
 				'</div>'+		
 				'<div class="all_menuitems"></div>'+
@@ -514,19 +514,19 @@ $(document).ready(function(){
 				'<div class="row menuitem">'+
 					'<div class="col-md-4 col-ms-4">'+	
 						'<div class="form-group">'+
-							'<label>Name</label>'+
+							'<label>Название</label>'+
 							'<input type="text" class="form-control  prname"  placeholder="Enter name"  value="">'+
 						'</div>'+
 					'</div>'+
 					'<div class="col-md-4 col-ms-4">'+
 						'<div class="form-group">'+
-							'<label>Information</label>'+
+							'<label>Информация</label>'+
 							'<textarea  class="form-control htmlcont_small prinfo"    cols="20"  ></textarea>'+
 						'</div>'+
 					'</div>'+
 					'<div class="col-md-3 col-ms-3">'+	
 						'<div class="form-group">'+
-							'<label>Price</label>'+
+							'<label>Цена</label>'+
 							'<input type="text" class="form-control  prprice"  placeholder="Enter price"  value="">'+
 						'</div>'+
 					'</div>'+
