@@ -168,6 +168,7 @@ function GetContent(_url, _cb){
 	$('.loader_start').css({'visibility':'visible','opacity':'1'});
 	
 	if(_playstatus || _audio){
+		if(_media_type=="4")  SendUDP("disconnect", "10.0.121.2",  6025, function(error){if(error) console.log(error);});
 		_audio.pause();
 		_audio.src="";
 		_playstatus=false;
