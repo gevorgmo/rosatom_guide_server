@@ -162,8 +162,8 @@ a:focus,a:visited,a:active{
 	margin:0;
 	padding:0;
 	background-color:#000;
-	-webkit-transition: all .3s ease;
-	transition: all .3s ease;
+	-webkit-transition: all .5s ease;
+	transition: all .5s ease;
 }
 .loader img{
 	margin: 0;
