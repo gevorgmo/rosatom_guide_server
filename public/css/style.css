@@ -162,13 +162,8 @@ a:focus,a:visited,a:active{
 	margin:0;
 	padding:0;
 	background-color:#000;
-	transition: none;
-	-webkit-transition:none;
-	-khtml-transition:none;
-	-moz-transition: none;
-	-o-transition: none;
-	-ms-transition: none;
-	-icab-transition:none;
+	-webkit-transition: all .3s ease;
+	transition: all .3s ease;
 }
 .loader img{
 	margin: 0;
