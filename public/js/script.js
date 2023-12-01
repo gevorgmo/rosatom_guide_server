@@ -657,7 +657,7 @@ function BroadCastHandl(data,info){
 												}
 												break;
 											} else if(_comma[2].indexOf('.')>0 && __data.data.videos[_t].code_name.toString()==_media_id){
-												_audio.src ="http://10.0.121.2/raduga/"+(_lang=="ru" ?_comma[2] : _comma[3]);
+												_audio.src ="http://10.0.121.2/uploads/global/audio/raduga/"+(_lang=="ru" ?_comma[2] : _comma[3]);
 												_time_code=parseFloat(__data.data.videos[_t].timeCode);
 												_page_load_time=Date.now()/1000;	
 												_find_media=true;
