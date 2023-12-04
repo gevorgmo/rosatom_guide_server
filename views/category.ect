@@ -1,7 +1,7 @@
 <% extend "layout.ect" %>
 <% all_category_titles={"exhibition":"Все выставки","media":"Весь контент","event":"Все мероприятия","service":"Все сервисы"} %>
 <% all_global_pages={"home":"Домашняя страница","events":"Страница событий"} %>
-<% all_media_types=["", "Статический контент", "Зацикленное видео со звуком", "Стартовое видео со звуком", "URL-радио"] %>
+<% all_media_types=["", "Статичный контент", "Зацикленное видео со звуком", "Аудио, запускающее программу", "Динамический контент"] %>
 
 
 <section class="content-header p-category"><h1><%- if all_category_titles[@pagename] then all_category_titles[@pagename] else "" %></h1></section>
