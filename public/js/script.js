@@ -632,7 +632,7 @@ function pointerup_handler(){
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
 function BroadCastHandl(data,info){
-	//if(_media_type=="4") alert("get-"+data);
+	if(_media_type=="4") alert("get-"+data);
 	var _comma=data.split(";");
 	if(_comma.length>=2 && _media_id){
 		if(_media_id==_comma[1]){	
