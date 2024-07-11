@@ -674,7 +674,7 @@ function BroadCastHandl(data,info){
 							}
 						}	
 					});
-			} else if(_comma[0]=="stop" && _playstatus  && _audio){
+			} else if((_comma[0]=="stop" || _comma[0]=="pause") && _playstatus  && _audio){
 				_audio.pause();
 				_playstatus=false;
 			} else if(_comma[0]=="resume" && !_playstatus  && _audio){
@@ -685,7 +685,7 @@ function BroadCastHandl(data,info){
 			} else if(_comma[0]=="unmute" && _playstatus  && _audio){
 				_audio.muted = false;
 			} else if(_comma[0]=="seek" && _playstatus  && _audio){
-				_audio.currentTime=parseFloat(_comma[1]);
+				_audio.currentTime=parseFloat(_comma[2]);
 				_audio.play();	
 			}
 		}
