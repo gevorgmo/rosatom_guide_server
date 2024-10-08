@@ -1,5 +1,5 @@
 <% extend "layout.ect" %>
-<% all_category_titles={"exhibition":"Все выставки","media":"Весь контент","event":"Все мероприятия","service":"Все сервисы"} %>
+<% all_category_titles={"exhibition":"Все выставки","media":"Весь контент","event":"Все мероприятия","service":"Все сервисы","location":"Все локации"} %>
 <% all_global_pages={"home":"Домашняя страница","events":"Страница событий"} %>
 <% all_media_types=["", "Статичный контент", "Зацикленное видео со звуком", "Аудио, запускающее программу", "Динамический контент"] %>
 
@@ -31,58 +31,68 @@
 			<table id="itemslist" class="table table-bordered table-hover">
 				<thead>
 					<tr>
-						<% if @pagename=="event" :%>
-							<th>Дата</th>
-						<% else if @pagename=="media" :%>
-							<th>QR</th>			
+						<% if @pagename!="location" :%>
+							<% if @pagename=="event" :%>
+								<th>Дата</th>
+							<% else if @pagename=="media" :%>
+								<th>QR</th>			
+							<% else :%>	
+								<th>Порядок сортировки</th>
+							<% end %>
+							
+							<% if @pagename=="media" :%>
+								<th>Заголовок</th>
+							<% else :%>	
+								<th>Название</th>
+							<% end %>
+							
+							<% if @pagename=="media" :%>
+								<th>Тип контента</th>
+								<th>Выставка</th>
+							<% end %>
+							<% if @pagename=="media" or @pagename=="exhibition" :%>
+								<th>Этаж</th>
+							<% end %>	
+							<th>Просмотры</th>
+							<th>Статус</th>	
 						<% else :%>	
 							<th>Порядок сортировки</th>
-						<% end %>
-						
-						<% if @pagename=="media" :%>
-							<th>Заголовок</th>
-						<% else :%>	
 							<th>Название</th>
-						<% end %>
-						
-						<% if @pagename=="media" :%>
-							<th>Тип контента</th>
-							<th>Выставка</th>
-						<% end %>
-						<% if @pagename=="media" or @pagename=="exhibition" :%>
-							<th>Этаж</th>
-						<% end %>	
-						<th>Просмотры</th>
-						<th>Статус</th>	
+						<% end %>		
 						<th class="no-sort">Удалить</th>
 					</tr>
 				</thead>
 				<tbody>	
 					<% for page in @pages : %>
 						<tr id="<%- page._id %>">
-							<% if @pagename=="event" :%>
-								<td><%- page.time %></td>
-							<% else if @pagename=="media" :%>	
-								<td><%- page.slug %></td>
+							<% if @pagename!="location" :%>
+								<% if @pagename=="event" :%>
+									<td><%- page.time %></td>
+								<% else if @pagename=="media" :%>	
+									<td><%- page.slug %></td>
+								<% else :%>	
+									<td><%- page.ord %></td>
+								<% end %>
+								<td><% if page.title.ru :%><a href="/item/<%- page._id %>"><%- page.title.ru %></a><% end %></td>
+								<% if @pagename=="media"  :%>
+									<td><%- all_media_types[page.media_type || 0] %></td>
+									<td><% if page.related :%><span style="display:none"><%- page.related._id %></span><% if page.related.title :%><%- page.related.title["ru"] || "" %><% end %><% end %></td>
+								<% end %>
+								<% if @pagename=="media" or @pagename=="exhibition" :%>
+									<td><% if page.content :%><%- page.content.floor || "" %><% end %></td>
+								<% end %>	
+								<td><%- page.views %></td>
+								<td>
+									<% if page.active :%>
+										<a href="#" class="itemturnicon-turn" data-status="1" data-id="<%- page._id %>" id="statusswicher<%- page._id %>"><i class="fa fa-toggle-on"></i>on</a>
+									<% else :%>	
+										<a href="#" class="itemturnicon-turn" data-status="0" data-id="<%- page._id %>" id="statusswicher<%- page._id %>"><i class="fa fa-toggle-off"></i>off</a>
+									<% end %>	
+								</td>
 							<% else :%>	
 								<td><%- page.ord %></td>
-							<% end %>
-							<td><% if page.title.ru :%><a href="/item/<%- page._id %>"><%- page.title.ru %></a><% end %></td>
-							<% if @pagename=="media"  :%>
-								<td><%- all_media_types[page.media_type || 0] %></td>
-								<td><% if page.related :%><span style="display:none"><%- page.related._id %></span><% if page.related.title :%><%- page.related.title["ru"] || "" %><% end %><% end %></td>
-							<% end %>
-							<% if @pagename=="media" or @pagename=="exhibition" :%>
-								<td><% if page.content :%><%- page.content.floor || "" %><% end %></td>
-							<% end %>	
-							<td><%- page.views %></td>
-							<td>
-								<% if page.active :%>
-									<a href="#" class="itemturnicon-turn" data-status="1" data-id="<%- page._id %>" id="statusswicher<%- page._id %>"><i class="fa fa-toggle-on"></i>on</a>
-								<% else :%>	
-									<a href="#" class="itemturnicon-turn" data-status="0" data-id="<%- page._id %>" id="statusswicher<%- page._id %>"><i class="fa fa-toggle-off"></i>off</a>
-								<% end %>	
-							</td>
+								<td><% if page.title.ru :%><a href="/item/<%- page._id %>"><%- page.title.ru %></a><% end %></td>
+							<% end %>							
 							<td>
 								<% if @user_status=="admin" :%>
 									<button type="button" data-id="<%- page._id %>"  class="btn btn-danger btn-xs btn-flat btn-deleteitem"><i class="glyphicon glyphicon-trash"></i></button>		

@@ -28,14 +28,14 @@
 
 		<main class="content">
 			<div class="events_blocks_container">
-				<% if @pages.today.length>0 :%>
-					<% if @pages.today[0] :%><div class="events_blocks_container_img" style="background-image:url(<%- if !@pages.today[0].event_id_on_web then @server_address  %><%- @pages.today[0].poster || "" %>)" ></div><% end %>
+				<% if @today.length>0 :%>
+					<% if @today[0] :%><div class="events_blocks_container_img" style="background-image:url(<%- if !@today[0].event_id_on_web then @server_address  %><%- @today[0].poster || "" %>)" ></div><% end %>
 				<%  else :%>	
-					<% if @pages.upcoming[0] :%><div class="events_blocks_container_img" style="background-image:url(<%- if !@pages.today[0].event_id_on_web then @server_address %><%- @pages.upcoming[0].poster || "" %>)"  ></div><% end %>
+					<% if @upcoming[0] :%><div class="events_blocks_container_img" style="background-image:url(<%- if !@today[0].event_id_on_web then @server_address %><%- @upcoming[0].poster || "" %>)"  ></div><% end %>
 				<% end %>	
 				
 				<div class="events_categories">
-					<% if @pages.today.length>0 :%>
+					<% if @today.length>0 :%>
 						<div class="events_itm selected" data-type="today"><div class="events_itm_txt"><% if opt.translations :%><%- opt.translations.today || "" %><% end %></div></div>
 						<div class="events_itm" data-type="upcoming"><div class="events_itm_txt"><% if opt.translations :%><%- opt.translations.upcoming || "" %><% end %></div></div> 
 					<%  else :%>	
@@ -48,8 +48,8 @@
 						<div class="prshold selected" data-type="filt_all"><span><% if opt.translations :%><%- opt.translations.all_events || "" %><% end %></span><i class="arrow down"></i></div>
 						<ul>
 							<li class="filt_itmm" id="filt_all"><% if opt.translations :%><%- opt.translations.all_events || "" %><% end %></li>
-							<% if @pages.filters.length>0 :%>
-								<% for fill,o in @pages.filters : %>
+							<% if @filters.length>0 :%>
+								<% for fill,o in @filters : %>
 									<li class="filt_itmm"  id="filt_<%- o %>"><%- fill %></li>
 								<% end %>
 							<% end %>		
@@ -59,9 +59,9 @@
 
 				
 				<div class="events_container">
-					<% if @pages.today.length>0 :%>
+					<% if @today.length>0 :%>
 						<div data-type="today">
-							<% for page in @pages.today : %>
+							<% for page in @today : %>
 								<div class="event_block" data-type="<% if page.content :%><% if page.content[@lang] :%><%- page.content[@lang].type || "" %><% end %><% end %>">
 									<div class="event_location">
 										<span class="event_time"><%- page.time %></span>
@@ -70,7 +70,7 @@
 									<div class="event_info">
 										<% if page.poster :%><a class="event_block_img" style="background-image:url(<%- if !page.event_id_on_web then  @server_address %><%- page.poster %>)" href="<%- @server_address %>/explore/<%- @lang %>/<%- page.slug %>"></a><% end %>
 										<h2><a  href="<%- @server_address %>/explore/<%- @lang %>/<%- page.slug %>"><% if page.title :%><% if page.title[@lang] :%><%- page.title[@lang] %><% end %><% end %></a></h2>
-										<span class="event_place"><% if opt.translations :%><% if page.content :%><% if page.content.place :%><%- opt.translations[page.content.place] || "" %><% end %><% end %><% end %></span>
+										<span class="event_place"><% if opt.translations :%><% if page.content :%><% if page.content.place :%><% if @locations[page.content.place] :%><%- @locations[page.content.place].title[@lang] || "" %><% end %><% end %><% end %><% end %></span>
 										<a  href="<%- @server_address %>/explore/<%- @lang %>/<%- page.slug %>" class="event_short"><% if page.text :%><% if page.text[@lang] :%><%- page.text[@lang] %><% end %><% end %></a>
 									</div>
 								</div>
@@ -78,8 +78,8 @@
 						</div>
 					<% end %>	
 					
-					<div data-type="upcoming" style="<%- if @pages.today.length==0  then "display:block" %>">
-						<% for page in @pages.upcoming : %>
+					<div data-type="upcoming" style="<%- if @today.length==0  then "display:block" %>">
+						<% for page in @upcoming : %>
 							<div class="event_block" data-type="<% if page.content :%><% if page.content[@lang] :%><%- page.content[@lang].type || "" %><% end %><% end %>">
 								<div class="event_location">
 									<span class="event_time"><%- page.time %></span>
@@ -89,7 +89,7 @@
 								<div class="event_info">
 									<% if page.poster :%><a class="event_block_img" style="background-image:url(<%- if !page.event_id_on_web then @server_address  %><%-  page.poster %>)" href="<%- @server_address %>/explore/<%- @lang %>/<%- page.slug %>"></a><% end %>
 									<h2><a  href="<%- @server_address %>/explore/<%- @lang %>/<%- page.slug %>"><% if page.title :%><% if page.title[@lang] :%><%- page.title[@lang] %><% end %><% end %></a></h2>
-									<span class="event_place"><% if opt.translations :%><% if page.content :%><% if page.content.place :%><%- opt.translations[page.content.place] || "" %><% end %><% end %><% end %></span>
+									<span class="event_place"><% if opt.translations :%><% if page.content :%><% if page.content.place :%><% if @locations[page.content.place] :%><%- @locations[page.content.place].title[@lang] || "" %><% end %><% end %><% end %><% end %></span>
 									<a  href="<%- @server_address %>/explore/<%- @lang %>/<%- page.slug %>" class="event_short"><% if page.text :%><% if page.text[@lang] :%><%- page.text[@lang] %><% end %><% end %></a>
 								</div>
 							</div>
@@ -139,7 +139,7 @@
 		</footer>
 
 <script>
-	var _events_filters_list=<%- JSON.stringify @pages.filters %>;
+	var _events_filters_list=<%- JSON.stringify @filters %>;
 </script>
 
 

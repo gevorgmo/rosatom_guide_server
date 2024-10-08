@@ -38,7 +38,7 @@
 						<div class="event_info">
 							<span><%- @page.time %></span> 
 							<span><%- @page.date %></span> 
-							<span><% if opt.translations :%><% if @page.content :%><% if @page.content.place :%><%- opt.translations[@page.content.place] || "" %><% end %><% end %><% end %></span> 
+							<span><% if opt.translations :%><% if @page.content :%><% if @page.content.place :%><% if @location.title :%><%- @location.title[@lang] || "" %><% end %><% end %><% end %><% end %></span> 
 							<span><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].type || "" %><% end %><% end %></span>
 							<span><% if @page.content :%><% if @page.content[@lang] :%><%- @page.content[@lang].floor || "" %><% end %><% end %></span>				
 						</div>

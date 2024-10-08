@@ -1446,6 +1446,14 @@ footer{background:#000}
 .wifierror{font-family: 'JournalSansNewRegular';color: #fff;font-size: 2.4rem; line-height: 2.6rem;text-align:center;padding:0 25px;position:absolute;left:0;top:50%;transform: translateY(-50%);-webkit-transform: translateY(-50%);}
 
 
+.media_player_speed_rel{position:relative}
+.media_player_speed_list_it{display:none;width:100px;position:absolute;z-index:2;top:51px;border:1px solid #fff;color:#fff;font-family:JournalSansNewRegular;font-size:15px;line-height:40px;width:40px;text-align:center;border-radius:50%}
+.media_player_speed_list_it1{left:20%;}
+.media_player_speed_list_it2{right:20%;}
+.media_player_speed_list_it.selected{color:#000;background:#fff;}
+
+
+
 
 @media only screen and (orientation : landscape) {
 	.mobile_rotate{visibility:visible;opacity:1;}

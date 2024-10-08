@@ -8,7 +8,8 @@
 
 var _audio,_playstatus=false,_playButton,_progress,_progress_drag,_media_type,_media_id,_trans_id=-1,_time_code=0,_page_load_time=0,_current_status=0,_tmp_class,_map_zoom;
 var _new_sock;
-
+var _exp_id = 0;
+var _playbackRate=1;
 $(document).ready(function() {
 	
 	document.addEventListener("backbutton", function (e) {
@@ -52,6 +53,7 @@ $(document).ready(function() {
 				StopScan(); 
 				$('.guide_blocks_container').hide();	
 				$('#global_wrap').show();
+				_exp_id = _media;
 				GetContent(_server_address+"/explore/"+_lang+"/"+_media,function(){});
 			}); 
 		}
@@ -156,6 +158,23 @@ $(document).ready(function() {
 	
 	
 
+
+	
+
+	$('body').on('click', '.media_player_speed_list_it', function(evt) {
+		evt.preventDefault();	
+		_playbackRate=(parseFloat($(this).attr('data-val'))==1 ? 1.0 :1.25); 
+		if(_media_type=="1"){
+			_audio.playbackRate=_playbackRate;
+		}
+		$('.media_player_speed_list_it').removeClass('selected');
+		$(this).addClass('selected');
+		return false;
+	});	
+	
+	
+	
+	
 	document.addEventListener('gesturestart', (event) => { event.preventDefault(); }, false);
 	
 	
@@ -232,6 +251,9 @@ function GetContent(_url, _cb){
 			
 			if(_media_type!="4" && _media_type!="3") _media_url="http://10.0.121.2/api/v1/video/index";
 			
+			if(_media_type=="1"){
+				$('.media_player_speed_list_it'+(_playbackRate==1 ?1 : 2)).addClass('selected');
+			}
 			
 			if(document.getElementById('progress')){
 				_progress = document.getElementById('progress');
@@ -245,8 +267,9 @@ function GetContent(_url, _cb){
 			}
 			
 			_audio.addEventListener('canplay', function(){
-				if((_media_type=="1") && !_playstatus && _audio.src!=""){
+				if(_media_type=="1" && !_playstatus && _audio.src!=""){
 					_playstatus=true;
+					_audio.playbackRate=_playbackRate;
 					_audio.play();	
 				} else if((_media_type=="2" || _media_type=="3" || _media_type=="4") && !_playstatus && _audio.src!=""){
 					var _duraton=_audio.duration;
@@ -254,6 +277,7 @@ function GetContent(_url, _cb){
 					if(_currtime>=_duraton) _currtime=0;	
 					_audio.currentTime=_currtime;
 					_playstatus=true;
+					_audio.playbackRate=1;
 					_audio.play();	
 				}	
 			});
@@ -376,11 +400,17 @@ function GetContent(_url, _cb){
 		_cb();		
 		
 	}).fail(function() {
+		
 		$('.loader_start').append('<div class="wifierror">'+_trs_wifi+'</div>');
 		$('.loader_start img').css({'visibility':'hidden','opacity':'0'});
 		$('.loader_start').css({'visibility':'visible','opacity':'1'});
-		setTimeout(function(){ GetContent(_url,function(){});},2000);
-		_cb();
+		//setTimeout(function(){ GetContent(_url,function(){});},2000);
+		setTimeout(function(){
+			//$('.loader_start').css({'visibility':'hidden','opacity':'0'});
+			window.location.reload();
+		},1000);
+		document.body.className=_tmp_class;	
+		_cb();	
 	});	
 
 	
@@ -428,8 +458,13 @@ function filterEvents(_typ){
 function playAudio() {
 	_playstatus=!_playstatus;
 	if(_playstatus){
+		if(_media_type=="1"){
+			_playButton.className="player_button playing";
+			_audio.playbackRate=_playbackRate;
+		} else {
+			_audio.playbackRate=1;
+		}
 		_audio.play();
-		if(_media_type=="1") _playButton.className="player_button playing"
 	} else {
 		_audio.pause();
 		if(_media_type=="1") _playButton.className="player_button paused"
@@ -455,6 +490,7 @@ function updateProgressBar() {
 				_audio.pause();
 			} else 	if(_media_type=="2") {
 				_audio.currentTime=0;
+				_audio.playbackRate=1;
 				_audio.play();
 			}
 	  }
@@ -492,8 +528,13 @@ function dragend(ev) {
 	var _t=_progress_drag.style.left.replace("%","").replace("px","");
 	var _y=parseInt(_t)*(_audio.duration/100);
 	_audio.currentTime=_y;
+	if(_media_type=="1"){
+		_playButton.className="player_button playing";
+		_audio.playbackRate=_playbackRate;
+	} else  {
+		_audio.playbackRate=1;
+	}
 	_audio.play();
-	if(_media_type=="1") _playButton.className="player_button playing"
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function formatTime(_t){
@@ -632,7 +673,7 @@ function pointerup_handler(){
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
 function BroadCastHandl(data,info){
-	//if(_media_type=="4") alert("get-"+data);
+	//if (_exp_id =="d45") alert("get-"+data);
 	var _comma=data.split(";");
 	if(_comma.length>=2 && _media_id){
 		if(_media_id==_comma[1]){	
@@ -678,6 +719,7 @@ function BroadCastHandl(data,info){
 				_audio.pause();
 				_playstatus=false;
 			} else if(_comma[0]=="resume" && !_playstatus  && _audio){
+				_audio.playbackRate=1;
 				_audio.play();
 				_playstatus=true;	
 			} else if(_comma[0]=="mute" && _playstatus  && _audio){
@@ -686,6 +728,7 @@ function BroadCastHandl(data,info){
 				_audio.muted = false;
 			} else if(_comma[0]=="seek" && _playstatus  && _audio){
 				_audio.currentTime=parseFloat(_comma[2]);
+				_audio.playbackRate=1;
 				_audio.play();	
 			}
 		}

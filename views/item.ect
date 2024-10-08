@@ -1,5 +1,5 @@
 <% extend "layout.ect" %>
-<% all_category_titles={"exhibition":"выставки","media":"контента","event":"мероприятия","service":"сервиса","home":"домашней страницы","events":"мероприятия"} %>
+<% all_category_titles={"exhibition":"выставки","media":"контента","event":"мероприятия","service":"сервиса","home":"домашней страницы","events":"мероприятия","location":"локации"} %>
 <section class="content-header p-item-<%- @pagename %>"><h1 class="categoryname">Редактор <%- if all_category_titles[@pagename] then all_category_titles[@pagename] else "" %></h1></section>
 
 <section class="content">
@@ -7,7 +7,7 @@
 		<input type="hidden" id="prid" value="<%- @item._id || "new" %>" />
 		<input type="hidden" id="prcategory" value="<%- @pagename || "page" %>" />
 		
-		<% if @pagename!="media" :%>
+		<% if @pagename!="media" and @pagename!="location" :%>
 			<div class="col-md-3">
 				<div class="box box-primary">
 					<div class="box-header">
@@ -23,145 +23,149 @@
 			</div>
 		<% end %>
 		
-		<div class="col-md-<%- if @pagename=="media" then "12" else "9" %>">		
-			<div class="box box-primary">
-				<div class="box-header">
-					<h3 class="box-title"><i class="fa fa-cog"></i> Общий</h3>	
-					<div class="material-switch pull-right"><span class="switcherleft">Off</span><input id="practive" name="practive" type="checkbox" <%- if @item.active then "checked" %> /><label for="practive" class="label-primary"></label><span class="switcherright">On</span></div>
-				</div>
-				<div class="box-body">
-					<div class="row">										
-						<% if @pagename=="media" :%>
-							<div class="col-md-3 col-ms-3">		
-								<label style="margin: 0 0 0 10px;">QR-код</label>
-								<div class="input-group margin" style="margin-top:5px;">
-									<input type="text" class="form-control" id="prslug" placeholder="Enter code" value="<%- @item.slug || "" %>">
-									<span class="input-group-btn">
-										<button type="button" class="btn btn-info btn-flat btn-qrgenerate"> <i class="fa fa-cloud-download"></i> Создать QR-код</button>
-									</span>
-								</div>	
-							</div>
-							
-							<div class="col-md-3 col-ms-3">	
-								<div class="form-group">	
-									<label>Тип контента</label>
-									<select class="form-control" id="prmedia_type" style="width: 100%;">
-										<option value="1" <% if @item.media_type :%><% if @item.media_type==1 :%>selected<% end %><% end %>>Статичный контент</option>
-										<option value="2" <% if @item.media_type :%><% if @item.media_type==2 :%>selected<% end %><% end %>>Зацикленное видео со звуком</option>
-										<option value="3" <% if @item.media_type :%><% if @item.media_type==3 :%>selected<% end %><% end %>>Аудио, запускающее программу</option>
-										<option value="4" <% if @item.media_type :%><% if @item.media_type==4 :%>selected<% end %><% end %>>Динамический контент</option>
-									</select>
-								</div>	
-							</div>
-							
-							<div class="col-md-3 col-ms-3">	
-								<div class="form-group">	
-									<label>Выставка</label>
-									<select class="form-control" id="prrelated" style="width: 100%;">
-										<option value="">Не указан</option>
-										<% for exhibit in @exhibitions : %>
-											<option value="<%- exhibit._id %>"  <% if @item.related :%><% if @item.related.toString()==exhibit._id.toString() :%>selected<% end %><% end %>><% if exhibit.title :%><%- exhibit.title["ru"] || "" %><% end %></option>
-										<% end %>	
-									</select>
-								</div>	
-							</div>
-							
-						<% end %>
-						<% if @pagename!="event" && @pagename!="media"  :%>
-							<div class="col-md-3 col-ms-3">	
-								<div class="form-group">
-									<label>Порядок сортировки</label>
-									<input type="number" class="form-control" id="prord" placeholder="Enter number" value="<%- @item.ord || 1 %>">
-								</div>
-							</div>
-						<% end %>
-						<% if @pagename=="event" :%>
-							<div class="col-md-4 col-ms-4">	
-								<div class="form-group">	
-									<label>Дата и время</label>
-									<div class="input-group date">
-										<div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-										<input type="text" class="form-control pull-right" id="prpublished" value="" readonly="readonly">
+		<% if  @pagename!="location" :%>
+			<div class="col-md-<%- if @pagename=="media" then "12" else "9" %>">		
+				<div class="box box-primary">
+					<div class="box-header">
+						<h3 class="box-title"><i class="fa fa-cog"></i> Общий</h3>	
+						<div class="material-switch pull-right"><span class="switcherleft">Off</span><input id="practive" name="practive" type="checkbox" <%- if @item.active then "checked" %> /><label for="practive" class="label-primary"></label><span class="switcherright">On</span></div>
+					</div>
+					<div class="box-body">
+						<div class="row">										
+							<% if @pagename=="media" :%>
+								<div class="col-md-3 col-ms-3">		
+									<label style="margin: 0 0 0 10px;">QR-код</label>
+									<div class="input-group margin" style="margin-top:5px;">
+										<input type="text" class="form-control" id="prslug" placeholder="Enter code" value="<%- @item.slug || "" %>">
+										<span class="input-group-btn">
+											<button type="button" class="btn btn-info btn-flat btn-qrgenerate"> <i class="fa fa-cloud-download"></i> Создать QR-код</button>
+										</span>
 									</div>	
-								</div>	
-							</div>
-							<div class="col-md-4 col-ms-4">	
-								<div class="form-group">	
-									<label>Место</label>
-									<select class="form-control" id="prplace" style="width: 100%;">
-										<option value="lobby" <% if @item.content :%><% if @item.content.place :%><% if @item.content.place=="lobby" :%>selected<% end %><% end %><% end %>>Лобби</option>
-										<option value="hall" <% if @item.content :%><% if @item.content.place :%><% if @item.content.place=="hall" :%>selected<% end %><% end %><% end %>>Конференц-зал</option>
-										<option value="laboratory" <% if @item.content :%><% if @item.content.place :%><% if @item.content.place=="laboratory" :%>selected<% end %><% end %><% end %>>Лаборатория</option>
-										<option value="atomarium" <% if @item.content :%><% if @item.content.place :%><% if @item.content.place=="atomarium" :%>selected<% end %><% end %><% end %>>Атомариум</option>
-									</select>
-								</div>	
-							</div>
-						<% end %>
-						
-						<% if @pagename=="exhibition"  or @pagename=="media":%>
-							<div class="col-md-3 col-ms-3">	
-								<div class="form-group">	
-									<label>Этаж</label>
-									<select class="form-control" id="prfloor" style="width: 100%;">
-										<option value="4" <% if @item.content :%><% if @item.content.floor :%><% if @item.content.floor=="4" :%>selected<% end %><% end %><% end %>>4</option>
-										<option value="3" <% if @item.content :%><% if @item.content.floor :%><% if @item.content.floor=="3" :%>selected<% end %><% end %><% end %>>3</option>
-										<option value="2" <% if @item.content :%><% if @item.content.floor :%><% if @item.content.floor=="2" :%>selected<% end %><% end %><% end %>>2</option>
-										<option value="1" <% if @item.content :%><% if @item.content.floor :%><% if @item.content.floor=="1" :%>selected<% end %><% end %><% end %>>1</option>
-										<option value="-1" <% if @item.content :%><% if @item.content.floor :%><% if @item.content.floor=="-1" :%>selected<% end %><% end %><% end %>>-1</option>
-										<option value="-2" <% if @item.content :%><% if @item.content.floor :%><% if @item.content.floor=="-2" :%>selected<% end %><% end %><% end %>>-2</option>
-										<option value="-3" <% if @item.content :%><% if @item.content.floor :%><% if @item.content.floor=="-3" :%>selected<% end %><% end %><% end %>>-3</option>										
-									</select>	
-								</div>	
-							</div>		
-						<% end %>	
-						
-						
-						<% if  @pagename=="service":%>
-							<div class="col-md-8 col-ms-8">	
-								<label>Время работы</label>
-								<div class="row">	
-									<div class="col-md-6 col-ms-6">	
-										<div class="form-group">
-											<label>Понедельник</label>
-											<input type="text" class="form-control" id="prmonday" placeholder="Enter Text" value="<% if @item.content :%><%- @item.content.monday || "" %><% end %>">
-										</div>
-										<div class="form-group">
-											<label>Вторник</label>
-											<input type="text" class="form-control" id="prtuesday" placeholder="Enter Text" value="<% if @item.content :%><%- @item.content.tuesday || "" %><% end %>">
-										</div>
-										<div class="form-group">
-											<label>Среда</label>
-											<input type="text" class="form-control" id="prwednesday" placeholder="Enter Text" value="<% if @item.content :%><%- @item.content.wednesday || "" %><% end %>">
-										</div>
-										<div class="form-group">
-											<label>Четверг</label>
-											<input type="text" class="form-control" id="prthursday" placeholder="Enter Text" value="<% if @item.content :%><%- @item.content.thursday || "" %><% end %>">
-										</div>
+								</div>
+								
+								<div class="col-md-3 col-ms-3">	
+									<div class="form-group">	
+										<label>Тип контента</label>
+										<select class="form-control" id="prmedia_type" style="width: 100%;">
+											<option value="1" <% if @item.media_type :%><% if @item.media_type==1 :%>selected<% end %><% end %>>Статичный контент</option>
+											<option value="2" <% if @item.media_type :%><% if @item.media_type==2 :%>selected<% end %><% end %>>Зацикленное видео со звуком</option>
+											<option value="3" <% if @item.media_type :%><% if @item.media_type==3 :%>selected<% end %><% end %>>Аудио, запускающее программу</option>
+											<option value="4" <% if @item.media_type :%><% if @item.media_type==4 :%>selected<% end %><% end %>>Динамический контент</option>
+										</select>
+									</div>	
+								</div>
+								
+								<div class="col-md-3 col-ms-3">	
+									<div class="form-group">	
+										<label>Выставка</label>
+										<select class="form-control" id="prrelated" style="width: 100%;">
+											<option value="">Не указан</option>
+											<% for exhibit in @exhibitions : %>
+												<option value="<%- exhibit._id %>"  <% if @item.related :%><% if @item.related.toString()==exhibit._id.toString() :%>selected<% end %><% end %>><% if exhibit.title :%><%- exhibit.title["ru"] || "" %><% end %></option>
+											<% end %>	
+										</select>
+									</div>	
+								</div>
+								
+							<% end %>
+							<% if @pagename!="event" and @pagename!="media" and @pagename!="location"  :%>
+								<div class="col-md-3 col-ms-3">	
+									<div class="form-group">
+										<label>Порядок сортировки</label>
+										<input type="number" class="form-control" id="prord" placeholder="Enter number" value="<%- @item.ord || 1 %>">
 									</div>
-									<div class="col-md-6 col-ms-6">	
-										<div class="form-group">
-											<label>Пятница</label>
-											<input type="text" class="form-control" id="prfriday" placeholder="Enter Text" value="<% if @item.content :%><%- @item.content.friday || "" %><% end %>">
+								</div>
+							<% end %>
+							<% if @pagename=="event" :%>
+								<div class="col-md-4 col-ms-4">	
+									<div class="form-group">	
+										<label>Дата и время</label>
+										<div class="input-group date">
+											<div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+											<input type="text" class="form-control pull-right" id="prpublished" value="" readonly="readonly">
+										</div>	
+									</div>	
+								</div>
+								<div class="col-md-4 col-ms-4">	
+									<div class="form-group">	
+										<label>Место</label>
+										<select class="form-control" id="prplace" style="width: 100%;">
+											<% if  @locations :%>
+												<% for location, i in @locations : %>
+													<% if location.title.ru :%>
+														<option value="<%- location._id.toString() %>" <% if @item.content.place==location._id.toString() :%>selected<% end %>><%- location.title.ru %></option>
+													<% end %>	
+												<% end %>
+											<% end %>
+										</select>
+									</div>	
+								</div>
+							<% end %>
+							
+							<% if @pagename=="exhibition"  or @pagename=="media":%>
+								<div class="col-md-3 col-ms-3">	
+									<div class="form-group">	
+										<label>Этаж</label>
+										<select class="form-control" id="prfloor" style="width: 100%;">
+											<option value="4" <% if @item.content :%><% if @item.content.floor :%><% if @item.content.floor=="4" :%>selected<% end %><% end %><% end %>>4</option>
+											<option value="3" <% if @item.content :%><% if @item.content.floor :%><% if @item.content.floor=="3" :%>selected<% end %><% end %><% end %>>3</option>
+											<option value="2" <% if @item.content :%><% if @item.content.floor :%><% if @item.content.floor=="2" :%>selected<% end %><% end %><% end %>>2</option>
+											<option value="1" <% if @item.content :%><% if @item.content.floor :%><% if @item.content.floor=="1" :%>selected<% end %><% end %><% end %>>1</option>
+											<option value="-1" <% if @item.content :%><% if @item.content.floor :%><% if @item.content.floor=="-1" :%>selected<% end %><% end %><% end %>>-1</option>
+											<option value="-2" <% if @item.content :%><% if @item.content.floor :%><% if @item.content.floor=="-2" :%>selected<% end %><% end %><% end %>>-2</option>
+											<option value="-3" <% if @item.content :%><% if @item.content.floor :%><% if @item.content.floor=="-3" :%>selected<% end %><% end %><% end %>>-3</option>										
+										</select>	
+									</div>	
+								</div>		
+							<% end %>	
+							
+							
+							<% if  @pagename=="service":%>
+								<div class="col-md-8 col-ms-8">	
+									<label>Время работы</label>
+									<div class="row">	
+										<div class="col-md-6 col-ms-6">	
+											<div class="form-group">
+												<label>Понедельник</label>
+												<input type="text" class="form-control" id="prmonday" placeholder="Enter Text" value="<% if @item.content :%><%- @item.content.monday || "" %><% end %>">
+											</div>
+											<div class="form-group">
+												<label>Вторник</label>
+												<input type="text" class="form-control" id="prtuesday" placeholder="Enter Text" value="<% if @item.content :%><%- @item.content.tuesday || "" %><% end %>">
+											</div>
+											<div class="form-group">
+												<label>Среда</label>
+												<input type="text" class="form-control" id="prwednesday" placeholder="Enter Text" value="<% if @item.content :%><%- @item.content.wednesday || "" %><% end %>">
+											</div>
+											<div class="form-group">
+												<label>Четверг</label>
+												<input type="text" class="form-control" id="prthursday" placeholder="Enter Text" value="<% if @item.content :%><%- @item.content.thursday || "" %><% end %>">
+											</div>
 										</div>
-										<div class="form-group">
-											<label>Суббота</label>
-											<input type="text" class="form-control" id="prsaturday" placeholder="Enter Text" value="<% if @item.content :%><%- @item.content.saturday || "" %><% end %>">
-										</div>
-										<div class="form-group">
-											<label>Воскресенье</label>
-											<input type="text" class="form-control" id="prsunday" placeholder="Enter Text" value="<% if @item.content :%><%- @item.content.sunday || "" %><% end %>">
+										<div class="col-md-6 col-ms-6">	
+											<div class="form-group">
+												<label>Пятница</label>
+												<input type="text" class="form-control" id="prfriday" placeholder="Enter Text" value="<% if @item.content :%><%- @item.content.friday || "" %><% end %>">
+											</div>
+											<div class="form-group">
+												<label>Суббота</label>
+												<input type="text" class="form-control" id="prsaturday" placeholder="Enter Text" value="<% if @item.content :%><%- @item.content.saturday || "" %><% end %>">
+											</div>
+											<div class="form-group">
+												<label>Воскресенье</label>
+												<input type="text" class="form-control" id="prsunday" placeholder="Enter Text" value="<% if @item.content :%><%- @item.content.sunday || "" %><% end %>">
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-						<% end %>
-					</div>	
+							<% end %>
+						</div>	
+					</div>
 				</div>
+				
 			</div>
-			
 		</div>
-	</div>
-	
+	<% end %>
 	
 	
 	
@@ -187,13 +191,21 @@
 								</div>
 								<div class="box-body">
 									<div class="row">
-										<div class="col-md-4 col-ms-4">	
+										<div class="col-md-6 col-ms-6">	
 											<div class="form-group">
 												<label>Название <%- if option.language_code=="ru" and (@pagename=="event" or @pagename=="exhibition") then "(обязательно)"%></label>
 												<input type="text" class="form-control  prtitle"  placeholder="Enter Text"  data-lang="<%- option.language_code %>" value="<% if @item.title :%><%- @item.title[option.language_code] || "" %><% end %>">
 											</div>
 										</div>
 										
+										<% if @pagename=="location"  :%>
+											<div class="col-md-6 col-ms-6">	
+												<div class="form-group">
+													<label>Порядок сортировки</label>
+													<input type="number" class="form-control" id="prord" placeholder="Enter number" value="<%- @item.ord || 1 %>">
+												</div>
+											</div>
+										<% end %>
 										
 										<% if @pagename=="event":%>
 											<div class="col-md-4 col-ms-4">	
@@ -226,7 +238,7 @@
 										<% end %>
 									</div>
 									
-									<% if @pagename!="service" :%>
+									<% if @pagename!="service" and @pagename!="location" :%>
 										<div class="row">
 											<div class="col-md-12 col-ms-12">
 												<div class="form-group">
@@ -348,34 +360,34 @@
 
 							<% end %>		
 							
-							
-							<div class="box box-primary">
-								<div class="box-header">
-									<h3 class="box-title">Визуальный контент</h3>
-								</div>
-								<div class="box-body">
-									<div class="edit_contr_cont">
-										<div class="edit_contr_left">
-											<div class="edit_contr_modules">
-												<h4 style="margin-top:0"><i class="fa fa-sticky-note-o"></i> Шаблоны</h4>
-												<div class="edit_contr_modules_templs">
-													<a class="edit_templ edit_templ<%- option.language_code %> edit_templ_1" data-type="0" href="#" title="Image"></a>
-													<a class="edit_templ edit_templ<%- option.language_code %> edit_templ_2" data-type="1" href="#" title="Text"></a>
+							<% if  @pagename!="location":%>
+								<div class="box box-primary">
+									<div class="box-header">
+										<h3 class="box-title">Визуальный контент</h3>
+									</div>
+									<div class="box-body">
+										<div class="edit_contr_cont">
+											<div class="edit_contr_left">
+												<div class="edit_contr_modules">
+													<h4 style="margin-top:0"><i class="fa fa-sticky-note-o"></i> Шаблоны</h4>
+													<div class="edit_contr_modules_templs">
+														<a class="edit_templ edit_templ<%- option.language_code %> edit_templ_1" data-type="0" href="#" title="Image"></a>
+														<a class="edit_templ edit_templ<%- option.language_code %> edit_templ_2" data-type="1" href="#" title="Text"></a>
+													</div>
 												</div>
 											</div>
-										</div>
-										<div class="edit_contr_right">
-											<h4><i class="fa fa-eye"></i> Предварительный просмотр</h4>
-											<div class="edit_contr_items">
-												<div class="edit_contr_items_list" id="edit_contr_items_list<%- option.language_code %>" data-lang="<%- option.language_code %>"></div>	
-												<h3 class="box-title edit_bottom_drag_text"><i class="fa fa-arrows"></i> Перетаскивание элементов из шаблонов</h3>
+											<div class="edit_contr_right">
+												<h4><i class="fa fa-eye"></i> Предварительный просмотр</h4>
+												<div class="edit_contr_items">
+													<div class="edit_contr_items_list" id="edit_contr_items_list<%- option.language_code %>" data-lang="<%- option.language_code %>"></div>	
+													<h3 class="box-title edit_bottom_drag_text"><i class="fa fa-arrows"></i> Перетаскивание элементов из шаблонов</h3>
+												</div>	
 											</div>	
+											
 										</div>	
-										
-									</div>	
+									</div>
 								</div>
-							</div>
-							
+							<% end %>	
 
 						</div>
 					<% end %>	

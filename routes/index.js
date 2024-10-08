@@ -18,7 +18,7 @@ var mongoose       = require('mongoose')
 var client = require('../redis').client();
 
 var _all_roles={1:"user",100:"admin"};
-var _all_categories=["exhibition","event","service","media"];
+var _all_categories=["exhibition","event","service","media", "location"];
 var _all_global_pages=["home","exhibitions","events","services","maps"];
 
 exports.init = function (app) {
@@ -56,33 +56,41 @@ exports.init = function (app) {
 									});
 								} else {
 									if(_slug=="events"){
-										_pages.today=[];
-										_pages.upcoming=[];
-										_pages.filters=[];
-										_pages.map(function(_i){
-											var _p=_i.toObject();
-											_p.time=moment(_p.published).format("HH:mm");
-											_p.date=moment(_p.published).format("DD.MM.YY");
-											
-											if (_p.content){
-												if (_p.content[_language]){
-													if (_p.content[_language].type){
-														if (_p.content[_language].type!=""){
-															if(_pages.filters.indexOf(_p.content[_language].type)==-1) _pages.filters.push(_p.content[_language].type);
-														}	
+										Page.find({category:"location"}).sort({ord:1}).exec(function(err, _locations){
+											var _today=[];
+											var _upcoming=[];
+											var _filters=[];
+											var _loca={};
+											_pages.map(function(_i){
+												var _p=_i.toObject();
+												_p.time=moment(_p.published).format("HH:mm");
+												_p.date=moment(_p.published).format("DD.MM.YY");
+												
+												if (_p.content){
+													if (_p.content[_language]){
+														if (_p.content[_language].type){
+															if (_p.content[_language].type!=""){
+																if(_filters.indexOf(_p.content[_language].type)==-1) _filters.push(_p.content[_language].type);
+															}	
+														}
 													}
 												}
-											}
-													
-											if(isToday(_p.published)){
-												//_pages.today.push(_p);
-											} else {
-												_pages.upcoming.push(_p);
-												_pages.today.push(_p);
-											}
-										});
-									}
-									return res.render('templates/'+_slug, {lang:_language, category:_slug, pages:_pages,  options:_options, server_address:config.server_address});	
+														
+												if(isToday(_p.published)){
+													_today.push(_p);
+												} else {
+													_upcoming.push(_p);
+												}
+											});
+											_locations.map(function(_i){
+												var _p=_i.toObject();
+												_loca[_p._id.toString()]=_p;
+											});
+											return res.render('templates/'+_slug, {lang:_language, category:_slug, pages:_pages,  options:_options, server_address:config.server_address, today:_today, upcoming:_upcoming,filters:_filters,locations:_loca});	
+										});		
+									} else {									
+										return res.render('templates/'+_slug, {lang:_language, category:_slug, pages:_pages,  options:_options, server_address:config.server_address});	
+									}	
 								}
 							});	
 						} else {
@@ -98,14 +106,18 @@ exports.init = function (app) {
 											if(_p.category=="event"){
 												_p.time=moment(_p.published).format("HH:mm");
 												_p.date=moment(_p.published).format("DD.MM.YY");
-											}
-											if(_p.category=="media"){
-												client.hmset("dev:"+_uuid, "interaction", _interaction.toString(), "time", _dev.time.toString(), "qr", (parseInt(_dev.qr)+1).toString(), function(err10,ret){
-													return res.render('templates/'+_p.category, {lang:_language, page:_p,   options:_options, server_address:config.server_address});
+												Page.findById(_p.content.place).exec(function(err, _location){
+													return res.render('templates/'+_p.category, {lang:_language, page:_p,   options:_options, server_address:config.server_address, location:(_location || {})});
 												});
 											} else {
-												return res.render('templates/'+_p.category, {lang:_language, page:_p,   options:_options, server_address:config.server_address});
-											}											
+												if(_p.category=="media"){
+													client.hmset("dev:"+_uuid, "interaction", _interaction.toString(), "time", _dev.time.toString(), "qr", (parseInt(_dev.qr)+1).toString(), function(err10,ret){
+														return res.render('templates/'+_p.category, {lang:_language, page:_p,   options:_options, server_address:config.server_address});
+													});
+												} else {
+													return res.render('templates/'+_p.category, {lang:_language, page:_p,   options:_options, server_address:config.server_address});
+												}	
+											}	
 										} else {
 											client.hmset("dev:"+_uuid, "interaction", _interaction.toString(), "time", _dev.time.toString(), "qr", (parseInt(_dev.qr)+1).toString(), function(err10,ret){	
 												return res.render('templates/media', {lang:_language, page:__page.toObject(),   options:_options, server_address:config.server_address});
@@ -278,32 +290,34 @@ exports.init = function (app) {
 	app.get('/item/:itemid', isLoggedIn, function(req, res) {
 		if(req.params.itemid){
 			Option.find().sort({ord:1}).exec(function(err, _options){
-				if(req.params.itemid!='new'){
-					Page.findById(req.params.itemid).exec(function(err, _page){
-						if(err || !_page) return res.render("index", {user_status:_all_roles[req.user.role],  pagename:"dashboard"});					
-						if(_all_categories.indexOf(_page.category)!=-1){
-							if(_page.category=="media"){
-								Page.find({category:"exhibition"}).sort({ord:1}).exec(function(err, _exhibitions){
-									return res.render("item", {user_status:_all_roles[req.user.role],  pagename:_page.category, item:_page.toObject(), options:_options, exhibitions:_exhibitions});
-								})
+				var _category=req.query.category || "page";
+				Page.find({category:"location"}).sort({ord:1}).exec(function(err, _locations){
+					if(req.params.itemid!='new'){
+						Page.findById(req.params.itemid).exec(function(err, _page){
+							if(err || !_page) return res.render("index", {user_status:_all_roles[req.user.role],  pagename:"dashboard"});					
+							if(_all_categories.indexOf(_page.category)!=-1){
+								if(_page.category=="media"){
+									Page.find({category:"exhibition"}).sort({ord:1}).exec(function(err, _exhibitions){
+										return res.render("item", {user_status:_all_roles[req.user.role],  pagename:_page.category, item:_page.toObject(), options:_options, exhibitions:_exhibitions});
+									})
+								} else {
+									return res.render("item", {user_status:_all_roles[req.user.role],  pagename:_page.category, item:_page.toObject(), options:_options, locations:_locations});
+								}							
 							} else {
-								return res.render("item", {user_status:_all_roles[req.user.role],  pagename:_page.category, item:_page.toObject(), options:_options});
-							}							
-						} else {
-							return res.render("globalpage", {user_status:_all_roles[req.user.role],  pagename:_page.category, item:_page.toObject(), options:_options});
-						}
-					});
-				} else {
-					var _category=req.query.category || "page";
-					if(_all_categories.indexOf(_category)==-1 && _all_global_pages.indexOf(_category)==-1) _category="page";
-					if(_category=="media"){
-						Page.find({category:"exhibition"}).sort({ord:1}).exec(function(err, _exhibitions){
-							return res.render("item", {user_status:_all_roles[req.user.role],  pagename:_category, item:{slug:"", _id:"new"}, options:_options, exhibitions:_exhibitions});
-						})	
+								return res.render("globalpage", {user_status:_all_roles[req.user.role],  pagename:_page.category, item:_page.toObject(), options:_options});
+							}
+						});
 					} else {
-						return res.render("item", {user_status:_all_roles[req.user.role],  pagename:_category, item:{slug:"", _id:"new"}, options:_options});
-					}		
-				}
+						if(_all_categories.indexOf(_category)==-1 && _all_global_pages.indexOf(_category)==-1) _category="page";
+						if(_category=="media"){
+							Page.find({category:"exhibition"}).sort({ord:1}).exec(function(err, _exhibitions){
+								return res.render("item", {user_status:_all_roles[req.user.role],  pagename:_category, item:{slug:"", _id:"new"}, options:_options, exhibitions:_exhibitions});
+							})	
+						} else {
+							return res.render("item", {user_status:_all_roles[req.user.role],  pagename:_category, item:{slug:"", _id:"new"}, options:_options, locations:_locations});
+						}		
+					}
+				});		
 			});	
 		} else {
 			return res.redirect('/');
@@ -713,7 +727,7 @@ function SendEmail_to_address(_lang, _email, _filename, _cb){
 			subject:"Ваш сертификат",
 			text:"Спасибо,<br>что поддержали<br>Московский<br>договор!",
 			file:"Certificate",
-			name:"Павильон АТОМ"
+			name:"Музей АТОМ"
 		},
 		"en":{
 			subject:"Your certificate",
