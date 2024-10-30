@@ -51,6 +51,7 @@ $(document).ready(function() {
 				console.log(_resp);
 				var _media=_resp.replace('http://',"").replace('https://',"");
 				StopScan(); 
+				document.body.classList.remove("scanning");
 				$('.guide_blocks_container').hide();	
 				$('#global_wrap').show();
 				_exp_id = _media;
@@ -300,6 +301,7 @@ function GetContent(_url, _cb){
 					var _find_media=false;
 					
 					if(__data){
+						$('.loader_start').css({'visibility':'hidden','opacity':'0'});
 						if(__data.success){
 							if(__data.data){
 								if(__data.data.videos){		
@@ -320,6 +322,14 @@ function GetContent(_url, _cb){
 								}	
 							}
 						}
+					} else  {
+						$('.loader_start').append('<div class="wifierror">'+_trs_wifi+'<br>code:102</div>');
+						$('.loader_start img').css({'visibility':'hidden','opacity':'0'});
+						$('.loader_start').css({'visibility':'visible','opacity':'1'});
+						setTimeout(function(){
+							$('.loader_start').css({'visibility':'hidden','opacity':'0'});
+							$('.wifierror').remove();
+						},1000);
 					}
 
 					if(!_find_media) {
@@ -327,9 +337,7 @@ function GetContent(_url, _cb){
 						if(_media_type=="1") document.getElementById('player_button').style.display="none";
 						if(!document.getElementById('trans_cont') &&  document.getElementById('media_player_block')) document.getElementById('media_player_block').style.display="none";
 					}
-					
-					$('.loader_start').css({'visibility':'hidden','opacity':'0'});
-					
+			
 				});
 				
 				///////////////////////// OGNENSK
@@ -401,15 +409,15 @@ function GetContent(_url, _cb){
 		
 	}).fail(function() {
 		
-		$('.loader_start').append('<div class="wifierror">'+_trs_wifi+'</div>');
+		$('.loader_start').append('<div class="wifierror">'+_trs_wifi+'<br>code:101</div>');
 		$('.loader_start img').css({'visibility':'hidden','opacity':'0'});
 		$('.loader_start').css({'visibility':'visible','opacity':'1'});
 		//setTimeout(function(){ GetContent(_url,function(){});},2000);
 		setTimeout(function(){
-			//$('.loader_start').css({'visibility':'hidden','opacity':'0'});
-			window.location.reload();
+			$('.loader_start').css({'visibility':'hidden','opacity':'0'});
+			$('.wifierror').remove();
 		},1000);
-		document.body.className=_tmp_class;	
+		//document.body.className=_tmp_class;	
 		_cb();	
 	});	
 
